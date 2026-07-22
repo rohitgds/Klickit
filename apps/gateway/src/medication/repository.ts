@@ -458,7 +458,7 @@ export async function getDocumentPrintTemplate(
 export async function createDocumentPrintSnapshot(
   ctx: DbContext,
   input: {
-    documentType: "care_plan" | "medication_order" | "consent";
+    documentType: string;
     sourceEntityType: string;
     sourceEntityId: string;
     templateGroupCode: string;
@@ -471,7 +471,7 @@ export async function createDocumentPrintSnapshot(
   },
 ) {
   const snapshot = buildDocumentPrintSnapshot({
-    documentType: input.documentType,
+    documentType: input.documentType as import("@klickit/plans-prescriptions").DocumentPrintType,
     templateVersion: input.templateVersion,
     sourceEntityType: input.sourceEntityType,
     sourceEntityId: input.sourceEntityId,

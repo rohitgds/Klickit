@@ -2,33 +2,34 @@
 
 - Project: KlickIt
 - Total phases: 55
-- Current phase: 46 complete — Financial documents, reconciliation and UAT
-- Completed phases: 46
-- Phase-count progress: 46/55 (84%)
-- Weighted project progress: 84%
-- Current milestone: Milestone 7 — Finance (ready for manual review)
-- Milestone approval: Milestone 6 approved 2026-07-22; Milestone 7 pending owner review
-- Last successful commit: CI typecheck fix on `main` (`b033174`)
-- Last passing test run: Phase 46 — 91 automated tests passed 2026-07-22
+- Current phase: 50 complete — Thermal, labels, appointment and CGHS/corporate printing
+- Completed phases: 50
+- Phase-count progress: 50/55 (91%)
+- Weighted project progress: 91%
+- Current milestone: Milestone 8 — Communications & Printing (ready for manual review)
+- Milestone approval: Milestone 7 approved 2026-07-22; Milestone 8 pending owner review
+- Last successful commit: Milestone 7 finance integration and approval (`ae15732`)
+- Last passing test run: Phase 50 — 103 automated tests passed 2026-07-22
 - Current blocker: None
-- Next action: Manual Milestone 7 review using `docs/MILESTONE7_EVIDENCE.md`
+- Next action: Manual Milestone 8 review using `docs/MILESTONE8_EVIDENCE.md`
 
 ## Recent results
 
-### Milestone 7 foundation delivered (Phases 40–46)
-- Finance PostgreSQL migrations for fee statements, collections, allocations, refunds and journals
-- `@klickit/finance` package with GST line math, discount ceilings, allocation/refund validation, aging and cent reconciliation
-- Gateway finance repository and `/finance/*` routes with permission gates
-- Dev seed data for tax codes, collection methods, fee schedule items and ledger accounts
+### Milestone 8 foundation delivered (Phases 47–50)
+- Continuity and messaging PostgreSQL migrations with contract validation trigger
+- `@klickit/comms` package with due-date math, consent checks, automation registry and print type validation
+- Pabbly stub messaging adapter behind provider interface
+- Gateway continuity, messaging and extended print routes with permission gates
+- Dev seed data for recall policy, WhatsApp templates, automation settings and print layouts
 
-### Milestone 6 approved
-- Owner approved treatment plans, prescriptions, signing and printing milestone
-- Work committed locally through Phase 39
+### Milestone 7 approved
+- Owner approved finance milestone and authorized Phase 47 work
+- Finance integration committed through Phase 46
 
 ## Owner actions still open
 
-1. Run manual checklist in `docs/MILESTONE7_EVIDENCE.md`.
-2. Reply exactly `APPROVE MILESTONE` when satisfied to continue to Phase 47.
+1. Run manual checklist in `docs/MILESTONE8_EVIDENCE.md`.
+2. Reply exactly `APPROVE MILESTONE` when satisfied to continue to Phase 51.
 
 ## Session handoff
 

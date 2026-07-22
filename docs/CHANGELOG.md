@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+### Milestone 8 foundation — 2026-07-22
+- Phases 47–50: continuity policies and tasks, messaging templates and preferences, outbound queue with Pabbly stub adapter, webhook deduplication, ten WhatsApp automations and extended print templates
+- `@klickit/comms` package with due-date math, consent validation, automation registry and print type helpers
+- Communications PostgreSQL migrations compiled from Blueprint 01 (9 tables) plus continuity contract trigger
+- Gateway continuity, messaging and extended print APIs with permission gates
+- Milestone 8 evidence checklist
+
 ### Milestone 7 approved — 2026-07-22
 - Owner approved Milestone 7 (Finance, Phases 40–46)
 - Next work: Phase 47 — Recall and follow-up rules

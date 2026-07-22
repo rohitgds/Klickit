@@ -13,7 +13,17 @@ export type TreatmentBundleTier = "primary" | "secondary" | "tertiary";
 export type MedicationOrderStatus = "draft" | "saved" | "signed" | "void";
 export type AllergyRuleAction = "block" | "warn" | "information";
 export type PlanAcceptanceMethod = "staff_confirmed" | "otp" | "signature_upload";
-export type DocumentPrintType = "care_plan" | "medication_order" | "consent";
+export type DocumentPrintType =
+  | "care_plan"
+  | "medication_order"
+  | "consent"
+  | "fee_statement"
+  | "collection_receipt"
+  | "appointment_slip"
+  | "patient_label"
+  | "thermal_receipt"
+  | "cghs_form"
+  | "corporate_form";
 
 export function calculateCarePlanTotals(lines: readonly { proposedFee: number; discount?: number; accepted?: boolean }[]) {
   let estimatedTotal = 0;

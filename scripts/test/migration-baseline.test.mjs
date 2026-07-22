@@ -15,7 +15,7 @@ describe("migration baseline", () => {
     assert.ok(files.includes("20260722100000_patient_registry_tables.sql"));
     assert.ok(files.includes("20260722120000_clinical_tables.sql"));
     assert.ok(files.includes("20260722130000_plan_prescription_tables.sql"));
-    assert.equal(files.at(-1), "20260722143000_finance_indexes.sql");
+    assert.equal(files.at(-1), "20260722158000_milestone8_supplemental.sql");
   });
 
   it("includes permission catalog seed content", () => {

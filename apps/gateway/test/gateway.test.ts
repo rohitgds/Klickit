@@ -21,7 +21,7 @@ describe("gateway health", () => {
     const body = response.json();
     assert.equal(body.product, "KlickIt");
     assert.equal(body.component, "gateway");
-    assert.equal(body.phase, 46);
+    assert.equal(body.phase, 50);
     await close();
   });
 
@@ -30,7 +30,7 @@ describe("gateway health", () => {
     const response = await app.inject({ method: "GET", url: "/architecture" });
     assert.equal(response.statusCode, 200);
     const body = response.json();
-    assert.equal(body.phase, 46);
+    assert.equal(body.phase, 50);
     assert.equal(body.components.length, 5);
     assert.equal(body.providers.length, 10);
     await close();

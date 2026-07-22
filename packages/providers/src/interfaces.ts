@@ -44,7 +44,12 @@ export interface JobQueueProvider {
 
 export interface MessagingProvider {
   readonly kind: "messaging";
-  sendMessage(input: { recipient: string; templateId: string }): Promise<{ queued: boolean; provider: string }>;
+  sendMessage(input: {
+    recipient: string;
+    templateId: string;
+    body?: string;
+    deduplicationKey?: string;
+  }): Promise<{ queued: boolean; provider: string; providerMessageId?: string }>;
 }
 
 export interface MonitoringProvider {

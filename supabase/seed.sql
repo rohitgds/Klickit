@@ -135,6 +135,9 @@ WHERE p.code IN (
   'fee_allocation.create',
   'collection.refund',
   'analytics.financial.view',
+  'message.view',
+  'message.send',
+  'message.bulk_send',
   'audit.view'
 )
 ON CONFLICT (role_id, permission_id) DO NOTHING;
@@ -570,4 +573,110 @@ VALUES (
   clock_timestamp(),
   clock_timestamp()
 )
+ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO dentos_data.message_templates (
+  id, organization_id, channel, purpose, route_type, name, body, approval_status, approved_at, approved_by, active, created_at, updated_at
+)
+VALUES
+  (
+    '888888c1-8888-48c1-88c1-8888888888c1',
+    '11111111-1111-4111-8111-111111111111',
+    'whatsapp',
+    'transactional',
+    'welcome_new_patient',
+    'Welcome Message',
+    'Welcome to KlickIt Development Clinic, {{patient_name}}.',
+    'approved',
+    clock_timestamp(),
+    '55555555-5555-4555-8555-555555555555',
+    true,
+    clock_timestamp(),
+    clock_timestamp()
+  ),
+  (
+    '888888c2-8888-48c2-88c2-8888888888c2',
+    '11111111-1111-4111-8111-111111111111',
+    'whatsapp',
+    'care',
+    'recall_reminder',
+    'Recall Reminder',
+    'Reminder: your follow-up is due on {{due_date}}.',
+    'approved',
+    clock_timestamp(),
+    '55555555-5555-4555-8555-555555555555',
+    true,
+    clock_timestamp(),
+    clock_timestamp()
+  )
+ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO dentos_data.continuity_policies (
+  id, organization_id, clinic_id, name, trigger_event, interval_value, interval_unit,
+  send_whatsapp, whatsapp_template_id, active, created_at, updated_at
+)
+VALUES (
+  '888888c3-8888-48c3-88c3-8888888888c3',
+  '11111111-1111-4111-8111-111111111111',
+  '22222222-2222-4222-8222-222222222222',
+  'Six-month hygiene recall',
+  'service_completed',
+  6,
+  'month',
+  true,
+  '888888c2-8888-48c2-88c2-8888888888c2',
+  true,
+  clock_timestamp(),
+  clock_timestamp()
+)
+ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO dentos_data.clinic_settings (
+  id, organization_id, clinic_id, group_code, key, value_json, value_schema_version, created_at, updated_at
+)
+VALUES
+  (
+    '888888c4-8888-48c4-88c4-8888888888c4',
+    '11111111-1111-4111-8111-111111111111',
+    '22222222-2222-4222-8222-222222222222',
+    'document_output',
+    'fee_statement_a4',
+    '{"pageSize":"A4","orientation":"portrait","showLogo":true,"headerText":"Fee Statement"}'::jsonb,
+    1,
+    clock_timestamp(),
+    clock_timestamp()
+  ),
+  (
+    '888888c5-8888-48c5-88c5-8888888888c5',
+    '11111111-1111-4111-8111-111111111111',
+    '22222222-2222-4222-8222-222222222222',
+    'document_output',
+    'thermal_receipt',
+    '{"paperWidthMm":80,"showClinicName":true}'::jsonb,
+    1,
+    clock_timestamp(),
+    clock_timestamp()
+  ),
+  (
+    '888888c6-8888-48c6-88c6-8888888888c6',
+    '11111111-1111-4111-8111-111111111111',
+    '22222222-2222-4222-8222-222222222222',
+    'document_output',
+    'appointment_slip',
+    '{"pageSize":"A5","orientation":"portrait","showQr":false}'::jsonb,
+    1,
+    clock_timestamp(),
+    clock_timestamp()
+  ),
+  (
+    '888888c7-8888-48c7-88c7-8888888888c7',
+    '11111111-1111-4111-8111-111111111111',
+    '22222222-2222-4222-8222-222222222222',
+    'messaging_automation',
+    'welcome_new_patient',
+    '{"enabled":true,"approvalMode":"manual","testMode":true}'::jsonb,
+    1,
+    clock_timestamp(),
+    clock_timestamp()
+  )
 ON CONFLICT (id) DO NOTHING;

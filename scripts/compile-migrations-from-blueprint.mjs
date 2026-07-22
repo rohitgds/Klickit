@@ -257,6 +257,27 @@ const financeTables = [
   ...financeLedgerTables,
 ];
 const financeReferenceTables = [...planPrescriptionReferenceTables, ...financeTables, "fee_schedules"];
+
+const messagingTables = [
+  "communication_preferences",
+  "message_templates",
+  "message_batches",
+  "outbound_messages",
+  "message_status_events",
+  "inbound_messages",
+];
+const continuityTables = ["continuity_policies", "continuity_recall_records", "continuity_tasks"];
+const commsTables = [...messagingTables, ...continuityTables];
+const commsReferenceTables = [
+  ...financeReferenceTables,
+  ...commsTables,
+  "care_encounters",
+  "care_bookings",
+  "care_deliveries",
+  "care_plan_services",
+  "medication_orders",
+  "patient_flag_assignments",
+];
 const indexBlock = blocks.find((block) => block.includes("ix_patients_scope_lookup")) ?? "";
 
 mkdirSync(outputDir, { recursive: true });
@@ -375,6 +396,30 @@ const migrations = [
     file: "20260722143000_finance_indexes.sql",
     body: `-- Generated from Blueprint 01 — finance indexes\n\nSET search_path = dentos_data, dentos_runtime, public;\n\n${extractIndexLines(indexBlock, financeTables)}\n`,
   },
+  {
+    file: "20260722150000_messaging_tables.sql",
+    body: `-- Generated from Blueprint 01 — messaging foundation (Milestone 8)\n\nSET search_path = dentos_data, dentos_runtime, public;\n\n${extractTables(tableBlock, messagingTables)}\n`,
+  },
+  {
+    file: "20260722151000_continuity_tables.sql",
+    body: `-- Generated from Blueprint 01 — continuity and recall foundation (Milestone 8)\n\nSET search_path = dentos_data, dentos_runtime, public;\n\n${extractTables(tableBlock, continuityTables)}\n`,
+  },
+  {
+    file: "20260722151500_patient_flag_assignments.sql",
+    body: `-- Milestone 8 prerequisite — patient flag assignments referenced by continuity tasks\n\nSET search_path = dentos_data, dentos_runtime, public;\n\n${extractTables(tableBlock, ["patient_flag_assignments"])}\n`,
+  },
+  {
+    file: "20260722152000_comms_foreign_keys.sql",
+    body: `-- Generated from Blueprint 01 — communications foreign keys\n\nSET search_path = dentos_data, dentos_runtime, public;\n\n${extractAlterLines(fkBlock, commsTables, commsReferenceTables)}\n`,
+  },
+  {
+    file: "20260722153000_comms_triggers.sql",
+    body: `-- Generated from Blueprint 01 — communications audit triggers\n\nSET search_path = dentos_data, dentos_runtime, public;\n\n${extractTriggerLines(triggerBlock, commsTables)}\n`,
+  },
+  {
+    file: "20260722154000_comms_indexes.sql",
+    body: `-- Generated from Blueprint 01 — communications indexes\n\nSET search_path = dentos_data, dentos_runtime, public;\n\n${extractIndexLines(indexBlock, commsTables)}\n`,
+  },
 ];
 
 for (const migration of migrations) {
@@ -392,4 +437,6 @@ console.log(`Scheduling tables extracted: ${schedulingTables.filter((name) => ex
 console.log(`Clinical tables extracted: ${clinicalTables.filter((name) => extractTableDDL(tableBlock, name)).length}/${clinicalTables.length}`);
 console.log(`Plan/prescription tables extracted: ${planPrescriptionTables.filter((name) => extractTableDDL(tableBlock, name)).length}/${planPrescriptionTables.length}`);
 console.log(`Finance tables extracted: ${financeTables.filter((name) => extractTableDDL(tableBlock, name)).length}/${financeTables.length}`);
+console.log(`Messaging tables extracted: ${messagingTables.filter((name) => extractTableDDL(tableBlock, name)).length}/${messagingTables.length}`);
+console.log(`Continuity tables extracted: ${continuityTables.filter((name) => extractTableDDL(tableBlock, name)).length}/${continuityTables.length}`);
 console.log(`Permission seed bytes: ${permissionSeedBlock.length}`);

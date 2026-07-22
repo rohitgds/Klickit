@@ -31,3 +31,4 @@ Record only accepted decisions. Do not place secrets here.
 | DEC-024 | 2026-07-22 | Milestone 6 approved after owner review | Authorizes Phase 40 within Milestone 7 | Milestone 6 | User |
 | DEC-025 | 2026-07-22 | Milestone 7 foundation delivered through Phase 46 with finance masters, fee statements, collections, allocations, refunds, aging and reconciliation APIs | Finance milestone endpoint ready for manual review | Phases 40–46, Milestone 7 | Agent |
 | DEC-026 | 2026-07-22 | Milestone 7 approved after owner review | Authorizes Phase 47 within Milestone 8 | Milestone 7 | User |
+| DEC-027 | 2026-07-22 | Milestone 8 foundation delivered through Phase 50 with recall rules, Pabbly messaging adapter, ten automation route types and extended print workflows | Communications & Printing milestone endpoint ready for manual review | Phases 47–50, Milestone 8 | Agent |
