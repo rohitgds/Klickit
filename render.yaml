@@ -1,0 +1,24 @@
+# Staging demo API — synthetic data only. Apply secrets in Render dashboard (never in Git).
+services:
+  - type: web
+    name: klickit-staging-api
+    runtime: docker
+    dockerfilePath: ./apps/gateway/Dockerfile
+    dockerContext: .
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: APP_ENV
+        value: staging
+      - key: GATEWAY_HOST
+        value: 0.0.0.0
+      - key: GATEWAY_LAN_DISCOVERY
+        value: "false"
+      - key: KLICKIT_CLINIC_CODE
+        value: DEV
+      - key: KLICKIT_GATEWAY_CODE
+        value: DEV-GW-01
+      - key: GATEWAY_CORS_ORIGINS
+        sync: false
+      - key: DATABASE_URL
+        sync: false

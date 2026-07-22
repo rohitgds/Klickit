@@ -41,6 +41,7 @@ Set in untracked `.env.local` if needed:
 - `GATEWAY_PORT`
 - `GATEWAY_LOG_LEVEL`
 - `GATEWAY_LAN_DISCOVERY`
+- `GATEWAY_CORS_ORIGINS` (comma-separated Vercel URLs for online staging)
 - `GATEWAY_DATABASE_URL`
 - `KLICKIT_CLINIC_CODE`
 - `KLICKIT_GATEWAY_CODE`
@@ -50,3 +51,15 @@ Set in untracked `.env.local` if needed:
 ## Windows service (later phase)
 
 Production clinic gateway Windows service installation requires administrator approval and arrives in Rohini readiness phases.
+
+## Staging demo API (online — synthetic only)
+
+For Option B online staging, deploy this gateway to a cloud host (Render/Railway) with `APP_ENV=staging`, Supabase `DATABASE_URL`, and `GATEWAY_CORS_ORIGINS` set to your Vercel URL.
+
+See **`docs/deployment/STAGING_API_RUNBOOK.md`** for click-by-click owner steps.
+
+Docker build (from repo root):
+
+```powershell
+docker build -f apps/gateway/Dockerfile -t klickit-staging-api .
+```

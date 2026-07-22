@@ -1,0 +1,10 @@
+node_modules
+**/node_modules
+**/dist
+.git
+.cursor
+audit-export
+*.log
+.env
+.env.*
+!.env.example

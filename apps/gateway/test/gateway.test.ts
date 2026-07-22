@@ -191,3 +191,61 @@ describe("resilience foundations", () => {
     await close();
   });
 });
+
+describe("staging gateway config", () => {
+  it("defaults staging host to 0.0.0.0 and disables LAN discovery", () => {
+    const config = loadGatewayConfig({
+      APP_ENV: "staging",
+      GATEWAY_DATABASE_URL: "postgresql://example",
+    });
+    assert.equal(config.host, "0.0.0.0");
+    assert.equal(config.lanDiscoveryEnabled, false);
+    assert.equal(config.allowDevSessionBootstrap, false);
+  });
+
+  it("prefers PORT over GATEWAY_PORT for cloud hosts", () => {
+    const config = loadGatewayConfig({
+      APP_ENV: "staging",
+      PORT: "10000",
+      GATEWAY_PORT: "8787",
+      GATEWAY_DATABASE_URL: "postgresql://example",
+    });
+    assert.equal(config.port, 10000);
+  });
+
+  it("parses comma-separated CORS origins", () => {
+    const config = loadGatewayConfig({
+      GATEWAY_CORS_ORIGINS: "https://klickit-web-2c63.vercel.app, https://example.com",
+    });
+    assert.deepEqual(config.corsOrigins, [
+      "https://klickit-web-2c63.vercel.app",
+      "https://example.com",
+    ]);
+  });
+
+  it("returns CORS headers for allowed browser origins", async () => {
+    const config = loadGatewayConfig({
+      GATEWAY_CORS_ORIGINS: "https://klickit-web-2c63.vercel.app",
+    });
+    const { app, close } = await buildServer({
+      config,
+      skipDatabase: true,
+      pool: createMockPool(),
+      bootstrap: TEST_BOOTSTRAP,
+    });
+    const response = await app.inject({
+      method: "OPTIONS",
+      url: "/health",
+      headers: {
+        origin: "https://klickit-web-2c63.vercel.app",
+        "access-control-request-method": "GET",
+      },
+    });
+    assert.equal(response.statusCode, 204);
+    assert.equal(
+      response.headers["access-control-allow-origin"],
+      "https://klickit-web-2c63.vercel.app",
+    );
+    await close();
+  });
+});

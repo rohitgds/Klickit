@@ -57,7 +57,7 @@ Leave unset for first deploy — pages load; login waits for API.
 
 1. Copy the `*.vercel.app` URL Vercel shows
 2. Open it in browser — you should see KlickIt login page
-3. Login will **fail until** staging API + `VITE_API_BASE` are configured (Option B next phase)
+3. Login will **fail until** staging API + `VITE_API_BASE` are configured — see **`STAGING_API_RUNBOOK.md`**
 
 ---
 

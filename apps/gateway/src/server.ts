@@ -1,3 +1,4 @@
+import cors from "@fastify/cors";
 import Fastify from "fastify";
 import { loadGatewayConfig, type GatewayConfig } from "./config.js";
 import {
@@ -59,6 +60,14 @@ export async function buildServer(options: BuildServerOptions = {}) {
       level: config.logLevel,
     },
   });
+
+  if (config.corsOrigins.length > 0) {
+    await app.register(cors, {
+      origin: config.corsOrigins,
+      methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+      allowedHeaders: ["Content-Type", "x-session-token"],
+    });
+  }
 
   const deps: GatewayDependencies = {
     config,

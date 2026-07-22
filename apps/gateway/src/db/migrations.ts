@@ -1,5 +1,6 @@
 import { readdir, readFile } from "node:fs/promises";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import type { DatabasePoolLike } from "./client.js";
 
 export interface MigrationApplyResult {
@@ -53,6 +54,7 @@ export async function applyMigrations(
   return { applied, skipped };
 }
 
-export function resolveMigrationsDir(fromDir = import.meta.url): string {
-  return path.resolve(path.dirname(fromDir), "../../../../supabase/migrations");
+export function resolveMigrationsDir(fromUrl = import.meta.url): string {
+  const dir = path.dirname(fileURLToPath(fromUrl));
+  return path.resolve(dir, "../../../../supabase/migrations");
 }

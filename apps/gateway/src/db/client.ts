@@ -44,13 +44,28 @@ export interface DatabaseHealth {
 
 const DEV_DEFAULT_URL = "postgresql://postgres:postgres@127.0.0.1:54322/postgres";
 
+function resolvePoolOptions(databaseUrl: string): { connectionString: string; ssl?: { rejectUnauthorized: false } } {
+  const isLocalHost =
+    databaseUrl.includes("127.0.0.1") || databaseUrl.includes("localhost");
+  if (isLocalHost) {
+    return { connectionString: databaseUrl };
+  }
+
+  // Supabase/cloud URLs often include sslmode=require, which pg v8 treats as verify-full
+  // and conflicts with managed Postgres certificates. Force encrypted but non-verifying SSL.
+  const connectionString = databaseUrl.replace(/([?&])sslmode=[^&]*&?/g, (_, prefix) =>
+    prefix === "?" ? "?" : prefix,
+  ).replace(/[?&]$/, "");
+  return { connectionString, ssl: { rejectUnauthorized: false } };
+}
+
 export function resolveDatabaseUrl(env: NodeJS.ProcessEnv = process.env): string {
   return env.GATEWAY_DATABASE_URL ?? env.DATABASE_URL ?? DEV_DEFAULT_URL;
 }
 
 export async function createDatabasePool(databaseUrl: string): Promise<DatabasePoolLike> {
   const { default: pg } = await import("pg");
-  const pool = new pg.Pool({ connectionString: databaseUrl, max: 5 });
+  const pool = new pg.Pool({ max: 5, ...resolvePoolOptions(databaseUrl) });
   return {
     async query<T extends Record<string, unknown> = Record<string, unknown>>(
       sql: string,
