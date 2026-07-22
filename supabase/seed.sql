@@ -138,7 +138,9 @@ WHERE p.code IN (
   'message.view',
   'message.send',
   'message.bulk_send',
-  'audit.view'
+  'audit.view',
+  'pilot.view',
+  'pilot.manage'
 )
 ON CONFLICT (role_id, permission_id) DO NOTHING;
 

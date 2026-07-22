@@ -11,7 +11,7 @@
 | Milestone 7 — Finance | Phase 46 | Approved | 2026-07-22 | approve milestone and continue to next milestone | Fee statements, collections, allocations, refunds, aging and reconciliation |
 | Milestone 8 — Communications & Printing | Phase 50 | Approved | 2026-07-22 | approve milestone and continue to next milestone | Recalls, Pabbly messaging adapter, automations and extended printing |
 | Milestone 9 — Rohini Readiness | Phase 53 | Approved | 2026-07-22 | approve milestone and create commit | Backup/restore drills, migration dry run, readiness drills and synthetic UAT |
-| Milestone 10 — Pilot Acceptance | Phase 55 | Ready to start | — | — | Final pilot acceptance and handover |
+| Milestone 10 — Pilot Acceptance | Phase 55 | Ready for review | — | — | Go-live checklist, reconciliation, acceptance, handover and Shalimar expansion plan |
 
 Only the exact phrase `APPROVE MILESTONE` authorizes continuation past a milestone endpoint.
 

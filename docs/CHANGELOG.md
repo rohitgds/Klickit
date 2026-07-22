@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+### Milestone 10 foundation — 2026-07-22
+- Phases 54–55: pilot release candidate, go-live checklist, production approval gate, daily reconciliation, acceptance records, unresolved issues, rollback and Shalimar expansion plan
+- `@klickit/pilot` package with checklist evaluation, production gate, reconciliation and handover helpers
+- Pilot PostgreSQL migrations and gateway milestone 10 routes
+- Rohini go-live and rollback runbooks, Shalimar expansion plan and Milestone 10 evidence checklist
+
 ### Milestone 9 approved — 2026-07-22
 - Owner approved Milestone 9 (Rohini Readiness, Phases 51–53)
 - Next work: Phase 54 within Milestone 10 — Pilot acceptance preparation
