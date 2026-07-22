@@ -24,33 +24,33 @@ Track every owner-facing screen. Status codes match `docs/FRONTEND_READINESS_AUD
 
 | Ref | Screen | Route | Status | Backend routes |
 |---|---|---|---|---|
-| UI-DSH-001 | Operational dashboard | `/dashboard` | NS | `/dashboard/operational/daily` |
+| UI-DSH-001 | Operational dashboard | `/dashboard` | OK | `/dashboard/operational/daily` | Summary counts and quick actions; activity rows deferred |
 
 ## Patient Registry
 
 | Ref | Screen | Route | Status | Backend routes |
 |---|---|---|---|---|
-| UI-PAT-001 | Patient search grid | `/patient-registry` | NS | `/patients/search` |
-| UI-PAT-002 | New patient registration | `/patient-registry/register` | NS | `/patients/register` |
-| UI-PAT-003 | Duplicate warning dialog | modal | NS | `/patients/duplicates/review` |
-| UI-PAT-004 | Patient profile | `/patient-registry/:id` | NS | `/patients/:id/profile` |
-| UI-PAT-005 | Safety summary / alerts | profile tab | NS | `/patients/:id/safety-summary` |
+| UI-PAT-001 | Patient search grid | `/patient-registry` | OK | `/patients/search` | Compact grid with paging |
+| UI-PAT-002 | New patient registration | `/patient-registry/register` | OK | `/patients/register` | Identity-first minimal form |
+| UI-PAT-003 | Duplicate warning dialog | modal | OK | `/patients/duplicates/review` | Warn on save; queue after create |
+| UI-PAT-004 | Patient profile | `/patient-registry/:id` | OK | `/patients/:id/profile` | Care overview tab |
+| UI-PAT-005 | Safety summary / alerts | profile tab | OK | `/patients/:id/safety-summary` | Read-only allergies |
 
 ## Scheduler
 
 | Ref | Screen | Route | Status | Backend routes |
 |---|---|---|---|---|
-| UI-SCH-001 | Day/week calendar | `/scheduler` | NS | `/scheduling/views/:viewType` |
-| UI-SCH-002 | Booking editor | modal/split | NS | `/scheduling/bookings` + transitions |
-| UI-SCH-003 | Availability / blackouts | `/scheduler/setup` | NS | `/scheduling/masters`, blackouts |
+| UI-SCH-001 | Day/week calendar | `/scheduler` | OK | `/scheduling/views/:viewType` | Month/week/day/resource table views |
+| UI-SCH-002 | Booking editor | modal | OK | `/scheduling/bookings` + transitions | Create, confirm, cancel, reschedule |
+| UI-SCH-003 | Availability / blackouts | `/scheduler/setup` | OK | `/scheduling/masters`, `/scheduling/blackouts` | Masters list and blackout form |
 
 ## Clinical Queue
 
 | Ref | Screen | Route | Status | Backend routes |
 |---|---|---|---|---|
-| UI-QUE-001 | Queue board | `/clinical-queue` | NS | `/clinical-queue` |
-| UI-QUE-002 | Walk-in admit | modal | NS | `/clinical-queue/unscheduled` |
-| UI-QUE-003 | Check-in / engage / checkout | row actions | NS | queue transition routes |
+| UI-QUE-001 | Queue board | `/clinical-queue` | OK | `/clinical-queue` | Encounters + arrival candidates |
+| UI-QUE-002 | Walk-in admit | modal | OK | `/clinical-queue/unscheduled` | Registered patient admit |
+| UI-QUE-003 | Check-in / engage / checkout | row actions | OK | queue transition routes | Begin care, release, checkout |
 
 ## Clinical records
 

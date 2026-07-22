@@ -24,26 +24,6 @@ export function filterNavItemsByPermission(
 }
 
 export const MODULE_PLACEHOLDERS: Record<string, { title: string; description: string; nextModule: string }> = {
-  "/dashboard": {
-    title: "Dashboard",
-    description: "Operational summary and quick actions will appear here in UI Module 2.",
-    nextModule: "Dashboard",
-  },
-  "/clinical-queue": {
-    title: "Clinical Queue",
-    description: "Arrival, admission, chair flow and checkout will be built in UI Module 5.",
-    nextModule: "Clinical Queue",
-  },
-  "/scheduler": {
-    title: "Scheduler",
-    description: "Calendar booking views will be built in UI Module 4.",
-    nextModule: "Scheduler",
-  },
-  "/patient-registry": {
-    title: "Patient Registry",
-    description: "Search, registration and duplicate warnings will be built in UI Module 3.",
-    nextModule: "Patient Registry",
-  },
   "/financial-operations": {
     title: "Financial Operations",
     description: "Fee statements, collections and allocations will be built in UI Module 9.",

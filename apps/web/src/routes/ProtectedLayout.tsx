@@ -39,7 +39,30 @@ export function ProtectedLayout() {
   }));
 
   const placeholder = MODULE_PLACEHOLDERS[location.pathname];
-  const pageTitle = placeholder?.title ?? "KlickIt";
+  const pageTitle = (() => {
+    if (location.pathname === "/dashboard") {
+      return "Dashboard";
+    }
+    if (location.pathname === "/patient-registry") {
+      return "Patient Registry";
+    }
+    if (location.pathname === "/patient-registry/register") {
+      return "Register Patient";
+    }
+    if (location.pathname.startsWith("/patient-registry/")) {
+      return "Patient Profile";
+    }
+    if (location.pathname === "/scheduler") {
+      return "Scheduler";
+    }
+    if (location.pathname === "/scheduler/setup") {
+      return "Scheduler Setup";
+    }
+    if (location.pathname === "/clinical-queue") {
+      return "Clinical Queue";
+    }
+    return placeholder?.title ?? "KlickIt";
+  })();
 
   return (
     <AppShell

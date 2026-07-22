@@ -6,3 +6,339 @@ code {
   font-family: Consolas, "Courier New", monospace;
   font-size: 12px;
 }
+
+.ki-dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ki-space-3);
+}
+
+.ki-dashboard-toolbar {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--ki-space-2);
+  min-height: var(--ki-toolbar-height);
+  padding-bottom: var(--ki-space-1);
+  border-bottom: 1px solid var(--ki-color-border);
+}
+
+.ki-dashboard-date-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ki-space-1);
+}
+
+.ki-dashboard-date-label {
+  font-size: var(--ki-font-size-sm);
+  font-weight: 600;
+}
+
+.ki-dashboard-date-input {
+  width: 148px;
+}
+
+.ki-dashboard-icon-btn {
+  min-width: var(--ki-icon-button);
+  min-height: var(--ki-icon-button);
+  padding: 0;
+}
+
+.ki-dashboard-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ki-space-2);
+  padding: var(--ki-space-2) 0;
+  border-bottom: 1px solid var(--ki-color-border);
+}
+
+.ki-dashboard-action-btn {
+  text-decoration: none;
+}
+
+.ki-dashboard-section {
+  border: 1px solid var(--ki-color-border);
+  background: var(--ki-color-surface);
+}
+
+.ki-dashboard-section-title {
+  margin: 0;
+  padding: var(--ki-space-2) var(--ki-space-3);
+  font-size: var(--ki-font-size-lg);
+  font-weight: 700;
+  border-bottom: 1px solid var(--ki-color-border);
+  background: #eef2f6;
+}
+
+.ki-dashboard-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--ki-font-size-md);
+}
+
+.ki-dashboard-table th,
+.ki-dashboard-table td {
+  padding: 0 var(--ki-space-3);
+  height: var(--ki-grid-row-height);
+  border-bottom: 1px solid var(--ki-color-border);
+  text-align: left;
+  vertical-align: middle;
+}
+
+.ki-dashboard-table th {
+  font-size: var(--ki-font-size-sm);
+  font-weight: 700;
+  background: #f8fafc;
+}
+
+.ki-dashboard-num-col {
+  width: 96px;
+  text-align: right;
+}
+
+.ki-dashboard-index-col {
+  width: 42px;
+  text-align: right;
+}
+
+.ki-dashboard-time-col {
+  width: 82px;
+}
+
+.ki-dashboard-clinician-col {
+  width: 140px;
+}
+
+.ki-dashboard-status-col {
+  width: 120px;
+}
+
+.ki-dashboard-grid-empty {
+  color: var(--ki-color-text-muted);
+  font-size: var(--ki-font-size-sm);
+  height: calc(var(--ki-grid-row-height) * 2);
+}
+
+.ki-dashboard-note {
+  margin: 0;
+  padding: var(--ki-space-2) var(--ki-space-3);
+  color: var(--ki-color-text-muted);
+  font-size: var(--ki-font-size-sm);
+  border-bottom: 1px solid var(--ki-color-border);
+}
+
+.ki-patient-registry,
+.ki-patient-register,
+.ki-patient-profile {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ki-space-3);
+}
+
+.ki-patient-search-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ki-space-1);
+  flex: 1;
+  min-width: 280px;
+}
+
+.ki-patient-table .ki-patient-id-col {
+  width: 104px;
+}
+
+.ki-patient-mobile-col {
+  width: 120px;
+}
+
+.ki-patient-status-col {
+  width: 88px;
+}
+
+.ki-patient-actions-col {
+  width: 92px;
+}
+
+.ki-patient-pager {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ki-space-2);
+  padding: var(--ki-space-2) var(--ki-space-3);
+  border-top: 1px solid var(--ki-color-border);
+  font-size: var(--ki-font-size-sm);
+}
+
+.ki-patient-form-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--ki-space-3);
+}
+
+.ki-patient-form-actions {
+  display: flex;
+  gap: var(--ki-space-2);
+  padding-top: var(--ki-space-2);
+}
+
+.ki-patient-duplicate-banner {
+  border: 1px solid var(--ki-color-warning);
+  background: var(--ki-color-warning-bg);
+  color: var(--ki-color-warning);
+  padding: var(--ki-space-2) var(--ki-space-3);
+  border-radius: var(--ki-radius-sm);
+  font-size: var(--ki-font-size-sm);
+}
+
+.ki-patient-profile-header {
+  border: 1px solid var(--ki-color-border);
+  background: var(--ki-color-surface);
+  padding: var(--ki-space-3);
+}
+
+.ki-patient-profile-name {
+  margin: 0 0 var(--ki-space-1);
+  font-size: 18px;
+}
+
+.ki-patient-tabs {
+  display: flex;
+  gap: var(--ki-space-2);
+}
+
+.ki-tab-active {
+  border-color: var(--ki-color-primary);
+  color: var(--ki-color-primary);
+  font-weight: 700;
+}
+
+.ki-patient-alert-list {
+  margin: 0;
+  padding: var(--ki-space-3) var(--ki-space-4);
+}
+
+.ki-muted-text {
+  color: var(--ki-color-text-muted);
+  font-size: var(--ki-font-size-sm);
+}
+
+.ki-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--ki-space-4);
+  z-index: 1000;
+}
+
+.ki-modal {
+  width: min(920px, 100%);
+  max-height: 90vh;
+  overflow: auto;
+  background: var(--ki-color-surface);
+  border: 1px solid var(--ki-color-border);
+  border-radius: var(--ki-radius-sm);
+  padding: var(--ki-space-4);
+}
+
+.ki-modal-title {
+  margin: 0 0 var(--ki-space-2);
+  font-size: 18px;
+}
+
+.ki-modal-text {
+  margin: 0 0 var(--ki-space-3);
+  color: var(--ki-color-text-muted);
+}
+
+.ki-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--ki-space-2);
+  margin-top: var(--ki-space-3);
+}
+
+.ki-scheduler,
+.ki-scheduler-setup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ki-space-3);
+}
+
+.ki-scheduler-view-switch {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ki-space-1);
+}
+
+.ki-scheduler-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ki-space-3);
+}
+
+.ki-scheduler-filter {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ki-space-1);
+  min-width: 180px;
+}
+
+.ki-scheduler-day-group + .ki-scheduler-day-group {
+  border-top: 1px solid var(--ki-color-border);
+}
+
+.ki-scheduler-day-title {
+  margin: 0;
+  padding: var(--ki-space-2) var(--ki-space-3);
+  font-size: var(--ki-font-size-lg);
+  background: #eef2f6;
+  border-bottom: 1px solid var(--ki-color-border);
+}
+
+.ki-booking-editor {
+  width: min(960px, 100%);
+}
+
+.ki-booking-mode-row {
+  grid-template-columns: 1fr;
+}
+
+.ki-booking-patient-search {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ki-space-2);
+}
+
+.ki-booking-patient-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ki-space-2);
+}
+
+.ki-available-ok {
+  color: var(--ki-color-success);
+}
+
+.ki-available-blocked {
+  color: var(--ki-color-warning);
+}
+
+.ki-clinical-queue {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ki-space-3);
+}
+
+.ki-queue-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ki-space-1);
+}
+
+@media (max-width: 900px) {
+  .ki-patient-form-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

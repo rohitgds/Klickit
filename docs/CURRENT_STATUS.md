@@ -10,8 +10,8 @@
 - Milestone approval: All 10 milestones approved; 55-phase master plan complete
 - Last successful commit: Milestone 10 pilot acceptance (`6ea0da2`)
 - Last passing test run: Phase 55 — 120 automated tests passed 2026-07-22
-- Current blocker: None for UI Module 1 — owner approved 2026-07-22
-- Next action: Build UI Module 2 — Dashboard (operational daily summary wired to gateway)
+- Current blocker: UI Module 5 ready for owner review — see `docs/UI_MODULE_05_OWNER_TEST_GUIDE.md`
+- Next action: Owner tests Module 5; reply `APPROVE UI MODULE` to start Module 6 (Clinical Records)
 
 ## Recent results
 
@@ -29,10 +29,16 @@
 - Owner approved Rohini Readiness milestone and authorized Phase 54 work
 - Milestone 9 committed through Phase 53
 
+### UI Module 3 approved — 2026-07-22
+- Owner approved Patient Registry; UI Modules 2–3 may be uncommitted locally
+
+### UI Module 4 approved — 2026-07-22
+- Owner approved Scheduler; UI Modules 3–4 may be uncommitted locally
+
 ## Owner actions still open
 
-1. Push approved milestones to GitHub when ready (Milestones 7–10 and UI Module 1 may be uncommitted locally).
-2. Continue frontend work: UI Module 2 — Dashboard (authorized after UI Module 1 approval).
+1. Push to GitHub when ready — UI Modules 3–5 may still be uncommitted locally.
+2. Start UI Module 6 — Clinical Records after Module 5 approval.
 3. Optional: complete remaining manual checks in `docs/MILESTONE10_EVIDENCE.md` if not already done.
 
 ## Session handoff

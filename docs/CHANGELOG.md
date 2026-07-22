@@ -6,6 +6,34 @@
 - Owner approved Pilot Acceptance milestone (Phases 54–55)
 - 55-phase master plan complete; remaining work is frontend UI modules and pilot go-live preparation
 
+### UI Module 5 foundation — 2026-07-22
+- Clinical queue board, walk-in admit, booking check-in and encounter transitions wired to gateway
+- Owner test guide `docs/UI_MODULE_05_OWNER_TEST_GUIDE.md`
+
+### UI Module 4 approved — 2026-07-22
+- Owner approved Scheduler after manual review
+- Next UI work: Module 5 — Clinical Queue
+
+### UI Module 4 foundation — 2026-07-22
+- Scheduler views, booking editor, setup/blackouts wired to gateway scheduling APIs
+- Owner test guide `docs/UI_MODULE_04_OWNER_TEST_GUIDE.md`
+
+### UI Module 3 approved — 2026-07-22
+- Owner approved Patient Registry after manual review
+- Next UI work: Module 4 — Scheduler
+
+### UI Module 2 approved — 2026-07-22
+- Owner approved Dashboard after manual review
+
+### UI Module 3 foundation — 2026-07-22
+- Patient registry search, registration, duplicate dialog, profile and safety summary wired to gateway
+- Owner test guide `docs/UI_MODULE_03_OWNER_TEST_GUIDE.md`
+
+### UI Module 2 foundation — 2026-07-22
+- Operational dashboard wired to `GET /dashboard/operational/daily`
+- Compact summary counts, date picker, refresh and permission-filtered quick actions
+- Owner test guide `docs/UI_MODULE_02_OWNER_TEST_GUIDE.md`
+
 ### UI Module 1 approved — 2026-07-22
 - Owner approved Login and Application Shell after manual review
 - Next UI work: Module 2 — Dashboard
