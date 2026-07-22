@@ -21,6 +21,8 @@
     "@klickit/plans-prescriptions": "0.0.0",
     "@klickit/finance": "0.0.0",
     "@klickit/comms": "0.0.0",
+    "@klickit/resilience": "0.0.0",
+    "@klickit/test-fixtures": "0.0.0",
     "@klickit/sync-contracts": "0.0.0",
     "fastify": "^5.5.0",
     "pg": "^8.16.3"

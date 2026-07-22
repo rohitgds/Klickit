@@ -2,6 +2,21 @@
 
 ## Unreleased
 
+### Milestone 9 approved — 2026-07-22
+- Owner approved Milestone 9 (Rohini Readiness, Phases 51–53)
+- Next work: Phase 54 within Milestone 10 — Pilot acceptance preparation
+
+### Milestone 9 foundation — 2026-07-22
+- Phases 51–53: backup and restore drill tracking, gateway incidents, readiness drills, migration batch accept/apply/report, synthetic DrKlick fixtures and portability guards
+- `@klickit/resilience` and `@klickit/test-fixtures` packages
+- Resilience PostgreSQL migration for backup runs, restore drills, gateway incidents and readiness drill runs
+- Gateway milestone 9 routes, recovery runbooks, local installer preview scripts and synthetic staff UAT scripts
+- Milestone 9 evidence checklist
+
+### Milestone 8 approved — 2026-07-22
+- Owner approved Milestone 8 (Communications & Printing, Phases 47–50)
+- Next work: Phase 51 — Gateway installer and recovery drill
+
 ### Milestone 8 foundation — 2026-07-22
 - Phases 47–50: continuity policies and tasks, messaging templates and preferences, outbound queue with Pabbly stub adapter, webhook deduplication, ten WhatsApp automations and extended print templates
 - `@klickit/comms` package with due-date math, consent validation, automation registry and print type helpers

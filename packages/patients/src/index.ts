@@ -96,7 +96,10 @@ export interface DrKlickStagingRow {
   firstName: string;
   lastName?: string;
   mobile?: string;
+  email?: string;
   birthDate?: string;
+  addressLine1?: string;
+  categoryCode?: string;
   clinicCode?: string;
 }
 
@@ -107,6 +110,12 @@ export function validateDrKlickStagingRow(row: DrKlickStagingRow): { valid: bool
   }
   if (row.mobile && normalizePhone(row.mobile) === null) {
     errors.push("mobile must contain at least 10 digits");
+  }
+  if (row.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(row.email)) {
+    errors.push("email must be valid");
+  }
+  if (row.birthDate && Number.isNaN(Date.parse(row.birthDate))) {
+    errors.push("birthDate must be a valid date");
   }
   return { valid: errors.length === 0, errors };
 }

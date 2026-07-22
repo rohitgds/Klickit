@@ -1,4 +1,5 @@
 export interface GatewayConfig {
+  appEnv: string;
   host: string;
   port: number;
   clinicCode: string;
@@ -15,6 +16,7 @@ export interface GatewayConfig {
 export function loadGatewayConfig(env: NodeJS.ProcessEnv = process.env): GatewayConfig {
   const appEnv = env.APP_ENV ?? "local";
   return {
+    appEnv,
     host: env.GATEWAY_HOST ?? "127.0.0.1",
     port: Number(env.GATEWAY_PORT ?? 8787),
     clinicCode: env.KLICKIT_CLINIC_CODE ?? "DEV",

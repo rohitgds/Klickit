@@ -2,34 +2,38 @@
 
 - Project: KlickIt
 - Total phases: 55
-- Current phase: 50 complete — Thermal, labels, appointment and CGHS/corporate printing
-- Completed phases: 50
-- Phase-count progress: 50/55 (91%)
-- Weighted project progress: 91%
-- Current milestone: Milestone 8 — Communications & Printing (ready for manual review)
-- Milestone approval: Milestone 7 approved 2026-07-22; Milestone 8 pending owner review
-- Last successful commit: Milestone 7 finance integration and approval (`ae15732`)
-- Last passing test run: Phase 50 — 103 automated tests passed 2026-07-22
+- Current phase: 53 complete — Staging, security, portability, performance and 72-hour drills
+- Completed phases: 53
+- Phase-count progress: 53/55 (96%)
+- Weighted project progress: 96%
+- Current milestone: Milestone 10 — Pilot Acceptance (ready to start)
+- Milestone approval: Milestone 9 approved 2026-07-22; Milestone 10 pending owner review
+- Last successful commit: pending Milestone 9 commit in this session
+- Last passing test run: Phase 53 — 112 automated tests passed 2026-07-22
 - Current blocker: None
-- Next action: Manual Milestone 8 review using `docs/MILESTONE8_EVIDENCE.md`
+- Next action: Begin Phase 54 within Milestone 10 after owner confirmation
 
 ## Recent results
 
-### Milestone 8 foundation delivered (Phases 47–50)
-- Continuity and messaging PostgreSQL migrations with contract validation trigger
-- `@klickit/comms` package with due-date math, consent checks, automation registry and print type validation
-- Pabbly stub messaging adapter behind provider interface
-- Gateway continuity, messaging and extended print routes with permission gates
-- Dev seed data for recall policy, WhatsApp templates, automation settings and print layouts
+### Milestone 9 approved
+- Owner approved Rohini Readiness milestone and authorized Phase 54 work
+- Backup/restore drills, migration dry run, readiness drills and synthetic UAT committed through Phase 53
 
-### Milestone 7 approved
-- Owner approved finance milestone and authorized Phase 47 work
-- Finance integration committed through Phase 46
+### Milestone 9 foundation delivered (Phases 51–53)
+- Resilience PostgreSQL migrations for backup runs, restore drills, gateway incidents and readiness drill runs
+- `@klickit/resilience` package with checksum, restore drill, readiness drill and migration report helpers
+- `@klickit/test-fixtures` package with large synthetic DrKlick row generator
+- Gateway resilience, migration batch accept/apply/report and readiness drill routes
+- Local installer and backup/restore preview scripts plus recovery runbooks and synthetic staff UAT scripts
+
+### Milestone 8 approved
+- Owner approved communications milestone and authorized Phase 51 work
+- Milestone 8 committed through Phase 50
 
 ## Owner actions still open
 
-1. Run manual checklist in `docs/MILESTONE8_EVIDENCE.md`.
-2. Reply exactly `APPROVE MILESTONE` when satisfied to continue to Phase 51.
+1. Confirm when to start Phase 54 within Milestone 10.
+2. Push approved milestones to GitHub when ready.
 
 ## Session handoff
 

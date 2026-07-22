@@ -9,9 +9,9 @@
 | Milestone 5 — Clinical & Files | Phase 34 | Approved | 2026-07-22 | approve milestone 5 and push to github | Encounter workspace, FDI records, notes, files and clinical permissions |
 | Milestone 6 — Plans & Prescriptions | Phase 39 | Approved | 2026-07-22 | approve milestone and create a commit | Treatment plans, prescriptions, signing and printing |
 | Milestone 7 — Finance | Phase 46 | Approved | 2026-07-22 | approve milestone and continue to next milestone | Fee statements, collections, allocations, refunds, aging and reconciliation |
-| Milestone 8 — Communications & Printing | Phase 50 | Ready for review | — | — | Recalls, Pabbly messaging adapter, automations and extended printing |
-| Milestone 9 — Rohini Readiness | Phase 53 | Not started | — | — | |
-| Milestone 10 — Pilot Acceptance | Phase 55 | Not started | — | — | |
+| Milestone 8 — Communications & Printing | Phase 50 | Approved | 2026-07-22 | approve milestone and continue to next milestone | Recalls, Pabbly messaging adapter, automations and extended printing |
+| Milestone 9 — Rohini Readiness | Phase 53 | Approved | 2026-07-22 | approve milestone and create commit | Backup/restore drills, migration dry run, readiness drills and synthetic UAT |
+| Milestone 10 — Pilot Acceptance | Phase 55 | Ready to start | — | — | Final pilot acceptance and handover |
 
 Only the exact phrase `APPROVE MILESTONE` authorizes continuation past a milestone endpoint.
 

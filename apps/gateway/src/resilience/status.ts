@@ -45,7 +45,7 @@ export function buildBackupManifest(config: GatewayConfig, runtime: GatewayRunti
     gatewayId: runtime.bootstrap?.gateway.id ?? null,
     createdAt: new Date().toISOString(),
     databaseUrlConfigured: Boolean(config.databaseUrl),
-    note: "Foundation manifest only. Encrypted backup execution is deferred to pilot readiness phases.",
+    note: "Manifest records last backup run when available through Milestone 9 resilience APIs.",
   };
 }
 

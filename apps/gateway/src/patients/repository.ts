@@ -268,6 +268,10 @@ export async function stageImportRows(
           firstName: row.firstName,
           lastName: row.lastName ?? null,
           mobile: normalizePhone(row.mobile),
+          email: row.email ?? null,
+          birthDate: row.birthDate ?? null,
+          addressLine1: row.addressLine1 ?? null,
+          categoryCode: row.categoryCode ?? null,
         }),
         validation.valid ? "valid" : "invalid",
         validation.valid ? null : JSON.stringify(validation.errors),
@@ -288,6 +292,112 @@ export async function stageImportRows(
     [input.batchId, input.rows.length, valid, invalid],
   );
   return { valid, invalid, total: input.rows.length };
+}
+
+export async function getImportBatchReport(pool: DatabasePoolLike, batchId: string) {
+  const batch = await pool.query<Record<string, unknown>>(
+    `SELECT * FROM dentos_runtime.drklick_import_batches WHERE id = $1`,
+    [batchId],
+  );
+  if (!batch.rows[0]) {
+    throw new Error("Import batch not found");
+  }
+  const invalidSamples = await pool.query(
+    `
+      SELECT source_row_number, validation_errors
+      FROM dentos_runtime.drklick_import_rows
+      WHERE batch_id = $1 AND validation_status = 'invalid'
+      ORDER BY source_row_number
+      LIMIT 10
+    `,
+    [batchId],
+  );
+  return { batch: batch.rows[0], invalidSamples: invalidSamples.rows };
+}
+
+export async function acceptImportBatch(
+  pool: DatabasePoolLike,
+  input: { batchId: string; actorUserId: string },
+) {
+  const batch = await pool.query<{ status: string }>(
+    `SELECT status FROM dentos_runtime.drklick_import_batches WHERE id = $1`,
+    [input.batchId],
+  );
+  if (!batch.rows[0] || batch.rows[0].status !== "validated") {
+    throw new Error("Only validated import batches can be accepted");
+  }
+  await pool.query(
+    `
+      UPDATE dentos_runtime.drklick_import_batches
+      SET status = 'accepted', validated_by = $2, validated_at = clock_timestamp()
+      WHERE id = $1
+    `,
+    [input.batchId, input.actorUserId],
+  );
+  return { id: input.batchId, status: "accepted" };
+}
+
+export async function applyImportBatch(
+  pool: DatabasePoolLike,
+  input: { batchId: string; organizationId: string; clinicId: string; actorUserId: string },
+) {
+  const batch = await pool.query<{ status: string }>(
+    `SELECT status FROM dentos_runtime.drklick_import_batches WHERE id = $1`,
+    [input.batchId],
+  );
+  if (!batch.rows[0] || batch.rows[0].status !== "accepted") {
+    throw new Error("Only accepted import batches can be applied");
+  }
+  const masters = await getDevPatientMasters(pool, input.organizationId, input.clinicId);
+  if (!masters.initialsId || !masters.categoryId || !masters.referralSourceId || !masters.feeScheduleId || !masters.documentSeriesId) {
+    throw new Error("Patient masters are not configured for import apply");
+  }
+  const rows = await pool.query<{
+    id: string;
+    normalized_json: Record<string, string | null>;
+  }>(
+    `
+      SELECT id, normalized_json
+      FROM dentos_runtime.drklick_import_rows
+      WHERE batch_id = $1 AND validation_status = 'valid' AND mapped_patient_id IS NULL
+      ORDER BY source_row_number
+    `,
+    [input.batchId],
+  );
+  let imported = 0;
+  for (const row of rows.rows) {
+    const normalized = row.normalized_json;
+    const created = await registerPatient(pool, {
+      organizationId: input.organizationId,
+      clinicId: input.clinicId,
+      firstName: normalized.firstName ?? "Synthetic",
+      lastName: normalized.lastName ?? undefined,
+      cellPhone: normalized.mobile ?? undefined,
+      birthDate: normalized.birthDate ?? undefined,
+      createdBy: input.actorUserId,
+      masters: {
+        initialsId: masters.initialsId,
+        categoryId: masters.categoryId,
+        referralSourceId: masters.referralSourceId,
+        feeScheduleId: masters.feeScheduleId,
+        documentSeriesId: masters.documentSeriesId,
+      },
+    });
+    await pool.query(
+      `UPDATE dentos_runtime.drklick_import_rows SET mapped_patient_id = $2 WHERE id = $1`,
+      [row.id, created.id],
+    );
+    imported += 1;
+  }
+  await pool.query(
+    `
+      UPDATE dentos_runtime.drklick_import_batches
+      SET status = 'applied', applied_at = clock_timestamp(), applied_by = $2
+      WHERE id = $1
+    `,
+    [input.batchId, input.actorUserId],
+  );
+  return { id: input.batchId, status: "applied", importedCount: imported };
 }
 
 export async function getDevPatientMasters(pool: DatabasePoolLike, organizationId: string, clinicId: string) {

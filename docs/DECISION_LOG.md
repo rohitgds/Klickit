@@ -32,3 +32,6 @@ Record only accepted decisions. Do not place secrets here.
 | DEC-025 | 2026-07-22 | Milestone 7 foundation delivered through Phase 46 with finance masters, fee statements, collections, allocations, refunds, aging and reconciliation APIs | Finance milestone endpoint ready for manual review | Phases 40–46, Milestone 7 | Agent |
 | DEC-026 | 2026-07-22 | Milestone 7 approved after owner review | Authorizes Phase 47 within Milestone 8 | Milestone 7 | User |
 | DEC-027 | 2026-07-22 | Milestone 8 foundation delivered through Phase 50 with recall rules, Pabbly messaging adapter, ten automation route types and extended print workflows | Communications & Printing milestone endpoint ready for manual review | Phases 47–50, Milestone 8 | Agent |
+| DEC-028 | 2026-07-22 | Milestone 8 approved after owner review | Authorizes Phase 51 within Milestone 9 | Milestone 8 | User |
+| DEC-029 | 2026-07-22 | Milestone 9 foundation delivered through Phase 53 with backup/restore drills, migration dry run, readiness drills, synthetic fixtures and portability guards | Rohini Readiness milestone endpoint ready for manual review | Phases 51–53, Milestone 9 | Agent |
+| DEC-030 | 2026-07-22 | Milestone 9 approved after owner review | Authorizes Phase 54 within Milestone 10 | Milestone 9 | User |
