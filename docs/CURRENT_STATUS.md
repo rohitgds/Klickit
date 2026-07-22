@@ -2,33 +2,33 @@
 
 - Project: KlickIt
 - Total phases: 55
-- Current phase: 39 complete — Plan, prescription and consent printing
-- Completed phases: 39
-- Phase-count progress: 39/55 (71%)
-- Weighted project progress: 67%
-- Current milestone: Milestone 6 — Plans & Prescriptions (approved)
-- Milestone approval: Milestone 6 approved 2026-07-22
-- Last successful commit: Milestone 6 integration and approval on `main`
-- Last passing test run: Phase 39 — 76 automated tests passed 2026-07-22
+- Current phase: 46 complete — Financial documents, reconciliation and UAT
+- Completed phases: 46
+- Phase-count progress: 46/55 (84%)
+- Weighted project progress: 84%
+- Current milestone: Milestone 7 — Finance (ready for manual review)
+- Milestone approval: Milestone 6 approved 2026-07-22; Milestone 7 pending owner review
+- Last successful commit: CI typecheck fix on `main` (`b033174`)
+- Last passing test run: Phase 46 — 91 automated tests passed 2026-07-22
 - Current blocker: None
-- Next action: Phase 40 — Financial masters, fees, taxes and discount controls
+- Next action: Manual Milestone 7 review using `docs/MILESTONE7_EVIDENCE.md`
 
 ## Recent results
+
+### Milestone 7 foundation delivered (Phases 40–46)
+- Finance PostgreSQL migrations for fee statements, collections, allocations, refunds and journals
+- `@klickit/finance` package with GST line math, discount ceilings, allocation/refund validation, aging and cent reconciliation
+- Gateway finance repository and `/finance/*` routes with permission gates
+- Dev seed data for tax codes, collection methods, fee schedule items and ledger accounts
 
 ### Milestone 6 approved
 - Owner approved treatment plans, prescriptions, signing and printing milestone
 - Work committed locally through Phase 39
 
-### Phases 35–39
-- Care plans with phases, service lines and primary/secondary/tertiary treatment bundles
-- Plan proposal, acceptance records with staff/OTP/signature methods
-- Medication catalog search, allergy safety evaluation and protocol-ready masters
-- Medication order save/sign with doctor PIN, SHA-256 signature hash and immutable revisions
-- Document print templates via clinic settings and versioned print snapshots
-
 ## Owner actions still open
 
-1. Reply when ready to continue with Phase 40.
+1. Run manual checklist in `docs/MILESTONE7_EVIDENCE.md`.
+2. Reply exactly `APPROVE MILESTONE` when satisfied to continue to Phase 47.
 
 ## Session handoff
 

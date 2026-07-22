@@ -221,6 +221,42 @@ const planPrescriptionReferenceTables = [
   ...planPrescriptionTables,
   "staff",
 ];
+
+const financeMasterTables = [
+  "tax_codes",
+  "collection_methods",
+  "fee_schedule_items",
+  "fee_statement_categories",
+  "ledger_accounts",
+];
+const financeCoreTables = [
+  "fee_statements",
+  "fee_statement_lines",
+  "collection_receipts",
+  "collection_tenders",
+  "fee_allocations",
+  "allocation_tender_splits",
+  "allocation_fee_line_splits",
+  "clinician_value_allocations",
+];
+const financeAdjustmentTables = [
+  "fee_credits",
+  "fee_credit_allocations",
+  "fee_credit_line_splits",
+  "fee_reliefs",
+  "fee_relief_line_splits",
+  "collection_refunds",
+  "collection_refund_tenders",
+  "legacy_balance_documents",
+];
+const financeLedgerTables = ["journal_entries", "journal_lines"];
+const financeTables = [
+  ...financeMasterTables,
+  ...financeCoreTables,
+  ...financeAdjustmentTables,
+  ...financeLedgerTables,
+];
+const financeReferenceTables = [...planPrescriptionReferenceTables, ...financeTables, "fee_schedules"];
 const indexBlock = blocks.find((block) => block.includes("ix_patients_scope_lookup")) ?? "";
 
 mkdirSync(outputDir, { recursive: true });
@@ -323,6 +359,22 @@ const migrations = [
     file: "20260722133000_plan_prescription_indexes.sql",
     body: `-- Generated from Blueprint 01 — plan and prescription indexes\n\nSET search_path = dentos_data, dentos_runtime, public;\n\n${extractIndexLines(indexBlock, planPrescriptionTables)}\n`,
   },
+  {
+    file: "20260722140000_finance_tables.sql",
+    body: `-- Generated from Blueprint 01 — financial operations foundation (Milestone 7)\n\nSET search_path = dentos_data, dentos_runtime, public;\n\n${extractTables(tableBlock, financeTables)}\n`,
+  },
+  {
+    file: "20260722141000_finance_foreign_keys.sql",
+    body: `-- Generated from Blueprint 01 — finance foreign keys\n\nSET search_path = dentos_data, dentos_runtime, public;\n\n${extractAlterLines(fkBlock, financeTables, financeReferenceTables)}\n`,
+  },
+  {
+    file: "20260722142000_finance_triggers.sql",
+    body: `-- Generated from Blueprint 01 — finance audit triggers\n\nSET search_path = dentos_data, dentos_runtime, public;\n\n${extractTriggerLines(triggerBlock, financeTables)}\n`,
+  },
+  {
+    file: "20260722143000_finance_indexes.sql",
+    body: `-- Generated from Blueprint 01 — finance indexes\n\nSET search_path = dentos_data, dentos_runtime, public;\n\n${extractIndexLines(indexBlock, financeTables)}\n`,
+  },
 ];
 
 for (const migration of migrations) {
@@ -339,4 +391,5 @@ console.log(`Patient tables extracted: ${patientTables.filter((name) => extractT
 console.log(`Scheduling tables extracted: ${schedulingTables.filter((name) => extractTableDDL(tableBlock, name)).length}/${schedulingTables.length}`);
 console.log(`Clinical tables extracted: ${clinicalTables.filter((name) => extractTableDDL(tableBlock, name)).length}/${clinicalTables.length}`);
 console.log(`Plan/prescription tables extracted: ${planPrescriptionTables.filter((name) => extractTableDDL(tableBlock, name)).length}/${planPrescriptionTables.length}`);
+console.log(`Finance tables extracted: ${financeTables.filter((name) => extractTableDDL(tableBlock, name)).length}/${financeTables.length}`);
 console.log(`Permission seed bytes: ${permissionSeedBlock.length}`);

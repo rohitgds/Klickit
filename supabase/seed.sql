@@ -124,7 +124,17 @@ WHERE p.code IN (
   'medication_order.edit_draft',
   'medication_order.sign',
   'medication_order.void',
+  'fee_statement.view',
+  'fee_statement.create',
+  'fee_statement.edit_draft',
+  'fee_statement.issue',
+  'fee_statement.discount',
   'fee_statement.print',
+  'collection.view',
+  'collection.create',
+  'fee_allocation.create',
+  'collection.refund',
+  'analytics.financial.view',
   'audit.view'
 )
 ON CONFLICT (role_id, permission_id) DO NOTHING;
@@ -452,6 +462,98 @@ VALUES (
   clock_timestamp(),
   clock_timestamp()
 )
+ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO dentos_data.tax_codes (
+  id, organization_id, code, cgst_rate, sgst_rate, igst_rate, active, created_at, updated_at
+)
+VALUES (
+  '888888b1-8888-48b1-88b1-8888888888b1',
+  '11111111-1111-4111-8111-111111111111',
+  'GST18',
+  9,
+  9,
+  0,
+  true,
+  clock_timestamp(),
+  clock_timestamp()
+)
+ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO dentos_data.collection_methods (
+  id, organization_id, code, name, requires_reference, active, created_at, updated_at
+)
+VALUES
+  (
+    '888888b2-8888-48b2-88b2-8888888888b2',
+    '11111111-1111-4111-8111-111111111111',
+    'CASH',
+    'Cash',
+    false,
+    true,
+    clock_timestamp(),
+    clock_timestamp()
+  ),
+  (
+    '888888b3-8888-48b3-88b3-8888888888b3',
+    '11111111-1111-4111-8111-111111111111',
+    'UPI',
+    'UPI',
+    true,
+    true,
+    clock_timestamp(),
+    clock_timestamp()
+  )
+ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO dentos_data.fee_schedule_items (
+  id, fee_schedule_id, service_id, fee, tax_code_id, created_at, updated_at
+)
+VALUES (
+  '888888b4-8888-48b4-88b4-8888888888b4',
+  '88888884-8888-4888-8888-888888888884',
+  '88888897-8888-4897-8897-888888888897',
+  2500,
+  '888888b1-8888-48b1-88b1-8888888888b1',
+  clock_timestamp(),
+  clock_timestamp()
+)
+ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO dentos_data.ledger_accounts (
+  id, organization_id, code, name, account_type, active, created_at, updated_at
+)
+VALUES
+  (
+    '888888b5-8888-48b5-88b5-8888888888b5',
+    '11111111-1111-4111-8111-111111111111',
+    '1100',
+    'Accounts Receivable',
+    'asset',
+    true,
+    clock_timestamp(),
+    clock_timestamp()
+  ),
+  (
+    '888888b6-8888-48b6-88b6-8888888888b6',
+    '11111111-1111-4111-8111-111111111111',
+    '1000',
+    'Cash',
+    'asset',
+    true,
+    clock_timestamp(),
+    clock_timestamp()
+  ),
+  (
+    '888888b7-8888-48b7-88b7-8888888888b7',
+    '11111111-1111-4111-8111-111111111111',
+    '4000',
+    'Clinical Revenue',
+    'revenue',
+    true,
+    clock_timestamp(),
+    clock_timestamp()
+  )
 ON CONFLICT (id) DO NOTHING;
 
 INSERT INTO dentos_data.clinic_settings (

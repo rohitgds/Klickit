@@ -29,3 +29,5 @@ Record only accepted decisions. Do not place secrets here.
 | DEC-022 | 2026-07-22 | Milestone 5 approved after owner review | Authorizes Phase 35 within Milestone 6 | Milestone 5 | User |
 | DEC-023 | 2026-07-22 | Milestone 6 foundation delivered through Phase 39 with care plans, acceptance, medication safety, signed orders and print snapshots | Plans & Prescriptions milestone endpoint ready for manual review | Phases 35–39, Milestone 6 | Agent |
 | DEC-024 | 2026-07-22 | Milestone 6 approved after owner review | Authorizes Phase 40 within Milestone 7 | Milestone 6 | User |
+| DEC-025 | 2026-07-22 | Milestone 7 foundation delivered through Phase 46 with finance masters, fee statements, collections, allocations, refunds, aging and reconciliation APIs | Finance milestone endpoint ready for manual review | Phases 40–46, Milestone 7 | Agent |
+| DEC-026 | 2026-07-22 | Milestone 7 approved after owner review | Authorizes Phase 47 within Milestone 8 | Milestone 7 | User |

@@ -2,6 +2,17 @@
 
 ## Unreleased
 
+### Milestone 7 approved — 2026-07-22
+- Owner approved Milestone 7 (Finance, Phases 40–46)
+- Next work: Phase 47 — Recall and follow-up rules
+
+### Milestone 7 foundation — 2026-07-22
+- Phases 40–46: finance masters, fee statement lifecycle, split-tender collections, allocations, refunds, journal posting, aging, opening balances and cent-level reconciliation
+- `@klickit/finance` package with GST totals, discount ceilings, allocation/refund validation, aging buckets and reconciliation helpers
+- Finance PostgreSQL migrations compiled from Blueprint 01 (23 tables)
+- Gateway finance repository and `/finance/*` routes with permission gates
+- Milestone 7 evidence checklist
+
 ### Milestone 6 approved — 2026-07-22
 - Owner approved Milestone 6 (Plans & Prescriptions, Phases 35–39)
 - Next work: Phase 40 — Financial masters and fee controls
