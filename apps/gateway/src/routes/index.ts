@@ -22,6 +22,7 @@ import { buildBackupManifest, buildClinicConfigResponse, buildUpdaterStatus, typ
 import {
   applyPushBatchLocally,
   evaluateOfflineWritePolicy,
+  getSyncStatusSummary,
   markGatewayReadOnly,
   pullBatchLocally,
   recordSuccessfulCloudSync,
@@ -144,8 +145,13 @@ export async function registerGatewayRoutes(app: FastifyInstance, deps: GatewayD
 
   app.get("/sync/outbox/pending", async () => {
     const ctx = syncContext(deps);
-    const events = await selectPendingOutboxEvents(ctx);
-    return { events, count: events.length };
+    const [events, summary] = await Promise.all([selectPendingOutboxEvents(ctx), getSyncStatusSummary(ctx)]);
+    return { events, count: events.length, summary };
+  });
+
+  app.get("/sync/status", async () => {
+    const ctx = syncContext(deps);
+    return getSyncStatusSummary(ctx);
   });
 
   app.post<{ Body: PushBatchRequest }>("/sync/push", async (request, reply) => {

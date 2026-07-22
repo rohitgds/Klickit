@@ -306,7 +306,20 @@ export async function createCollectionReceipt(
       [crypto.randomUUID(), id, tender.collectionMethodId, tender.amount, tender.referenceNo ?? null, input.actorUserId],
     );
   }
-  return { id, grossCollected, unappliedTotal: grossCollected };
+  const tenderRows = await ctx.pool.query<{ id: string; collection_method_id: string; amount: string }>(
+    `SELECT id, collection_method_id, amount FROM dentos_data.collection_tenders WHERE collection_receipt_id = $1 ORDER BY amount DESC`,
+    [id],
+  );
+  return {
+    id,
+    grossCollected,
+    unappliedTotal: grossCollected,
+    tenders: tenderRows.rows.map((row) => ({
+      id: row.id,
+      collectionMethodId: row.collection_method_id,
+      amount: Number(row.amount),
+    })),
+  };
 }
 
 export async function createFeeAllocation(
@@ -426,7 +439,7 @@ export async function createCollectionRefund(
   }
   const refundCheck = validateRefundAmount({
     refundAmount: input.amount,
-    availableOnReceipt: Number(receipt.available_total),
+    availableOnReceipt: Number(receipt.unapplied_total),
   });
   if (!refundCheck.ok) {
     throw new Error(refundCheck.message);

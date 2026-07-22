@@ -1,12 +1,11 @@
 import type { FastifyReply, FastifyRequest } from "fastify";
 import type { AuthSessionContext } from "@klickit/identity";
-import { hashSessionToken } from "@klickit/identity";
+import { hashSessionToken, sanitizeSessionForResponse } from "@klickit/identity";
 import type { GatewayDependencies } from "../routes/index.js";
 import { membershipHasPermission, recordAuthorizationDenial } from "./permissions.js";
 
 export interface RequestSession extends AuthSessionContext {
   sessionId: string;
-  tokenHash: string;
 }
 
 declare module "fastify" {
@@ -27,6 +26,14 @@ export async function resolveSession(
     return null;
   }
   const tokenHash = hashSessionToken(token);
+  const clinicId = deps.bootstrap?.clinic.id;
+  const params: unknown[] = [tokenHash];
+  let clinicFilter = "";
+  if (clinicId) {
+    params.push(clinicId);
+    clinicFilter = "AND cm.clinic_id = $2";
+  }
+
   const result = await deps.pool.query<{
     session_id: string;
     user_id: string;
@@ -34,6 +41,9 @@ export async function resolveSession(
     clinic_id: string;
     membership_id: string;
     authz_version: string;
+    user_authz_version: string;
+    user_status: string;
+    membership_active: boolean;
   }>(
     `
       SELECT
@@ -42,20 +52,27 @@ export async function resolveSession(
         c.organization_id,
         cm.clinic_id,
         cm.id AS membership_id,
-        s.authz_version
+        s.authz_version,
+        u.authz_version AS user_authz_version,
+        u.status AS user_status,
+        cm.active AS membership_active
       FROM dentos_data.user_sessions s
+      JOIN dentos_data.users u ON u.id = s.user_id
       JOIN dentos_data.clinic_memberships cm ON cm.user_id = s.user_id AND cm.active = true
       JOIN dentos_data.clinics c ON c.id = cm.clinic_id
       WHERE s.token_hash = $1
         AND s.revoked_at IS NULL
         AND s.expires_at > clock_timestamp()
+        AND u.status = 'active'
+        AND s.authz_version = u.authz_version
+        ${clinicFilter}
       ORDER BY cm.is_default DESC
       LIMIT 1
     `,
-    [tokenHash],
+    params,
   );
   const row = result.rows[0];
-  if (!row) {
+  if (!row || !row.membership_active) {
     return null;
   }
   const permissionCodes = await import("./permissions.js").then((mod) =>
@@ -69,7 +86,6 @@ export async function resolveSession(
     membershipId: row.membership_id,
     authzVersion: Number(row.authz_version),
     permissionCodes,
-    tokenHash,
   };
 }
 
@@ -105,4 +121,8 @@ export function requirePermission(deps: GatewayDependencies, permissionCode: str
       throw new Error(`Permission denied: ${permissionCode}`);
     }
   };
+}
+
+export function publicSessionResponse(session: AuthSessionContext) {
+  return sanitizeSessionForResponse(session);
 }

@@ -5,8 +5,8 @@ import { EmptyState, ErrorState, LoadingState, PermissionGuard } from "@klickit/
 import { useAuth } from "../auth/AuthContext.js";
 import { createStaffMember, fetchClinics, fetchStaffDirectory, fetchUsers } from "../api/settings.js";
 import { fetchAcceptanceRecords, fetchHandoverSummary, fetchProductionGate } from "../api/pilot.js";
-import { fetchBackupManifest, fetchBackupRuns, fetchOpenConflicts, fetchRecoveryStatus, resolveSyncConflict } from "../api/sync.js";
-import { conflictResolutionLabel, staffTypeLabel, SYSTEM_TABS, type SystemTab } from "../config/system.js";
+import { fetchBackupManifest, fetchBackupRuns, fetchOpenConflicts, fetchRecoveryStatus, fetchSyncStatus, resolveSyncConflict } from "../api/sync.js";
+import { conflictResolutionLabel, formatConflictValue, staffTypeLabel, SYSTEM_TABS, type SystemTab } from "../config/system.js";
 
 export function SystemConfigurationPage() {
   const auth = useAuth();
@@ -42,6 +42,12 @@ export function SystemConfigurationPage() {
   const conflictsQuery = useQuery({
     queryKey: ["sync", "conflicts", auth.token],
     queryFn: () => fetchOpenConflicts(auth.token!),
+    enabled: Boolean(auth.token && tab === "sync"),
+  });
+
+  const syncStatusQuery = useQuery({
+    queryKey: ["sync", "status", auth.token],
+    queryFn: () => fetchSyncStatus(auth.token!),
     enabled: Boolean(auth.token && tab === "sync"),
   });
 
@@ -207,6 +213,12 @@ export function SystemConfigurationPage() {
       {tab === "sync" ? (
         <section className="ki-dashboard-section">
           <h2 className="ki-dashboard-section-title">Open sync conflicts</h2>
+          {syncStatusQuery.data ? (
+            <p className="ki-dashboard-note">
+              Outbox pending: {syncStatusQuery.data.pendingOutbox} · Failed: {syncStatusQuery.data.failedOutbox} · Dead
+              letters: {syncStatusQuery.data.deadLetters} · Open conflicts: {syncStatusQuery.data.openConflicts}
+            </p>
+          ) : null}
           {conflictsQuery.isLoading ? <LoadingState label="Loading conflicts…" /> : null}
           {conflictsQuery.isSuccess && (conflictsQuery.data.conflicts ?? []).length === 0 ? (
             <EmptyState title="No open conflicts" description="Sync conflicts between local and cloud will list here." />
@@ -217,6 +229,8 @@ export function SystemConfigurationPage() {
                 <tr>
                   <th scope="col">Entity</th>
                   <th scope="col">Field</th>
+                  <th scope="col">Local value</th>
+                  <th scope="col">Cloud value</th>
                   <th scope="col">Actions</th>
                 </tr>
               </thead>
@@ -224,9 +238,11 @@ export function SystemConfigurationPage() {
                 {conflictsQuery.data.conflicts.map((conflict) => (
                   <tr key={conflict.id}>
                     <td>
-                      {conflict.entityType} / {conflict.entityId.slice(0, 8)}…
+                      {conflict.aggregateType} / {conflict.aggregateId.slice(0, 8)}…
                     </td>
-                    <td>{conflict.fieldPath}</td>
+                    <td>{conflict.fieldName}</td>
+                    <td>{formatConflictValue(conflict.localValue)}</td>
+                    <td>{formatConflictValue(conflict.cloudValue)}</td>
                     <td>
                       {(["keep_local", "keep_cloud"] as const).map((action) => (
                         <button

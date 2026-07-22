@@ -1,4 +1,4 @@
-export { AppShell, type AppShellProps, type NavItem, type SyncDisplayStatus } from "./components/AppShell.js";
+export { AppShell, type AppShellProps, type NavItem, type SyncDisplayStatus, type SyncStatusMetrics } from "./components/AppShell.js";
 export { DemoBanner } from "./components/DemoBanner.js";
 export { SyncStatusIndicator } from "./components/SyncStatusIndicator.js";
 export { FormField } from "./components/FormField.js";

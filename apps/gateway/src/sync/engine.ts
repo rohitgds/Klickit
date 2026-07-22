@@ -21,7 +21,7 @@ export interface SyncEngineContext {
 export async function enqueueOutboxEvent(
   ctx: SyncEngineContext,
   input: Omit<SyncEventEnvelope, "id" | "payloadHash" | "createdAt"> & { createdBy?: string },
-): Promise<{ id: string; idempotencyKey: string }> {
+): Promise<{ id: string; idempotencyKey: string; duplicate: boolean }> {
   const idempotencyKey =
     input.idempotencyKey ||
     buildIdempotencyKey({
@@ -42,7 +42,7 @@ export async function enqueueOutboxEvent(
     [input.organizationId, idempotencyKey],
   );
   if (existing.rows[0]) {
-    return { id: existing.rows[0].id, idempotencyKey };
+    return { id: existing.rows[0].id, idempotencyKey, duplicate: true };
   }
 
   await ctx.pool.query(
@@ -74,7 +74,19 @@ export async function enqueueOutboxEvent(
     ],
   );
 
-  return { id, idempotencyKey };
+  return { id, idempotencyKey, duplicate: false };
+}
+
+export interface SyncStatusSummary {
+  pendingOutbox: number;
+  failedOutbox: number;
+  openConflicts: number;
+  deadLetters: number;
+  offlinePolicy: {
+    offlineHours: number;
+    writeAllowed: boolean;
+    readOnly: boolean;
+  };
 }
 
 export async function selectPendingOutboxEvents(
@@ -131,6 +143,14 @@ export async function recordPushResults(
   results: readonly PushBatchItemResult[],
 ): Promise<void> {
   for (const result of results) {
+    const storedStatus =
+      result.status === "accepted" ||
+      result.status === "already_applied" ||
+      result.status === "rejected" ||
+      result.status === "conflict"
+        ? result.status
+        : "rejected";
+
     await ctx.pool.query(
       `
         UPDATE dentos_runtime.sync_outbox_events
@@ -139,9 +159,117 @@ export async function recordPushResults(
             last_error = $3
         WHERE gateway_id = $1 AND idempotency_key = $4
       `,
-      [ctx.gateway.id, result.status, result.error ?? null, result.idempotencyKey],
+      [ctx.gateway.id, storedStatus, result.error ?? null, result.idempotencyKey],
     );
+
+    if (result.status === "rejected" || result.status === "validation_failed" || result.status === "permission_failed") {
+      await recordSyncDeadLetter(ctx, result.idempotencyKey, result.error ?? result.status, result.status);
+    }
   }
+}
+
+export async function recordSyncDeadLetter(
+  ctx: SyncEngineContext,
+  idempotencyKey: string,
+  failureReason: string,
+  failureCode?: string,
+): Promise<void> {
+  const event = await ctx.pool.query<{
+    id: string;
+    organization_id: string;
+    clinic_id: string;
+    aggregate_type: string;
+    aggregate_id: string;
+    event_type: string;
+    payload_json: Record<string, unknown>;
+  }>(
+    `
+      SELECT id, organization_id, clinic_id, aggregate_type, aggregate_id, event_type, payload_json
+      FROM dentos_runtime.sync_outbox_events
+      WHERE gateway_id = $1 AND idempotency_key = $2
+    `,
+    [ctx.gateway.id, idempotencyKey],
+  );
+  const row = event.rows[0];
+  if (!row) {
+    return;
+  }
+
+  await ctx.pool.query(
+    `
+      INSERT INTO dentos_runtime.sync_dead_letters (
+        id, organization_id, clinic_id, gateway_id, outbox_event_id,
+        idempotency_key, aggregate_type, aggregate_id, event_type, payload_json,
+        failure_reason, failure_code
+      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
+      ON CONFLICT (gateway_id, idempotency_key) DO UPDATE
+        SET failure_reason = EXCLUDED.failure_reason,
+            failure_code = EXCLUDED.failure_code,
+            recorded_at = clock_timestamp()
+    `,
+    [
+      crypto.randomUUID(),
+      row.organization_id,
+      row.clinic_id,
+      ctx.gateway.id,
+      row.id,
+      idempotencyKey,
+      row.aggregate_type,
+      row.aggregate_id,
+      row.event_type,
+      JSON.stringify(row.payload_json),
+      failureReason,
+      failureCode ?? null,
+    ],
+  );
+}
+
+export async function getSyncStatusSummary(ctx: SyncEngineContext): Promise<SyncStatusSummary> {
+  const [pending, failed, conflicts, deadLetters] = await Promise.all([
+    ctx.pool.query<{ count: number }>(
+      `
+        SELECT COUNT(*)::int AS count
+        FROM dentos_runtime.sync_outbox_events
+        WHERE gateway_id = $1 AND sent_at IS NULL AND available_at <= clock_timestamp()
+      `,
+      [ctx.gateway.id],
+    ),
+    ctx.pool.query<{ count: number }>(
+      `
+        SELECT COUNT(*)::int AS count
+        FROM dentos_runtime.sync_outbox_events
+        WHERE gateway_id = $1
+          AND cloud_status IN ('rejected', 'conflict', 'validation_failed', 'permission_failed')
+      `,
+      [ctx.gateway.id],
+    ),
+    ctx.pool.query<{ count: number }>(
+      `
+        SELECT COUNT(*)::int AS count
+        FROM dentos_runtime.sync_conflicts
+        WHERE clinic_id = $1 AND status = 'open'
+      `,
+      [ctx.gateway.clinicId],
+    ),
+    ctx.pool.query<{ count: number }>(
+      `
+        SELECT COUNT(*)::int AS count
+        FROM dentos_runtime.sync_dead_letters
+        WHERE gateway_id = $1
+      `,
+      [ctx.gateway.id],
+    ),
+  ]);
+
+  const offlinePolicy = evaluateOfflineWritePolicy(ctx.gateway);
+
+  return {
+    pendingOutbox: pending.rows[0]?.count ?? 0,
+    failedOutbox: failed.rows[0]?.count ?? 0,
+    openConflicts: conflicts.rows[0]?.count ?? 0,
+    deadLetters: deadLetters.rows[0]?.count ?? 0,
+    offlinePolicy,
+  };
 }
 
 export async function applyPushBatchLocally(
@@ -152,8 +280,8 @@ export async function applyPushBatchLocally(
 
   for (const event of request.events) {
     try {
-      const { idempotencyKey } = await enqueueOutboxEvent(ctx, event);
-      results.push({ idempotencyKey, status: "accepted" });
+      const { idempotencyKey, duplicate } = await enqueueOutboxEvent(ctx, event);
+      results.push({ idempotencyKey, status: duplicate ? "already_applied" : "accepted" });
     } catch (error) {
       results.push({
         idempotencyKey: event.idempotencyKey,

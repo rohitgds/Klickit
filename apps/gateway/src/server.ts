@@ -21,6 +21,8 @@ export interface BuildServerOptions {
   pool?: DatabasePoolLike | null;
   bootstrap?: ClinicBootstrap | null;
   skipDatabase?: boolean;
+  /** When false, close() will not call pool.end() — use for integration tests sharing a pool. */
+  closePoolOnClose?: boolean;
 }
 
 export async function buildServer(options: BuildServerOptions = {}) {
@@ -72,7 +74,7 @@ export async function buildServer(options: BuildServerOptions = {}) {
   async function close() {
     markServiceStopping(lifecycle);
     await app.close();
-    if (pool) {
+    if (pool && options.closePoolOnClose !== false) {
       await pool.end();
     }
     lifecycle.state = "stopped";

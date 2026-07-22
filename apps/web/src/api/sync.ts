@@ -2,16 +2,53 @@ import { apiFetch } from "./client.js";
 
 export interface SyncConflict {
   id: string;
-  entityType: string;
-  entityId: string;
-  fieldPath: string;
+  aggregateType: string;
+  aggregateId: string;
+  fieldName: string;
   localValue: unknown;
   cloudValue: unknown;
-  detectedAt: string;
+  status: string;
 }
 
+export interface SyncStatusSummary {
+  pendingOutbox: number;
+  failedOutbox: number;
+  openConflicts: number;
+  deadLetters: number;
+  offlinePolicy: {
+    offlineHours: number;
+    writeAllowed: boolean;
+    readOnly: boolean;
+  };
+}
+
+type GatewayConflictRow = {
+  id: string;
+  aggregateType: string;
+  aggregateId: string;
+  fieldName: string;
+  localValue: unknown;
+  cloudValue: unknown;
+  status: string;
+};
+
 export async function fetchOpenConflicts(token: string): Promise<{ conflicts: SyncConflict[] }> {
-  return apiFetch<{ conflicts: SyncConflict[] }>("/sync/conflicts/open", {}, token);
+  const response = await apiFetch<{ conflicts: GatewayConflictRow[] }>("/sync/conflicts/open", {}, token);
+  return {
+    conflicts: (response.conflicts ?? []).map((row) => ({
+      id: row.id,
+      aggregateType: row.aggregateType,
+      aggregateId: row.aggregateId,
+      fieldName: row.fieldName,
+      localValue: row.localValue,
+      cloudValue: row.cloudValue,
+      status: row.status,
+    })),
+  };
+}
+
+export async function fetchSyncStatus(token: string): Promise<SyncStatusSummary> {
+  return apiFetch<SyncStatusSummary>("/sync/status", {}, token);
 }
 
 export async function resolveSyncConflict(

@@ -1,7 +1,9 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 import { AppShell, LoadingState } from "@klickit/ui";
 import { PRODUCT_NAME } from "@klickit/shared";
 import { useAuth } from "../auth/AuthContext.js";
+import { fetchSyncStatus } from "../api/sync.js";
 import {
   filterNavItemsByPermission,
   mapClinicConfigToSyncStatus,
@@ -37,6 +39,13 @@ export function ProtectedLayout() {
     to: item.to,
     end: item.end,
   }));
+
+  const syncStatusQuery = useQuery({
+    queryKey: ["sync", "status", auth.token],
+    queryFn: () => fetchSyncStatus(auth.token!),
+    enabled: Boolean(auth.token),
+    refetchInterval: 30_000,
+  });
 
   const placeholder = MODULE_PLACEHOLDERS[location.pathname];
   const pageTitle = (() => {
@@ -90,6 +99,15 @@ export function ProtectedLayout() {
         auth.clinicConfig
           ? mapClinicConfigToSyncStatus(auth.clinicConfig)
           : "disconnected"
+      }
+      syncMetrics={
+        syncStatusQuery.data
+          ? {
+              pendingOutbox: syncStatusQuery.data.pendingOutbox,
+              failedOutbox: syncStatusQuery.data.failedOutbox,
+              openConflicts: syncStatusQuery.data.openConflicts,
+            }
+          : undefined
       }
       accountLabel={`User ${auth.user.userId.slice(0, 8)}…`}
       onSignOut={() => {

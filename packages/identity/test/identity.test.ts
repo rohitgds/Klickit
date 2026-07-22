@@ -5,6 +5,8 @@ import {
   hashPassword,
   sessionHasPermission,
   verifyPassword,
+  PASSWORD_ALGORITHM_LEGACY_SCRYPT,
+  hashSessionToken,
 } from "../src/index.js";
 
 describe("identity permissions", () => {
@@ -22,10 +24,25 @@ describe("identity permissions", () => {
     assert.equal(result.allowed, false);
   });
 
-  it("hashes and verifies development passwords", () => {
-    const hash = hashPassword("DevPass123!");
-    assert.equal(verifyPassword("DevPass123!", hash), true);
-    assert.equal(verifyPassword("wrong", hash), false);
+  it("hashes and verifies argon2id passwords", async () => {
+    const { hash, algorithm } = await hashPassword("DevPass123!");
+    assert.equal(algorithm, "argon2id");
+    assert.match(hash, /^\$argon2id\$/);
+    assert.equal(await verifyPassword("DevPass123!", hash), true);
+    assert.equal(await verifyPassword("wrong", hash), false);
+  });
+
+  it("verifies legacy scrypt passwords during migration", async () => {
+    const { scryptSync } = await import("node:crypto");
+    const legacyHash = scryptSync("DevPass123!", "klickit-dev-salt", 32).toString("hex");
+    assert.equal(await verifyPassword("DevPass123!", legacyHash, PASSWORD_ALGORITHM_LEGACY_SCRYPT), true);
+  });
+
+  it("hashes session tokens without exposing raw token in hash", () => {
+    const token = "abc123";
+    const hash = hashSessionToken(token);
+    assert.notEqual(hash, token);
+    assert.equal(hash.length, 64);
   });
 
   it("checks session permission codes", () => {

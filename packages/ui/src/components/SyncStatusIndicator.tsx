@@ -1,5 +1,12 @@
 export type SyncDisplayStatus = "online" | "local-offline" | "read-only" | "disconnected";
 
+export type SyncStatusMetrics = {
+  pendingOutbox?: number;
+  failedOutbox?: number;
+  openConflicts?: number;
+  deadLetters?: number;
+};
+
 const LABELS: Record<SyncDisplayStatus, { text: string; bg: string; color: string; border: string }> = {
   online: {
     text: "Sync: Online",
@@ -27,12 +34,29 @@ const LABELS: Record<SyncDisplayStatus, { text: string; bg: string; color: strin
   },
 };
 
-export function SyncStatusIndicator({ status }: { status: SyncDisplayStatus }) {
+export function SyncStatusIndicator({
+  status,
+  metrics,
+}: {
+  status: SyncDisplayStatus;
+  metrics?: SyncStatusMetrics;
+}) {
   const style = LABELS[status];
+  const parts: string[] = [style.text];
+  if (metrics?.pendingOutbox && metrics.pendingOutbox > 0) {
+    parts.push(`${metrics.pendingOutbox} pending`);
+  }
+  if (metrics?.failedOutbox && metrics.failedOutbox > 0) {
+    parts.push(`${metrics.failedOutbox} failed`);
+  }
+  if (metrics?.openConflicts && metrics.openConflicts > 0) {
+    parts.push(`${metrics.openConflicts} conflicts`);
+  }
+  const label = parts.join(" · ");
   return (
     <span
-      aria-label={style.text}
-      title={style.text}
+      aria-label={label}
+      title={label}
       style={{
         display: "inline-flex",
         alignItems: "center",
@@ -47,7 +71,7 @@ export function SyncStatusIndicator({ status }: { status: SyncDisplayStatus }) {
         whiteSpace: "nowrap",
       }}
     >
-      {style.text}
+      {label}
     </span>
   );
 }

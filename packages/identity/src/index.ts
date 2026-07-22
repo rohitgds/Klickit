@@ -1,6 +1,12 @@
-import { scryptSync, timingSafeEqual, randomBytes } from "node:crypto";
+import { scryptSync, timingSafeEqual, randomBytes, createHash } from "node:crypto";
+import { hash as argon2Hash, verify as argon2Verify } from "@node-rs/argon2";
 
 export type PermissionEffect = "allow" | "deny";
+
+export const PASSWORD_ALGORITHM_ARGON2ID = "argon2id";
+export const PASSWORD_ALGORITHM_LEGACY_SCRYPT = "legacy-scrypt-v1";
+
+const LEGACY_DEV_SALT = "klickit-dev-salt";
 
 export interface PermissionGrant {
   code: string;
@@ -12,6 +18,11 @@ export interface EffectivePermissionResult {
   allowed: boolean;
   matched?: PermissionGrant;
   evaluatedCodes: readonly string[];
+}
+
+export interface HashedPassword {
+  hash: string;
+  algorithm: typeof PASSWORD_ALGORITHM_ARGON2ID;
 }
 
 export function evaluateEffectivePermission(
@@ -43,12 +54,17 @@ export function evaluateEffectivePermission(
   return { allowed: false, evaluatedCodes: [permissionCode] };
 }
 
-export function hashPassword(password: string, salt = "klickit-dev-salt"): string {
-  return scryptSync(password, salt, 32).toString("hex");
+export async function hashPassword(password: string): Promise<HashedPassword> {
+  const hash = await argon2Hash(password, {
+    memoryCost: 19456,
+    timeCost: 2,
+    parallelism: 1,
+  });
+  return { hash, algorithm: PASSWORD_ALGORITHM_ARGON2ID };
 }
 
-export function verifyPassword(password: string, storedHash: string, salt = "klickit-dev-salt"): boolean {
-  const computed = hashPassword(password, salt);
+function verifyLegacyScryptPassword(password: string, storedHash: string): boolean {
+  const computed = scryptSync(password, LEGACY_DEV_SALT, 32).toString("hex");
   const left = Buffer.from(computed, "hex");
   const right = Buffer.from(storedHash, "hex");
   if (left.length !== right.length) {
@@ -57,12 +73,27 @@ export function verifyPassword(password: string, storedHash: string, salt = "kli
   return timingSafeEqual(left, right);
 }
 
+export async function verifyPassword(
+  password: string,
+  storedHash: string,
+  algorithm = PASSWORD_ALGORITHM_ARGON2ID,
+): Promise<boolean> {
+  if (algorithm === PASSWORD_ALGORITHM_LEGACY_SCRYPT) {
+    return verifyLegacyScryptPassword(password, storedHash);
+  }
+  try {
+    return await argon2Verify(storedHash, password);
+  } catch {
+    return false;
+  }
+}
+
 export function createSessionToken(): string {
   return randomBytes(32).toString("hex");
 }
 
 export function hashSessionToken(token: string): string {
-  return scryptSync(token, "klickit-session-salt", 32).toString("hex");
+  return createHash("sha256").update(token).digest("hex");
 }
 
 export interface AuthSessionContext {
@@ -76,4 +107,15 @@ export interface AuthSessionContext {
 
 export function sessionHasPermission(session: AuthSessionContext, permissionCode: string): boolean {
   return session.permissionCodes.includes(permissionCode);
+}
+
+export function sanitizeSessionForResponse(session: AuthSessionContext): AuthSessionContext {
+  return {
+    userId: session.userId,
+    organizationId: session.organizationId,
+    clinicId: session.clinicId,
+    membershipId: session.membershipId,
+    authzVersion: session.authzVersion,
+    permissionCodes: session.permissionCodes,
+  };
 }

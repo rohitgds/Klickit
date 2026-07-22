@@ -22,7 +22,7 @@ import {
 } from "../patients/repository.js";
 import type { GatewayDependencies } from "./index.js";
 import { evaluateOfflineWritePolicy } from "../sync/engine.js";
-import { requirePermission, requireSession } from "../security/middleware.js";
+import { requirePermission, requireSession, publicSessionResponse } from "../security/middleware.js";
 import { loadPermissionCodes } from "../security/permissions.js";
 
 function dbContext(deps: GatewayDependencies) {
@@ -61,7 +61,11 @@ export async function registerMilestone3Routes(app: FastifyInstance, deps: Gatew
       reply.code(404);
       return { error: "Development user not found" };
     }
-    return result;
+    return {
+      token: result.token,
+      session: publicSessionResponse(result.session),
+      expiresAt: result.expiresAt,
+    };
   });
 
   app.post<{
@@ -79,7 +83,11 @@ export async function registerMilestone3Routes(app: FastifyInstance, deps: Gatew
       reply.code(401);
       return { error: "Invalid credentials or unapproved device" };
     }
-    return result;
+    return {
+      token: result.token,
+      session: publicSessionResponse(result.session),
+      expiresAt: result.expiresAt,
+    };
   });
 
   app.post("/auth/logout", { preHandler: requireSession(deps) }, async (request) => {
@@ -103,7 +111,7 @@ export async function registerMilestone3Routes(app: FastifyInstance, deps: Gatew
   });
 
   app.get("/auth/session", { preHandler: requireSession(deps) }, async (request) => ({
-    session: request.klickitSession,
+    session: publicSessionResponse(request.klickitSession!),
   }));
 
   app.get(

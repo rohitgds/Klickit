@@ -193,4 +193,39 @@ export async function recordAppointmentCollisionWarning(
   return id;
 }
 
+export async function reconcileFieldPatches(
+  pool: DatabasePoolLike,
+  input: {
+    organizationId: string;
+    clinicId: string;
+    gatewayId: string;
+    aggregateType: string;
+    aggregateId: string;
+    base: Record<string, unknown>;
+    localPatch: Record<string, unknown>;
+    cloudPatch: Record<string, unknown>;
+    createdBy?: string;
+  },
+): Promise<{ merged: Record<string, unknown>; conflictIds: string[] }> {
+  const { merged, conflicts } = mergeIndependentFields(input.base, input.localPatch, input.cloudPatch);
+  const conflictIds: string[] = [];
+
+  for (const conflict of conflicts) {
+    const id = await createFieldConflict(pool, {
+      ...conflict,
+      aggregateType: input.aggregateType,
+      aggregateId: input.aggregateId,
+      organizationId: input.organizationId,
+      clinicId: input.clinicId,
+      gatewayId: input.gatewayId,
+      createdBy: input.createdBy,
+    });
+    if (id) {
+      conflictIds.push(id);
+    }
+  }
+
+  return { merged, conflictIds };
+}
+
 export { mergeIndependentFields };

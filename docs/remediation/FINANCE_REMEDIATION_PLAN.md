@@ -2,7 +2,8 @@
 
 **Track:** Critical remediation — P0  
 **Status:** Plan only  
-**Last updated:** 2026-07-22
+**Last updated:** 2026-07-22  
+**Remediation 1:** Delivered — see `FINANCE_REMEDIATION_EVIDENCE.md`
 
 ## Blueprint requirements
 

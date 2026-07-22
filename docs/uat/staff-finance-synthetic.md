@@ -1,9 +1,10 @@
 # Synthetic Finance UAT Script
 
-1. Create a draft fee statement with one line.
-2. Issue the fee statement.
-3. Record a split-tender collection.
-4. Allocate the collection to the fee statement.
-5. Run `GET /finance/fee-statements/:id/reconcile` and confirm zero variance.
+Use **Financial Operations** (`/financial-operations`) tabs in order:
 
-Record pass/fail in `docs/MILESTONE9_EVIDENCE.md`.
+1. **Statements** — create draft fee statement, add one line, issue.
+2. **Collections** — record a split-tender collection for the same patient (FIN-DEC-06).
+3. **Allocations** — manually allocate the collection to the issued statement (FIN-DEC-01).
+4. **Reconciliation** — run statement reconcile; confirm INR 0.00 variance. Record daily reconciliation if pilot.manage is available.
+
+Record pass/fail in `docs/remediation/FINANCE_REMEDIATION_EVIDENCE.md`.

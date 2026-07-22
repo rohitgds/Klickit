@@ -3,11 +3,38 @@ import {
   hashPassword,
   hashSessionToken,
   verifyPassword,
+  PASSWORD_ALGORITHM_ARGON2ID,
+  PASSWORD_ALGORITHM_LEGACY_SCRYPT,
   type AuthSessionContext,
 } from "@klickit/identity";
 import type { DatabasePoolLike } from "../db/client.js";
 import { loadPermissionCodes } from "../security/permissions.js";
 import { isDeviceApproved } from "../clinic/services.js";
+
+async function upgradeLegacyCredentialIfNeeded(
+  pool: DatabasePoolLike,
+  input: { userId: string; password: string; passwordAlgorithm: string; passwordHash: string },
+): Promise<void> {
+  if (input.passwordAlgorithm !== PASSWORD_ALGORITHM_LEGACY_SCRYPT) {
+    return;
+  }
+  const valid = await verifyPassword(input.password, input.passwordHash, input.passwordAlgorithm);
+  if (!valid) {
+    return;
+  }
+  const upgraded = await hashPassword(input.password);
+  await pool.query(
+    `
+      UPDATE dentos_data.user_credentials
+      SET password_hash = $2,
+          password_algorithm = $3,
+          password_changed_at = clock_timestamp(),
+          updated_at = clock_timestamp()
+      WHERE user_id = $1
+    `,
+    [input.userId, upgraded.hash, upgraded.algorithm],
+  );
+}
 
 export async function loginOnline(input: {
   pool: DatabasePoolLike;
@@ -21,6 +48,7 @@ export async function loginOnline(input: {
     organization_id: string;
     authz_version: string;
     password_hash: string;
+    password_algorithm: string;
     membership_id: string;
   }>(
     `
@@ -29,6 +57,7 @@ export async function loginOnline(input: {
         u.organization_id,
         u.authz_version,
         uc.password_hash,
+        uc.password_algorithm,
         cm.id AS membership_id
       FROM dentos_data.users u
       JOIN dentos_data.user_credentials uc ON uc.user_id = u.id
@@ -40,9 +69,20 @@ export async function loginOnline(input: {
     [input.clinicId, input.loginName],
   );
   const row = userResult.rows[0];
-  if (!row || !verifyPassword(input.password, row.password_hash)) {
+  if (!row) {
     return null;
   }
+  const passwordValid = await verifyPassword(input.password, row.password_hash, row.password_algorithm);
+  if (!passwordValid) {
+    return null;
+  }
+
+  await upgradeLegacyCredentialIfNeeded(input.pool, {
+    userId: row.user_id,
+    password: input.password,
+    passwordAlgorithm: row.password_algorithm,
+    passwordHash: row.password_hash,
+  });
 
   if (input.deviceFingerprintHash) {
     const approved = await isDeviceApproved(input.pool, input.clinicId, input.deviceFingerprintHash);
@@ -92,7 +132,8 @@ export async function logoutSession(pool: DatabasePoolLike, tokenHash: string): 
   await pool.query(
     `
       UPDATE dentos_data.user_sessions
-      SET revoked_at = clock_timestamp()
+      SET revoked_at = clock_timestamp(),
+          revoked_reason = 'logout'
       WHERE token_hash = $1 AND revoked_at IS NULL
     `,
     [tokenHash],
@@ -113,12 +154,11 @@ export async function cacheOfflineSnapshot(
   await pool.query(
     `
       INSERT INTO dentos_runtime.offline_auth_snapshots (
-        device_fingerprint_hash, organization_id, clinic_id, user_id,
+        clinic_id, device_fingerprint_hash, organization_id, user_id,
         authz_version, permission_codes, expires_at
-      ) VALUES ($1, $2, $3, $4, $5, $6::jsonb, clock_timestamp() + interval '72 hours')
-      ON CONFLICT (device_fingerprint_hash)
+      ) VALUES ($2, $1, $3, $4, $5, $6::jsonb, clock_timestamp() + interval '72 hours')
+      ON CONFLICT (clinic_id, device_fingerprint_hash, user_id)
       DO UPDATE SET
-        user_id = EXCLUDED.user_id,
         authz_version = EXCLUDED.authz_version,
         permission_codes = EXCLUDED.permission_codes,
         cached_at = clock_timestamp(),
@@ -126,8 +166,8 @@ export async function cacheOfflineSnapshot(
     `,
     [
       input.deviceFingerprintHash,
-      input.organizationId,
       input.clinicId,
+      input.organizationId,
       input.userId,
       input.authzVersion,
       JSON.stringify(input.permissionCodes),
@@ -139,37 +179,53 @@ export async function verifyOfflineLogin(
   pool: DatabasePoolLike,
   input: { clinicId: string; deviceFingerprintHash: string; loginName: string; password: string },
 ): Promise<{ valid: boolean; reason?: string; permissionCodes?: string[] }> {
-  const snapshot = await pool.query<{ user_id: string; permission_codes: string[]; expires_at: string }>(
+  const userResult = await pool.query<{
+    user_id: string;
+    password_hash: string;
+    password_algorithm: string;
+    authz_version: string;
+  }>(
     `
-      SELECT user_id, permission_codes, expires_at
+      SELECT u.id AS user_id, uc.password_hash, uc.password_algorithm, u.authz_version
+      FROM dentos_data.users u
+      JOIN dentos_data.user_credentials uc ON uc.user_id = u.id
+      JOIN dentos_data.clinic_memberships cm ON cm.user_id = u.id AND cm.clinic_id = $1 AND cm.active = true
+      WHERE lower(u.login_name) = lower($2)
+        AND u.status = 'active'
+      LIMIT 1
+    `,
+    [input.clinicId, input.loginName],
+  );
+  const user = userResult.rows[0];
+  if (!user) {
+    return { valid: false, reason: "User not recognized for clinic" };
+  }
+
+  const passwordValid = await verifyPassword(input.password, user.password_hash, user.password_algorithm);
+  if (!passwordValid) {
+    return { valid: false, reason: "Invalid offline credentials" };
+  }
+
+  const snapshot = await pool.query<{ permission_codes: string[]; expires_at: string; authz_version: string }>(
+    `
+      SELECT permission_codes, expires_at, authz_version
       FROM dentos_runtime.offline_auth_snapshots
       WHERE clinic_id = $1
         AND device_fingerprint_hash = $2
+        AND user_id = $3
         AND expires_at > clock_timestamp()
     `,
-    [input.clinicId, input.deviceFingerprintHash],
+    [input.clinicId, input.deviceFingerprintHash, user.user_id],
   );
   const cached = snapshot.rows[0];
   if (!cached) {
-    return { valid: false, reason: "No offline snapshot for approved device" };
+    return { valid: false, reason: "No offline snapshot for approved device and user" };
   }
 
-  const userResult = await pool.query<{ password_hash: string; login_name: string }>(
-    `
-      SELECT uc.password_hash, u.login_name
-      FROM dentos_data.users u
-      JOIN dentos_data.user_credentials uc ON uc.user_id = u.id
-      WHERE u.id = $1 AND u.status = 'active'
-    `,
-    [cached.user_id],
-  );
-  const user = userResult.rows[0];
-  if (!user || user.login_name.toLowerCase() !== input.loginName.toLowerCase()) {
-    return { valid: false, reason: "User not recognized for cached device" };
+  if (Number(cached.authz_version) !== Number(user.authz_version)) {
+    return { valid: false, reason: "Offline snapshot authz version stale" };
   }
-  if (!verifyPassword(input.password, user.password_hash)) {
-    return { valid: false, reason: "Invalid offline credentials" };
-  }
+
   return { valid: true, permissionCodes: cached.permission_codes };
 }
 

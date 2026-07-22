@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { DemoBanner } from "./DemoBanner.js";
 import { GlobalNavigation, type NavItem } from "./GlobalNavigation.js";
 import { ClinicContextBar } from "./ClinicContextBar.js";
-import type { SyncDisplayStatus } from "./SyncStatusIndicator.js";
+import type { SyncDisplayStatus, SyncStatusMetrics } from "./SyncStatusIndicator.js";
 
 export interface AppShellProps {
   productName: string;
@@ -11,6 +11,7 @@ export interface AppShellProps {
   clinicCode: string;
   operationalDate: string;
   syncStatus: SyncDisplayStatus;
+  syncMetrics?: SyncStatusMetrics;
   accountLabel: string;
   onSignOut: () => void;
   pageTitle: string;
@@ -27,6 +28,7 @@ export function AppShell(props: AppShellProps) {
         clinicCode={props.clinicCode}
         operationalDate={props.operationalDate}
         syncStatus={props.syncStatus}
+        syncMetrics={props.syncMetrics}
         accountLabel={props.accountLabel}
         onSignOut={props.onSignOut}
       />
@@ -38,4 +40,4 @@ export function AppShell(props: AppShellProps) {
   );
 }
 
-export type { NavItem, SyncDisplayStatus };
+export type { NavItem, SyncDisplayStatus, SyncStatusMetrics };

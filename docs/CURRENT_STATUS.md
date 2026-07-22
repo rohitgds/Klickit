@@ -16,7 +16,7 @@
 ## Active remediation branch
 
 - Branch: `remediation/pilot-safety`
-- Baseline commit: `27978fb` — UI Modules 1–14 + audit tooling fix + remediation plans
+- Baseline commit: `899032e` — UI Modules 1–14 + audit tooling fix + remediation plans
 - Annotated tag `pre-remediation-audit-baseline`: **pending owner approval**
 
 ## Critical remediation tracks (plans in `docs/remediation/`)
@@ -31,14 +31,24 @@
 
 ## Part D — Security Remediation 1
 
-**Status: NOT STARTED** — awaits explicit owner approval after plan review.
+**Status: DELIVERED (local)** — Argon2id, session validation, offline multi-user, PostgreSQL auth tests. Evidence: `docs/remediation/SECURITY_REMEDIATION_EVIDENCE.md`.
+
+## Finance Remediation 1
+
+**Status: DELIVERED (local)** — FIN-DEC-01..06 recorded, tabbed Financial Operations UI, REP-001 test, refund guard. Evidence: `docs/remediation/FINANCE_REMEDIATION_EVIDENCE.md`.
+
+## Sync Remediation 1
+
+**Status: DELIVERED (local)** — SYNC-001..004 automated PG tests, dead-letter queue, sync status API, conflict UI with local/cloud values, OFF-003 drill script. Evidence: `docs/remediation/SYNC_REMEDIATION_EVIDENCE.md`.
 
 ## Next safe step
 
-1. Owner reviews remediation plans in `docs/remediation/`
-2. Reply **`APPROVE SECURITY REMEDIATION 1`** to begin Part D (Argon2id, session invalidation, PostgreSQL auth tests)
-3. Reply **`APPROVE TAG`** to create annotated tag `pre-remediation-audit-baseline`
-4. Reply **`APPROVE PUSH`** to push `remediation/pilot-safety` to GitHub
+1. Start Docker Desktop and run `npm run verify:migrations` (must exit 0)
+2. Run `npx supabase db reset` then gateway tests for security + sync PG scenarios
+3. Run OFF-003 drill: `powershell -File scripts/drill-offline-readonly.ps1` and record in `docs/remediation/evidence/SYNC_DRILL_20260722.md`
+4. Continue **Backup / Desktop Remediation** track (`BACKUP_DESKTOP_REMEDIATION_PLAN.md`)
+5. Reply **`APPROVE TAG`** to create annotated tag `pre-remediation-audit-baseline`
+6. Reply **`APPROVE PUSH`** to push `remediation/pilot-safety` to GitHub
 
 ## Do not proceed without approval
 

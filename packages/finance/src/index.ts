@@ -212,3 +212,71 @@ export function reconcileCentVariance(input: {
   }
   return { ok: true, variance: 0 };
 }
+
+/** REP-001 — grid, header and journal must reconcile to INR 0.00 variance. */
+export function validateRep001Reconciliation(input: {
+  lineTotals: readonly number[];
+  headerGrandTotal: number;
+  journalDebits: readonly number[];
+  journalCredits: readonly number[];
+}): { ok: true } | { ok: false; code: string; message: string } {
+  const lineSum = roundMoney(input.lineTotals.reduce((sum, value) => sum + value, 0));
+  const headerCheck = reconcileCentVariance({ sourceTotal: lineSum, outputTotal: input.headerGrandTotal });
+  if (!headerCheck.ok) {
+    return { ok: false, code: headerCheck.code, message: headerCheck.message };
+  }
+  const debitTotal = roundMoney(input.journalDebits.reduce((sum, value) => sum + value, 0));
+  const creditTotal = roundMoney(input.journalCredits.reduce((sum, value) => sum + value, 0));
+  const journalCheck = reconcileCentVariance({ sourceTotal: debitTotal, outputTotal: creditTotal });
+  if (!journalCheck.ok) {
+    return { ok: false, code: journalCheck.code, message: journalCheck.message };
+  }
+  const gridCheck = reconcileCentVariance({ sourceTotal: input.headerGrandTotal, outputTotal: debitTotal });
+  if (!gridCheck.ok) {
+    return { ok: false, code: gridCheck.code, message: gridCheck.message };
+  }
+  return { ok: true };
+}
+
+export function validateRefundBlockedWhenAllocated(input: {
+  refundAmount: number;
+  unappliedTotal: number;
+  appliedTotal: number;
+}): { ok: true } | { ok: false; code: string; message: string } {
+  if (input.appliedTotal > 0 && input.refundAmount > input.unappliedTotal) {
+    return {
+      ok: false,
+      code: "REFUND_REQUIRES_DEALLOCATION",
+      message: "Refund exceeds unapplied balance; reverse allocations first (FIN-DEC-05)",
+    };
+  }
+  return validateRefundAmount({ refundAmount: input.refundAmount, availableOnReceipt: input.unappliedTotal });
+}
+
+export function distributeProportionalLineSplits(input: {
+  allocationAmount: number;
+  lines: readonly { lineId: string; outstandingAmount: number }[];
+}): Array<{ lineId: string; amount: number }> {
+  const eligible = input.lines.filter((line) => line.outstandingAmount > 0);
+  if (eligible.length === 0) {
+    return [];
+  }
+  const totalOutstanding = roundMoney(eligible.reduce((sum, line) => sum + line.outstandingAmount, 0));
+  if (totalOutstanding <= 0) {
+    return [];
+  }
+  const raw = eligible.map((line) => ({
+    lineId: line.lineId,
+    amount: roundMoney((input.allocationAmount * line.outstandingAmount) / totalOutstanding),
+  }));
+  let assigned = roundMoney(raw.reduce((sum, split) => sum + split.amount, 0));
+  let remainder = roundMoney(input.allocationAmount - assigned);
+  const sorted = [...raw].sort((a, b) => b.amount - a.amount);
+  let index = 0;
+  while (remainder > 0 && sorted.length > 0) {
+    sorted[index % sorted.length]!.amount = roundMoney(sorted[index % sorted.length]!.amount + 0.01);
+    remainder = roundMoney(remainder - 0.01);
+    index += 1;
+  }
+  return sorted;
+}

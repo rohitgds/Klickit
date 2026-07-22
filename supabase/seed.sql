@@ -144,6 +144,81 @@ WHERE p.code IN (
 )
 ON CONFLICT (role_id, permission_id) DO NOTHING;
 
+INSERT INTO dentos_data.user_credentials (
+  user_id, password_hash, password_algorithm, password_changed_at, created_at, updated_at
+)
+VALUES (
+  '55555555-5555-4555-8555-555555555555',
+  '$argon2id$v=19$m=19456,t=2,p=1$n74TElZUq81afB9fiXKqKQ$LY64bGgGx8T9cDpiKgXcy18A0OivnT0t9RZH/HznmYk',
+  'argon2id',
+  clock_timestamp(),
+  clock_timestamp(),
+  clock_timestamp()
+)
+ON CONFLICT (user_id) DO UPDATE SET
+  password_hash = EXCLUDED.password_hash,
+  password_algorithm = EXCLUDED.password_algorithm,
+  password_changed_at = EXCLUDED.password_changed_at,
+  updated_at = EXCLUDED.updated_at;
+
+INSERT INTO dentos_data.users (
+  id, organization_id, login_name, display_name, status, created_at, updated_at
+)
+VALUES (
+  '55555555-5555-4555-8555-555555555556',
+  '11111111-1111-4111-8111-111111111111',
+  'dev.reception',
+  'Development Reception User',
+  'active',
+  clock_timestamp(),
+  clock_timestamp()
+)
+ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO dentos_data.clinic_memberships (
+  id, clinic_id, user_id, is_default, active, created_at, updated_at
+)
+VALUES (
+  '66666666-6666-4666-8666-666666666667',
+  '22222222-2222-4222-8222-222222222222',
+  '55555555-5555-4555-8555-555555555556',
+  true,
+  true,
+  clock_timestamp(),
+  clock_timestamp()
+)
+ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO dentos_data.membership_roles (
+  membership_id, role_id, assigned_by, assigned_at, created_at, updated_at
+)
+VALUES (
+  '66666666-6666-4666-8666-666666666667',
+  '33333333-3333-4333-8333-333333333333',
+  '55555555-5555-4555-8555-555555555555',
+  clock_timestamp(),
+  clock_timestamp(),
+  clock_timestamp()
+)
+ON CONFLICT (membership_id, role_id) DO NOTHING;
+
+INSERT INTO dentos_data.user_credentials (
+  user_id, password_hash, password_algorithm, password_changed_at, created_at, updated_at
+)
+VALUES (
+  '55555555-5555-4555-8555-555555555556',
+  '$argon2id$v=19$m=19456,t=2,p=1$n74TElZUq81afB9fiXKqKQ$LY64bGgGx8T9cDpiKgXcy18A0OivnT0t9RZH/HznmYk',
+  'argon2id',
+  clock_timestamp(),
+  clock_timestamp(),
+  clock_timestamp()
+)
+ON CONFLICT (user_id) DO UPDATE SET
+  password_hash = EXCLUDED.password_hash,
+  password_algorithm = EXCLUDED.password_algorithm,
+  password_changed_at = EXCLUDED.password_changed_at,
+  updated_at = EXCLUDED.updated_at;
+
 INSERT INTO dentos_data.staff (
   id, organization_id, display_name, staff_type, active, created_at, updated_at
 )

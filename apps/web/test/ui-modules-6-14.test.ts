@@ -6,13 +6,13 @@ import {
   canOpenEncounterWorkspace,
   formatEncounterStatusLabel,
 } from "../src/config/clinical.js";
-import { buildPatientBalancePath, extractFeeScheduleOptions, formatMoney } from "../src/config/finance.js";
+import { buildPatientBalancePath, extractFeeScheduleOptions, financeTabLabel, formatMoney, buildSplitTenderRows } from "../src/config/finance.js";
 import {
   buildDueTasksPath,
   continuityTaskPatientId,
   filterDueTasksByPatient,
 } from "../src/config/comms.js";
-import { conflictResolutionLabel, staffTypeLabel } from "../src/config/system.js";
+import { conflictResolutionLabel, formatConflictValue, staffTypeLabel } from "../src/config/system.js";
 
 describe("ui modules 6-14 helpers", () => {
   it("builds encounter workspace paths", () => {
@@ -32,6 +32,8 @@ describe("ui modules 6-14 helpers", () => {
   it("builds finance paths and formats money", () => {
     assert.equal(buildPatientBalancePath("pat-1"), "/finance/patients/pat-1/balance");
     assert.match(formatMoney(1500), /1,500/);
+    assert.equal(financeTabLabel("collections"), "Collections");
+    assert.equal(buildSplitTenderRows({ methodA: "m1", amountA: 600, methodB: "m2", amountB: 400 }).length, 2);
   });
 
   it("extracts fee schedule options from items", () => {
@@ -53,5 +55,7 @@ describe("ui modules 6-14 helpers", () => {
   it("labels system configuration helpers", () => {
     assert.equal(conflictResolutionLabel("keep_local"), "Keep local");
     assert.equal(staffTypeLabel("front_office"), "front office");
+    assert.equal(formatConflictValue(null), "—");
+    assert.equal(formatConflictValue({ phone: "111" }), '{"phone":"111"}');
   });
 });
