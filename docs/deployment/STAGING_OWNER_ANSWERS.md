@@ -16,10 +16,17 @@
 | WhatsApp | **Test number only** — correct for staging |
 | Cursor | **Pro** — sufficient; not a runtime dependency |
 
+## Paid subscription approvals
+
+| Date | Approval | Service | Purpose | Status |
+|------|----------|---------|---------|--------|
+| 2026-07-22 | `APPROVE PAID SUBSCRIPTION` | **Vercel Pro** (~$20/user/month) | Commercial staging web hosting | **Deferred until go-live** — owner will use Hobby first |
+| 2026-07-22 | Owner decision | **Vercel Hobby** | First web deploy only | **Active** — upgrade to Pro before real go-live |
+
 ## Implications
 
 - **No custom domain yet** — first staging can use a temporary `*.vercel.app` address. Domain purchase waits for `APPROVE PAID SUBSCRIPTION`.
-- **Vercel Free → Pro likely required** — KlickIt is commercial software; Hobby/free is not for business use ([Vercel fair use](https://vercel.com/docs/limits/fair-use-guidelines)). Budget **~$20/month**.
+- **Vercel Free → Pro likely required** — KlickIt is commercial software; Hobby/free is not for business use ([Vercel fair use](https://vercel.com/docs/limits/fair-use-guidelines)). Budget **~$20/month**. **Owner chose Hobby for first deploy; Pro before go-live.**
 - **Option B needs a staging API host** — web on Vercel + a separate **staging demo API** (synthetic data only). This is **not** the real clinic LAN gateway exposed to the internet.
 - **Supabase Free** can host one staging cloud project (synthetic only). Upgrade to Pro (~$25/mo) later if backups/no-pause are needed.
 - **GitHub personal repo OK for now**; plan business organization before multi-customer subscriptions.
