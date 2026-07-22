@@ -21,7 +21,16 @@
 - Gateway exposes architecture boundary endpoint
 
 ### Added
-- `@klickit/sync-contracts` package for push/pull/idempotency/offline policy contracts
+- Patient registry migration batch compiled from Blueprint 01 (21 tables)
+- `@klickit/identity` and `@klickit/patients` packages
+- Gateway identity, auth, patient and migration staging APIs (Phases 17–23)
+- Synthetic seed for memberships, role permissions and patient masters
+- Milestone 3 evidence and migration staging blueprint amendment
+
+### Changed
+- `docs/CURRENT_STATUS.md` updated through Milestone 3 endpoint (Phase 23)
+- Compile script now emits patient registry migrations
+- Gateway architecture phase marker updated to 23
 - Gateway local PostgreSQL connection, clinic bootstrap and migration apply script
 - LAN discovery beacon, sync push/pull routes, conflict queues and device approval APIs
 - 72-hour offline read-only enforcement foundation

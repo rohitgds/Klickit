@@ -69,8 +69,23 @@ export function App() {
     <main className="shell">
       <header>
         <h1>{PRODUCT_NAME} Web</h1>
-        <p>Phase 12 shell — local gateway, cloud fallback, and browser mode selection.</p>
+        <p>Milestone 3 shell — workforce, patient registry and migration staging placeholders.</p>
       </header>
+
+      <section>
+        <h2>Workforce (Phase 17–18)</h2>
+        <p>Use gateway APIs `/identity/staff`, `/identity/users`, and `/security/permissions/effective` with a session token.</p>
+      </section>
+
+      <section>
+        <h2>Patient Registry (Phase 20–22)</h2>
+        <p>Use `/patients/search`, `/patients/register`, and `/patients/:id/profile` after local dev session bootstrap.</p>
+      </section>
+
+      <section>
+        <h2>Migration staging dry run (Phase 23)</h2>
+        <p>Synthetic DrKlick demographic batches only — no live DrKlick connection in development.</p>
+      </section>
 
       <section>
         <h2>Runtime mode</h2>

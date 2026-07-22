@@ -4,7 +4,7 @@
 |---|---|---|---|---|---|
 | Milestone 1 — Setup | Phase 7 | Approved | 2026-07-21 | APPROVE MILESTONE | Setup complete; local Supabase verified |
 | Milestone 2 — Gateway & Sync | Phase 16 | Approved | 2026-07-22 | APPROVE MILESTONE | Gateway, sync foundation and offline policy through Phase 16 |
-| Milestone 3 — Access & Patients | Phase 23 | Not started | — | — | |
+| Milestone 3 — Access & Patients | Phase 23 | Ready for manual review | 2026-07-22 | — | Identity, patients and synthetic migration staging |
 | Milestone 4 — Scheduler & Queue | Phase 29 | Not started | — | — | |
 | Milestone 5 — Clinical & Files | Phase 34 | Not started | — | — | |
 | Milestone 6 — Plans & Prescriptions | Phase 39 | Not started | — | — | |

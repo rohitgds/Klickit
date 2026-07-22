@@ -57,6 +57,21 @@ function extractTriggerLines(block, tableNames) {
     .join("\n");
 }
 
+function extractIndexLines(block, tableNames) {
+  const allowed = new Set(tableNames);
+  return block
+    .split("\n")
+    .filter((line) => {
+      if (!line.startsWith("CREATE INDEX")) {
+        return false;
+      }
+      const match = line.match(/ ON ([a-z_]+) /i);
+      return match && allowed.has(match[1].toLowerCase());
+    })
+    .map((line) => line.replace(/ ON ([a-z_]+) /i, " ON dentos_data.$1 "))
+    .join("\n");
+}
+
 const blocks = extractSqlBlocks(blueprint);
 const extensionsBlock = blocks[0];
 const tableBlock = blocks.find((block) => block.includes("CREATE TABLE organizations")) ?? "";
@@ -91,6 +106,36 @@ const identityTables = [
 ];
 
 const runtimeTables = ["audit_events", "outbox_events", "job_runs", "idempotency_keys"];
+
+const patientMasterTables = [
+  "patient_initials",
+  "patient_categories",
+  "patient_flags",
+  "occupations",
+  "referral_sources",
+  "fee_schedules",
+  "document_series",
+  "document_number_reservations",
+];
+
+const patientCoreTables = [
+  "patients",
+  "patient_clinics",
+  "patient_contacts",
+  "patient_addresses",
+  "patient_family_links",
+  "custom_field_definitions",
+  "patient_custom_field_values",
+  "medical_question_definitions",
+  "patient_medical_responses",
+  "allergy_catalog",
+  "patient_allergies",
+  "patient_consents",
+  "patient_merge_events",
+];
+
+const patientTables = [...patientMasterTables, ...patientCoreTables];
+const indexBlock = blocks.find((block) => block.includes("ix_patients_scope_lookup")) ?? "";
 
 mkdirSync(outputDir, { recursive: true });
 
@@ -128,6 +173,22 @@ const migrations = [
       )
       .replace(/;\s*$/, "")}\nON CONFLICT (code) DO NOTHING;\n`,
   },
+  {
+    file: "20260722100000_patient_registry_tables.sql",
+    body: `-- Generated from Blueprint 01 — patient registry foundation (Milestone 3)\n\nSET search_path = dentos_data, dentos_runtime, public;\n\n${extractTables(tableBlock, patientTables)}\n`,
+  },
+  {
+    file: "20260722101000_patient_registry_foreign_keys.sql",
+    body: `-- Generated from Blueprint 01 — patient registry foreign keys\n\nSET search_path = dentos_data, dentos_runtime, public;\n\n${extractAlterLines(fkBlock, patientTables)}\n`,
+  },
+  {
+    file: "20260722102000_patient_registry_triggers.sql",
+    body: `-- Generated from Blueprint 01 — patient registry audit triggers\n\nSET search_path = dentos_data, dentos_runtime, public;\n\n${extractTriggerLines(triggerBlock, patientTables)}\n`,
+  },
+  {
+    file: "20260722103000_patient_registry_indexes.sql",
+    body: `-- Generated from Blueprint 01 — patient registry indexes\n\nSET search_path = dentos_data, dentos_runtime, public;\n\n${extractIndexLines(indexBlock, patientTables)}\n`,
+  },
 ];
 
 for (const migration of migrations) {
@@ -140,4 +201,5 @@ const extractedRuntimeCount = runtimeTables.filter((name) => extractTableDDL(tab
 console.log(`Wrote ${migrations.length} migration files to ${outputDir}`);
 console.log(`Identity tables extracted: ${extractedIdentityCount}/${identityTables.length}`);
 console.log(`Runtime tables extracted: ${extractedRuntimeCount}/${runtimeTables.length}`);
+console.log(`Patient tables extracted: ${patientTables.filter((name) => extractTableDDL(tableBlock, name)).length}/${patientTables.length}`);
 console.log(`Permission seed bytes: ${permissionSeedBlock.length}`);

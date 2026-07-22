@@ -9,7 +9,7 @@
 | 2026-07-21 | 7 | `npx supabase start` + `npx supabase db reset` | Windows dev laptop | Pass | Local Supabase stack | Synthetic bootstrap migration applied |
 | 2026-07-21 | 8 | `npm test`, `npm run typecheck`, `npm run build` | Windows dev laptop | Pass | Architecture/provider packages + gateway `/architecture` | 13 tests passed |
 | 2026-07-21 | 10 | `npm test`, `npm run typecheck`, `npm run build` | Windows dev laptop | Pass | Gateway config/lifecycle + `/service/status` | 17 tests passed |
-| 2026-07-22 | 16 | `npm test`, `npm run typecheck`, `npm run build` | Windows dev laptop | Pass | Phases 11–16 gateway/sync/desktop/web foundations | 32 tests passed |
+| 2026-07-22 | 23 | `npm test`, `npm run typecheck`, `npm run build` | Windows dev laptop | Pass | Milestone 3 identity, patients, auth and staging APIs | 41 tests passed |
 
 ## Rules
 

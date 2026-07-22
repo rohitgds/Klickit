@@ -21,3 +21,4 @@ Record only accepted decisions. Do not place secrets here.
 | DEC-014 | 2026-07-21 | Compile Blueprint 01 SQL into ordered Supabase migrations via script | Portable rebuild and provider-neutral schema baseline | Phase 9 | Agent |
 | DEC-015 | 2026-07-22 | Milestone 2 foundation delivered through Phase 16 with gateway-local PostgreSQL, sync contracts, LAN discovery and 72-hour policy enforcement | Gateway & Sync milestone endpoint ready for manual review | Phases 11–16, Milestone 2 | Agent |
 | DEC-016 | 2026-07-22 | Milestone 2 approved after owner review | Authorizes Phase 17 within Milestone 3 | Milestone 2 | User |
+| DEC-017 | 2026-07-22 | Milestone 3 foundation delivered through Phase 23 with identity, patient registry and synthetic DrKlick staging | Access & Patients milestone endpoint ready for manual review | Phases 17–23, Milestone 3 | Agent |

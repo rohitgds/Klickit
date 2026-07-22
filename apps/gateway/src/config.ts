@@ -9,9 +9,11 @@ export interface GatewayConfig {
   logLevel: "info" | "debug" | "warn" | "error";
   serviceName: string;
   softwareVersion: string;
+  allowDevSessionBootstrap: boolean;
 }
 
 export function loadGatewayConfig(env: NodeJS.ProcessEnv = process.env): GatewayConfig {
+  const appEnv = env.APP_ENV ?? "local";
   return {
     host: env.GATEWAY_HOST ?? "127.0.0.1",
     port: Number(env.GATEWAY_PORT ?? 8787),
@@ -26,5 +28,6 @@ export function loadGatewayConfig(env: NodeJS.ProcessEnv = process.env): Gateway
     logLevel: (env.GATEWAY_LOG_LEVEL as GatewayConfig["logLevel"]) ?? "info",
     serviceName: "KlickIt Clinic Gateway",
     softwareVersion: env.KLICKIT_SOFTWARE_VERSION ?? "0.0.0",
+    allowDevSessionBootstrap: appEnv === "local",
   };
 }

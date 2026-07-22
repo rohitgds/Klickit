@@ -12,7 +12,8 @@ describe("migration baseline", () => {
     const files = readdirSync(migrationsDir).filter((name) => name.endsWith(".sql")).sort();
     assert.ok(files.includes("20260721100000_extensions_schemas_enums.sql"));
     assert.ok(files.includes("20260721107000_sync_foundation.sql"));
-    assert.equal(files.at(-1), "20260721107000_sync_foundation.sql");
+    assert.ok(files.includes("20260722100000_patient_registry_tables.sql"));
+    assert.equal(files.at(-1), "20260722104000_migration_staging_and_offline_auth.sql");
   });
 
   it("includes permission catalog seed content", () => {

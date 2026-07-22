@@ -29,6 +29,7 @@ import {
 } from "../sync/engine.js";
 import { listOpenConflicts, resolveConflict } from "../sync/conflicts.js";
 import { approveDevice, revokeDevice } from "../clinic/services.js";
+import { registerMilestone3Routes } from "./milestone3.js";
 
 export interface GatewayDependencies {
   config: GatewayConfig;
@@ -74,7 +75,7 @@ export async function registerGatewayRoutes(app: FastifyInstance, deps: GatewayD
     const policy = deps.bootstrap ? evaluateOfflineWritePolicy(deps.bootstrap.gateway) : null;
     return {
       ...base,
-      phase: 16,
+      phase: 23,
       database: dbHealth,
       offlinePolicy: policy,
       lifecycle: deps.lifecycle.state,
@@ -96,7 +97,7 @@ export async function registerGatewayRoutes(app: FastifyInstance, deps: GatewayD
 
   app.get("/architecture", async () => ({
     product: "KlickIt",
-    phase: 16,
+    phase: 23,
     runtimeMode: resolveRuntimeMode({
       gatewayReachable: true,
       cloudReachable: Boolean(deps.config.cloudSyncUrl),
@@ -252,6 +253,8 @@ export async function registerGatewayRoutes(app: FastifyInstance, deps: GatewayD
     );
     return { approved };
   });
+
+  await registerMilestone3Routes(app, deps);
 }
 
 function policyHours(deps: GatewayDependencies): number {
