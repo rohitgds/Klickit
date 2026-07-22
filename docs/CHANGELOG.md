@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+### Remediation staging milestone approved — 2026-07-22
+- Owner `APPROVE MILESTONE` (DEC-048): synthetic staging stack + UI Modules 6–14 review
+- Gateway fix: refresh in-memory read-only state after `POST /sync/cloud-sync/success`
+- Evidence: `REMEDIATION_STAGING_MILESTONE_20260722.md`, `UI_MODULES_TEST_20260722.md`
+- Release state remains **NOT READY**
+
+### Annotated tag approved — 2026-07-22
+- Tag `pre-remediation-audit-baseline` on `899032e` (owner: APPROVE TAG)
+
 ### Backup / Desktop remediation 1 — 2026-07-22
 - Real pg_dump backup + restore drill on local Supabase (BCP-001 evidence)
 - Tauri signed build still deferred pending certificate purchase approval

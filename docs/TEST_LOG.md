@@ -2,6 +2,8 @@
 
 | Date/time | Phase | Test command or manual case | Environment | Result | Evidence/location | Notes |
 |---|---:|---|---|---|---|---|
+| 2026-07-22 | — | UI Modules 6–14 retest (read-only fix + API/browser) | Local + staging | Pass (with KI-004) | `docs/remediation/evidence/UI_MODULES_TEST_20260722.md` | 14/17 API checks; odontogram finding FK bug logged |
+| 2026-07-22 | — | Staging `/health` owner check | Render API | Pass | `readOnly: false`, DB connected | Owner verified after Render restart |
 | 2026-07-22 | — | BCP-001 backup + restore drill | Local Docker Supabase | Pass | `docs/remediation/evidence/BACKUP_DRILL_20260722.md` | pg_dump 810KB; 90 permissions after restore |
 | 2026-07-22 | — | OFF-003 offline read-only drill | Local gateway + Docker Supabase | Pass | `docs/remediation/evidence/SYNC_DRILL_20260722.md` | Push blocked with 403 after enter-read-only |
 | 2026-07-22 | — | `npm run verify:migrations` | Windows + Docker Supabase | Pass | 90 permissions, 6 sync tables | Fixed `.env.local` UTF-8 BOM blocking supabase CLI |

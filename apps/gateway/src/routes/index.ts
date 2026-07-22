@@ -174,6 +174,12 @@ export async function registerGatewayRoutes(app: FastifyInstance, deps: GatewayD
   app.post("/sync/cloud-sync/success", async () => {
     const ctx = syncContext(deps);
     await recordSuccessfulCloudSync(ctx);
+    if (deps.bootstrap) {
+      const now = new Date().toISOString();
+      deps.bootstrap.gateway.lastSuccessfulCloudSyncAt = now;
+      deps.bootstrap.gateway.offlineStartedAt = null;
+      deps.bootstrap.gateway.readOnlyAt = null;
+    }
     return { ok: true };
   });
 

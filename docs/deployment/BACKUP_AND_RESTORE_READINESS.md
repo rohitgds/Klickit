@@ -12,7 +12,7 @@
 | Backup manifest API | **Implemented** | `GET /resilience/backup/manifest` |
 | Record backup run | **Implemented** | `POST /resilience/backup/run` (auth required) |
 | Encrypted off-site storage | **Not yet** | Owner decision pending |
-| Code-signed Tauri desktop | **Not yet** | Requires certificate purchase approval |
+| Code-signed Tauri desktop | **Deferred** | When SaaS/subscription sales begin — owner decision 2026-07-22 |
 
 ## Local backup (click-by-click)
 
@@ -46,7 +46,7 @@ Verifies SHA256, restores to temporary database `klickit_restore_drill`, checks 
 - [ ] Owner approves backup storage location (local disk vs cloud bucket)
 - [ ] Off-site encrypted copy workflow documented and tested
 - [ ] Rohini gateway hardware install drill
-- [ ] Code signing certificate (`APPROVE PAID SUBSCRIPTION` required)
+- [ ] Code signing certificate when SaaS/subscription sales begin (owner deferred 2026-07-22)
 
 ## Related
 

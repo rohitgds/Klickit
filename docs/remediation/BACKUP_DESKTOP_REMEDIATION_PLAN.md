@@ -62,7 +62,7 @@ Use existing `20260722160000_milestone9_resilience_tables.sql` — verify column
 
 ## Owner decisions required
 
-- [ ] Approve code signing certificate purchase (paid service — **mandatory stop**)
+- [ ] Approve code signing certificate purchase — **deferred until SaaS/subscription sales** (owner decision 2026-07-22)
 - [ ] Approve pilot hardware for gateway install test
 - [ ] Approve backup storage location (local disk vs cloud bucket)
 
