@@ -56,3 +56,6 @@ Record only accepted decisions. Do not place secrets here.
 | SYNC-DEC-02 | 2026-07-22 | OFF-001 multi-workstation drill remains **manual** with evidence template; automated OFF-003 only | LAN drill needs physical second workstation | Sync Remediation | Agent (continue sync) |
 | DEC-042 | 2026-07-22 | Owner approved **Vercel Pro** paid subscription for commercial staging web hosting (~$20/user/month) | Hobby plan not permitted for KlickIt commercial staging | Staging deployment | Owner (`APPROVE PAID SUBSCRIPTION`) |
 | DEC-043 | 2026-07-22 | Owner defers **Vercel Pro** until go-live; first deploy uses **Vercel Hobby** with upgrade before production | Cost control; owner accepts ToS risk until live | Staging deployment | Owner |
+| DEC-044 | 2026-07-22 | **DEPLOY STAGING** signed off for synthetic online demo (Vercel + Render + Supabase Mumbai); NOT production | Owner authorized staging stack after Chrome login + verification batch | Staging | Owner |
+| DEC-045 | 2026-07-22 | Local backup uses **pg_dump custom format** via Docker; restore drill verifies SHA256 + row counts | Replaces synthetic SQL stub; BCP-001 evidence | Backup Remediation 1 | Agent |
+| DEC-046 | 2026-07-22 | Tauri **code signing deferred** until owner approves certificate purchase | Mandatory stop for paid signing service | Backup/Desktop | Pending owner |

@@ -2,6 +2,25 @@
 
 ## Unreleased
 
+### Backup / Desktop remediation 1 — 2026-07-22
+- Real pg_dump backup + restore drill on local Supabase (BCP-001 evidence)
+- Tauri signed build still deferred pending certificate purchase approval
+
+### Staging deploy sign-off — 2026-07-22
+- Owner authorized DEPLOY STAGING (synthetic demo stack only, NOT production)
+- STAGING SMOKE OK recorded with Chrome login + API/local verification batch
+
+### Local verification batch — 2026-07-22
+- `npm run verify:migrations` pass after Docker ready (`.env.local` BOM stripped for Supabase CLI)
+- OFF-003 offline read-only drill pass; gateway in-memory read-only sync fix
+- Owner confirmed Chrome staging login
+
+### Online staging login verified — 2026-07-22
+- Supabase `klickit-staging`, Render `klickit-staging-api`, and Vercel web connected end-to-end
+- Fixed Render CORS (`GATEWAY_CORS_ORIGINS` was incorrectly set to `undefined`)
+- Commit `242fdff`: staging CORS fallback, Vercel `/api` proxy, login page guidance
+- Owner confirmed Password Login works at https://klickit-web-2c63.vercel.app
+
 ### Milestone 10 approved — 2026-07-22
 - Owner approved Pilot Acceptance milestone (Phases 54–55)
 - 55-phase master plan complete; remaining work is frontend UI modules and pilot go-live preparation

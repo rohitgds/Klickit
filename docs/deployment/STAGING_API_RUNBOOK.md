@@ -12,8 +12,9 @@ This is a **staging demo API**, not your real clinic LAN gateway.
 | Item | Status |
 |------|--------|
 | Web on Vercel | **Live** — https://klickit-web-2c63.vercel.app |
-| Staging API | **Not live yet** — this guide |
-| Supabase staging DB | **Not created yet** |
+| Staging API (Render) | **Live** — https://klickit-staging-api.onrender.com |
+| Supabase staging DB | **Live** — project `klickit-staging` (Mumbai), migrations + seed applied |
+| Password login online | **Verified** — owner confirmed 2026-07-22 |
 
 ---
 
@@ -182,8 +183,9 @@ These exist only in the **staging** database after seed runs.
 | Variable | Where | Purpose |
 |----------|--------|---------|
 | `APP_ENV` | Render | `staging` |
-| `DATABASE_URL` | Render secret | Supabase Postgres |
-| `GATEWAY_CORS_ORIGINS` | Render | Vercel URL allowed in browser |
+| `DATABASE_URL` | Render secret | Supabase direct URL (legacy; IPv6 may fail from Render free tier) |
+| `GATEWAY_DATABASE_URL` | Render secret | **Use Supabase Session pooler (IPv4)** — overrides `DATABASE_URL` for DB connectivity |
+| `GATEWAY_CORS_ORIGINS` | Render / `render.yaml` | Must be `https://klickit-web-2c63.vercel.app` — never the literal text `undefined` |
 | `KLICKIT_CLINIC_CODE` | Render | `DEV` (matches seed) |
 | `KLICKIT_GATEWAY_CODE` | Render | `DEV-GW-01` (matches seed) |
 | `VITE_API_BASE` | Vercel | Render API URL at build time |

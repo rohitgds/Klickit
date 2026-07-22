@@ -2,6 +2,12 @@
 
 | Date/time | Phase | Test command or manual case | Environment | Result | Evidence/location | Notes |
 |---|---:|---|---|---|---|---|
+| 2026-07-22 | — | BCP-001 backup + restore drill | Local Docker Supabase | Pass | `docs/remediation/evidence/BACKUP_DRILL_20260722.md` | pg_dump 810KB; 90 permissions after restore |
+| 2026-07-22 | — | OFF-003 offline read-only drill | Local gateway + Docker Supabase | Pass | `docs/remediation/evidence/SYNC_DRILL_20260722.md` | Push blocked with 403 after enter-read-only |
+| 2026-07-22 | — | `npm run verify:migrations` | Windows + Docker Supabase | Pass | 90 permissions, 6 sync tables | Fixed `.env.local` UTF-8 BOM blocking supabase CLI |
+| 2026-07-22 | — | Staging API smoke (login, dashboard, patients, scheduler) | Render + Supabase | Pass | `docs/remediation/evidence/STAGING_SMOKE_20260722.md` | Empty patient/booking lists OK — masters only in seed |
+| 2026-07-22 | — | Staging Password Login (`dev.admin`) | Vercel + Render + Supabase | Pass | https://klickit-web-2c63.vercel.app | Owner verified; synthetic data only; Demo Login not used online |
+| 2026-07-22 | — | `npm test` (gateway) before staging CORS commit | Windows dev laptop | Pass | 59 tests | Commit `242fdff` |
 | 2026-07-21 | 1 | `powershell -ExecutionPolicy Bypass -File .\scripts\verify-blueprints.ps1` | Windows dev laptop | Pass | All 10 blueprint files OK | SHA-256 matches `blueprints/manifest.json` |
 | 2026-07-21 | 4 | `npm run verify:toolchain` | Windows dev laptop | Pass | Rust, Docker CLI, C++ Build Tools installed | Docker engine must be started manually in Docker Desktop |
 | 2026-07-21 | 5 | Cursor memory file validation | Workspace | Pass | `docs/CURSOR_MEMORY_CHECK.md` | AGENTS, rules, commands, portability docs present |

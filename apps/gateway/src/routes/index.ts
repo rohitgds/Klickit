@@ -180,6 +180,10 @@ export async function registerGatewayRoutes(app: FastifyInstance, deps: GatewayD
   app.post("/sync/offline/enter-read-only", async () => {
     const ctx = syncContext(deps);
     await markGatewayReadOnly(ctx);
+    if (deps.bootstrap) {
+      deps.bootstrap.gateway.readOnlyAt =
+        deps.bootstrap.gateway.readOnlyAt ?? new Date().toISOString();
+    }
     return { ok: true, readOnly: true };
   });
 

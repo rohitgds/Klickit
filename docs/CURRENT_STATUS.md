@@ -16,18 +16,30 @@
 ## Active remediation branch
 
 - Branch: `remediation/pilot-safety`
+- Latest commit: pending — staging sign-off + backup/desktop remediation 1
 - Baseline commit: `899032e` — UI Modules 1–14 + audit tooling fix + remediation plans
 - Annotated tag `pre-remediation-audit-baseline`: **pending owner approval**
 
+## Online staging stack (synthetic data only — signed off 2026-07-22)
+
+| Layer | URL / ID | Status |
+|-------|----------|--------|
+| Web (Vercel) | https://klickit-web-2c63.vercel.app | **Live — DEPLOY STAGING signed off** |
+| API (Render) | https://klickit-staging-api.onrender.com | **Live** (free tier; cold start ~30s) |
+| Database (Supabase) | `klickit-staging` / `yazwehoetblzbtyrgjwu` (Mumbai) | **Live** — 43 migrations + seed |
+| End-to-end login | Password Login `dev.admin` | **Owner verified (Chrome)** |
+
+**Evidence:** `docs/remediation/evidence/STAGING_DEPLOY_SIGNOFF_20260722.md`
+
 ## Critical remediation tracks (plans in `docs/remediation/`)
 
-| Track | Plan | Priority |
-|-------|------|----------|
-| Security | `SECURITY_REMEDIATION_PLAN.md` | P0 — fixed-salt passwords, session/authz validation |
-| Finance | `FINANCE_REMEDIATION_PLAN.md` | P0 — FIN-DEC closure, UI, reconciliation |
-| Sync | `SYNC_REMEDIATION_PLAN.md` | P1 — live OFF/SYNC drills |
-| Backup / Desktop | `BACKUP_DESKTOP_REMEDIATION_PLAN.md` | P1 — real backup, signed Tauri |
-| Test / CI | `TEST_REMEDIATION_PLAN.md` | P1 — migration verify exit codes, E2E |
+| Track | Plan | Priority | Status |
+|-------|------|----------|--------|
+| Security | `SECURITY_REMEDIATION_PLAN.md` | P0 | Delivered (local) |
+| Finance | `FINANCE_REMEDIATION_PLAN.md` | P0 | Delivered (local) |
+| Sync | `SYNC_REMEDIATION_PLAN.md` | P1 | Delivered (local) + OFF-003 drill pass |
+| Backup / Desktop | `BACKUP_DESKTOP_REMEDIATION_PLAN.md` | P1 | **In progress** — pg_dump + restore drill pass |
+| Test / CI | `TEST_REMEDIATION_PLAN.md` | P1 | Migration verify pass |
 
 ## Part D — Security Remediation 1
 
@@ -39,20 +51,22 @@
 
 ## Sync Remediation 1
 
-**Status: DELIVERED (local)** — SYNC-001..004 automated PG tests, dead-letter queue, sync status API, conflict UI with local/cloud values, OFF-003 drill script. Evidence: `docs/remediation/SYNC_REMEDIATION_EVIDENCE.md`.
+**Status: DELIVERED (local)** — SYNC-001..004 automated PG tests, dead-letter queue, sync status API, conflict UI with local/cloud values, OFF-003 drill script. Evidence: `docs/remediation/SYNC_REMEDIATION_EVIDENCE.md`, `SYNC_DRILL_20260722.md`.
+
+## Backup / Desktop Remediation 1
+
+**Status: IN PROGRESS** — Real `pg_dump` backup + restore drill on local Supabase. Tauri signed build deferred (certificate purchase). Evidence: `BACKUP_DRILL_20260722.md`, `docs/deployment/BACKUP_AND_RESTORE_READINESS.md`.
 
 ## Next safe step
 
-1. Start Docker Desktop and run `npm run verify:migrations` (must exit 0)
-2. Run `npx supabase db reset` then gateway tests for security + sync PG scenarios
-3. Run OFF-003 drill: `powershell -File scripts/drill-offline-readonly.ps1` and record in `docs/remediation/evidence/SYNC_DRILL_20260722.md`
-4. Continue **Backup / Desktop Remediation** track (`BACKUP_DESKTOP_REMEDIATION_PLAN.md`)
-5. Reply **`APPROVE TAG`** to create annotated tag `pre-remediation-audit-baseline`
-6. Reply **`APPROVE PUSH`** to push `remediation/pilot-safety` to GitHub
+1. Review UI Modules 6–14 on staging (synthetic data)
+2. Reply **`APPROVE TAG`** to create annotated tag `pre-remediation-audit-baseline`
+3. Optional: `tauri build` manual checklist when Rust toolchain ready (unsigned)
+4. Owner decisions: backup storage location, pilot hardware, code signing cert
 
 ## Do not proceed without approval
 
-- Push to remote
 - Production deployment or credentials changes
 - Live WhatsApp / real patient data
+- Paid certificate purchase or code signing
 - Deleting credential data

@@ -1,7 +1,7 @@
 # Backup and Desktop Remediation Plan
 
 **Track:** Critical remediation — P1  
-**Status:** Plan only  
+**Status:** In progress — backup scripts delivered 2026-07-22  
 **Last updated:** 2026-07-22
 
 ## Blueprint requirements
@@ -68,8 +68,8 @@ Use existing `20260722160000_milestone9_resilience_tables.sql` — verify column
 
 ## Definition of done
 
-- [ ] `run-backup.ps1` produces verifiable pg_dump + manifest
-- [ ] Restore drill passes on synthetic database with evidence log
+- [x] `run-backup.ps1` produces verifiable pg_dump + manifest
+- [x] Restore drill passes on synthetic database with evidence log
 - [ ] Tauri `tauri build` succeeds in CI or documented manual checklist
-- [ ] `39_BACKUP_AND_RESTORE_READINESS.md` updated
-- [ ] BCP-001 acceptance evidence attached
+- [x] `docs/deployment/BACKUP_AND_RESTORE_READINESS.md` updated
+- [x] BCP-001 acceptance evidence attached (`BACKUP_DRILL_20260722.md`)

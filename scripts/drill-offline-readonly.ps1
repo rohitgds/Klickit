@@ -1,4 +1,4 @@
-# KlickIt OFF-003 drill helper — simulates 72-hour offline read-only policy (synthetic only).
+# KlickIt OFF-003 drill helper - simulates 72-hour offline read-only policy (synthetic only).
 # Requires: gateway running locally, Docker/Supabase optional for PG-backed gateway.
 
 param(
@@ -13,7 +13,7 @@ Write-Host ""
 
 Write-Host "Step 1: Enter read-only mode via gateway endpoint..."
 try {
-  $enter = Invoke-RestMethod -Method Post -Uri "$GatewayUrl/sync/offline/enter-read-only" -ContentType "application/json"
+  $enter = Invoke-RestMethod -Method Post -Uri "$GatewayUrl/sync/offline/enter-read-only" -ContentType "application/json" -Body "{}"
   Write-Host "  readOnly: $($enter.readOnly)"
 } catch {
   Write-Host "  FAILED: $_" -ForegroundColor Red
@@ -46,7 +46,7 @@ try {
   Write-Host "  pendingOutbox: $($status.pendingOutbox)"
   Write-Host "  readOnly: $($status.offlinePolicy.readOnly)"
 } catch {
-  Write-Host "  WARN: /sync/status unavailable — $_" -ForegroundColor Yellow
+  Write-Host "  WARN: /sync/status unavailable - $_" -ForegroundColor Yellow
 }
 
 Write-Host ""

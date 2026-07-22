@@ -1,47 +1,40 @@
-# Sync drill evidence template
+# OFF-003 offline read-only drill — 2026-07-22
 
-**Date:** 2026-07-22  
-**Environment:** Synthetic local gateway only — **not production**  
-**Operator:** ____________________
+**Drill code:** OFF-003  
+**Environment:** Local gateway + Docker Supabase (synthetic data only)  
+**Gateway:** http://127.0.0.1:8787  
+**Branch:** `remediation/pilot-safety`
 
-## Scenarios
+## Preconditions
 
-| ID | Scenario | Result | Timestamp (IST) | Notes |
-|----|----------|--------|-----------------|-------|
-| OFF-001 | Multi-workstation offline writes | Pending | | Requires two LAN workstations |
-| OFF-002 | Reconnect after offline period | Pending | | |
-| OFF-003 | 72h read-only write rejection | | | Run `scripts/drill-offline-readonly.ps1` |
-| SYNC-001 | Idempotent push replay | Automated | | `sync-integration.test.ts` |
-| SYNC-002 | Same-field conflict queue | Automated | | |
-| SYNC-003 | Different-field auto-merge | Automated | | |
-| SYNC-004 | Duplicate patients preserved | Automated | | |
+- Docker Desktop running
+- `npx supabase db reset` succeeded via `npm run verify:migrations`
+- Local gateway: `npm run dev` in `apps/gateway` (`APP_ENV=local`)
 
-## OFF-003 drill steps (click-by-click)
+## Results
 
-1. Start Docker Desktop.
-2. Open PowerShell in the KlickIt project folder.
-3. Run `npx supabase start` then `npx supabase db reset` if gateway uses local PG.
-4. Start gateway: `npm run dev --workspace @klickit/gateway`
-5. Run drill: `powershell -File scripts/drill-offline-readonly.ps1`
-6. Confirm output shows **403** on push and `readOnly: true` in status.
-7. Paste command output below.
+| Step | Expected | Actual | Result |
+|------|----------|--------|--------|
+| 1. `POST /sync/offline/enter-read-only` | `readOnly: true` | `readOnly: True` | Pass |
+| 2. `POST /sync/push` while read-only | HTTP 403 | HTTP 403 | Pass |
+| 3. `GET /sync/status` | `readOnly: true` | `readOnly: True`, `pendingOutbox: 1` | Pass |
 
-## Command output
+**Script:** `scripts/drill-offline-readonly.ps1`
 
-```
-(paste drill script output here)
-```
+## Fixes applied same session
 
-## UI verification
+1. Drill script: send `{}` body for enter-read-only; replace em-dash characters breaking PowerShell parse
+2. Gateway: refresh in-memory `bootstrap.gateway.readOnlyAt` after enter-read-only so push enforcement matches DB
 
-- [ ] Shell sync badge shows pending/failed/conflict counts when non-zero
-- [ ] System Configuration → Sync Conflicts shows local vs cloud values
-- [ ] Resolve buttons mark conflict resolved
+## Related verification (same session)
 
-## Staging cloud drill (blocked)
+| Check | Result |
+|-------|--------|
+| `npm run verify:migrations` | Pass (90 permissions, 6 sync tables) |
+| Staging Chrome login | Pass (owner confirmed) |
+| Staging API smoke | Pass — see `STAGING_SMOKE_20260722.md` |
 
-Staging Supabase sync target **not approved** — do not use production credentials.
+## Notes
 
-## Screenshots
-
-Attach to local evidence folder (not Git): `audit-export/sync-drills/`
+- `.env.local` had a UTF-8 BOM that blocked `supabase db reset`; BOM stripped (file not committed)
+- Agent shell needed Docker added to PATH: `C:\Program Files\Docker\Docker\resources\bin`
