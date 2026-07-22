@@ -1,0 +1,1 @@
+Record the user's feedback in `docs/USER_FEEDBACK.md`, map it to requirements and affected phase, implement the agreed correction, rerun tests, update logs, and ask the user to retest. Do not continue to the next milestone without approval.

@@ -1,0 +1,1 @@
+Do not touch production. Follow `docs/REBUILD_FROM_ZERO_RUNBOOK.md` in a clean local or disposable environment. Record every undocumented prerequisite, dashboard step, missing secret name, migration failure and provider dependency.

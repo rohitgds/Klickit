@@ -1,0 +1,13 @@
+---
+description: Pabbly and WhatsApp integration safety
+globs: ["**/*message*", "**/*whatsapp*", "**/*pabbly*", "services/**/integrations/**"]
+alwaysApply: false
+---
+
+- Pabbly is a communication provider, not the patient or financial source of truth.
+- Verify and deduplicate provider webhooks.
+- Respect channel and purpose consent.
+- Never send development messages to patients.
+- Use only the owner and specifically approved staff test numbers.
+- Do not connect the live number until the user approves a ready test workflow.
+- Provider downtime must not block clinical work.

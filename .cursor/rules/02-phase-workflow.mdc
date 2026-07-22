@@ -1,0 +1,13 @@
+---
+description: Small-phase workflow, progress, commits and milestone reviews
+globs:
+alwaysApply: true
+---
+
+- Work on one numbered phase at a time.
+- Select the next incomplete phase unless a dependency blocker requires prerequisite work.
+- Run tests and make at most three meaningful repair attempts.
+- Update `CURRENT_STATUS`, `TEST_LOG`, `CHANGELOG`, `KNOWN_ISSUES` and phase evidence.
+- Commit after each successful small phase.
+- Do not push after every phase; push only after an approved milestone.
+- At milestones provide screenshots where supported and a click-by-click test checklist.

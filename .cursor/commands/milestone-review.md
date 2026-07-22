@@ -1,0 +1,1 @@
+Do not start the next milestone. Verify all phases in the current milestone, run the milestone test suite, open the application, capture screenshots where supported, and provide a click-by-click test checklist. Record feedback. Wait for the exact phrase `APPROVE MILESTONE`.

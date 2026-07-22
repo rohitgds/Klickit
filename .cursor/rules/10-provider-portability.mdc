@@ -1,0 +1,17 @@
+---
+description: Provider, account, rebuild, resale and local-stack portability
+globs:
+alwaysApply: true
+---
+
+- KlickIt must remain rebuildable, transferable, sellable and provider-replaceable.
+- This applies to cloud, AI/MCP, Git, CI, hosting, database, storage, auth, realtime, jobs, communications, monitoring, domain, desktop shell, gateway, OS and hardware assumptions.
+- Keep domain/UI code behind internal provider interfaces where practical.
+- Use provider-neutral object keys, event contracts and configuration schemas.
+- Keep migrations, functions, workflows, build commands and infrastructure configuration in Git.
+- Important setup must not exist only in a provider dashboard.
+- Cursor and MCP must not be required to build or operate KlickIt.
+- Update provider inventory, account transfer and exit documentation whenever a service is added.
+- Ask before accepting material lock-in.
+- Do not falsely claim that every migration has identical effort.
+- Before production, run clean rebuild, database restore, file restore and provider-exit checks.

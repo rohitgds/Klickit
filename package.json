@@ -1,0 +1,24 @@
+{
+  "name": "klickit",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Offline-first multi-clinic dental operations platform",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "npm run build --workspace @klickit/domain && npm run build --workspace @klickit/providers && npm run build --workspace @klickit/sync-contracts && npm run build --workspace @klickit/gateway && npm run build --workspace @klickit/web",
+    "test": "npm run build --workspace @klickit/domain --workspace @klickit/providers --workspace @klickit/sync-contracts && npm run test --workspaces --if-present && npm run test:migrations",
+    "typecheck": "npm run build --workspace @klickit/domain --workspace @klickit/providers --workspace @klickit/sync-contracts && npm run typecheck --workspaces --if-present",
+    "verify:blueprints": "powershell -ExecutionPolicy Bypass -File ./scripts/verify-blueprints.ps1",
+    "verify:toolchain": "powershell -ExecutionPolicy Bypass -File ./scripts/verify-toolchain.ps1",
+    "verify:migrations": "powershell -ExecutionPolicy Bypass -File ./scripts/verify-migrations.ps1",
+    "compile:migrations": "node ./scripts/compile-migrations-from-blueprint.mjs",
+    "verify": "npm run verify:blueprints && npm run verify:toolchain",
+    "test:migrations": "node --test scripts/test/migration-baseline.test.mjs"
+  }
+}

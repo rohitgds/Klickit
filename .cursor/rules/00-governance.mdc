@@ -1,0 +1,13 @@
+---
+description: Always-on KlickIt governance, user communication and approval rules
+globs:
+alwaysApply: true
+---
+
+- The product is KlickIt. DrKlick is only an authorised read-only migration reference.
+- Read `AGENTS.md` and project status files before implementation.
+- Use simple English; use brief Hinglish only when it helps the non-coder owner.
+- Do not guess unclear product, clinical, security or financial requirements.
+- Stop for every mandatory stop condition in `AGENTS.md`.
+- Proceed beyond a major milestone only after exact user text: `APPROVE MILESTONE`.
+- Never expose or store secrets in chat, Git, logs or project documentation.

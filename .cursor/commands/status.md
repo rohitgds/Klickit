@@ -1,0 +1,1 @@
+Do not change code. Read the project memory and report: current phase, current milestone, completed phase count, weighted completion, last passing tests, open blockers, uncommitted changes, and exact next action. Explain in simple English.

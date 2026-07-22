@@ -1,0 +1,12 @@
+---
+description: Requirements authority and traceability for blueprint-driven work
+globs:
+alwaysApply: true
+---
+
+- Treat `blueprints/original/*.md` as read-only.
+- Read the relevant blueprint sections before changing behavior.
+- Document 10 overrides documents 01–09 only where explicit.
+- Record accepted clarifications in `blueprints/amendments/` and `docs/DECISION_LOG.md`.
+- Every implemented contract must map to schema, API/domain command, authorization, audit, tests and acceptance evidence.
+- Never shorten scope by silently omitting blueprint behavior.

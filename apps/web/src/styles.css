@@ -1,0 +1,22 @@
+:root {
+  color: #102a43;
+  background: #f7fafc;
+  font-family: Segoe UI, Arial, sans-serif;
+}
+
+body {
+  margin: 0;
+}
+
+.shell {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+pre {
+  background: #ffffff;
+  border: 1px solid #d9e2ec;
+  padding: 12px;
+  overflow: auto;
+}

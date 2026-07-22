@@ -1,0 +1,1 @@
+Do not deploy. Run the relevant release gate: tests, security, migrations, reconciliation, secret scan, blueprint traceability, backup/restore evidence and known issues. Produce a pass/fail report and list every unmet condition. Production remains blocked without explicit approval.

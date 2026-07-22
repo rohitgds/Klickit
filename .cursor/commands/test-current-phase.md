@@ -1,0 +1,1 @@
+Run the automated tests relevant to the current phase, then run broader regression checks justified by changed contracts. Do not weaken tests. Record results in `docs/TEST_LOG.md`. If user-facing, provide a simple click-by-click manual test checklist.

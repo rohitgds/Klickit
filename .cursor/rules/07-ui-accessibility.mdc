@@ -1,0 +1,12 @@
+---
+description: KlickIt dense UI, accessibility and non-generic interaction rules
+globs: ["apps/web/**", "packages/ui/**", "packages/printing/**"]
+alwaysApply: false
+---
+
+- Follow the dense application-shell contracts in blueprint 06.
+- Avoid generic card-dashboard templates, excessive whitespace, decorative gradients and oversized hero UI.
+- Keep keyboard workflows, visible focus, text labels and accessibility semantics.
+- Never rely on color alone.
+- English UI first; selected patient messages may be Hindi.
+- Show local/cloud mode, active clinic, last sync, pending, failed and conflict states.

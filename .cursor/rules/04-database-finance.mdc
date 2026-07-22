@@ -1,0 +1,13 @@
+---
+description: Database and financial integrity requirements
+globs: ["**/*.sql", "supabase/**", "services/**", "packages/domain/**"]
+alwaysApply: false
+---
+
+- PostgreSQL 16+.
+- Use UUID internal identifiers and numeric monetary columns; never floating-point money.
+- Derive organization and clinic from authenticated server context.
+- Posted clinical and financial records are reversed, voided or superseded, not hard-deleted.
+- Use explicit transactions, row locks, idempotency and immutable audit.
+- Preserve separate facts for bills, collections, allocations, advances, exposure, refunds and reversals.
+- Do not implement uncertain financial behavior without a decision record.

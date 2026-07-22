@@ -1,0 +1,12 @@
+---
+description: Testing, evidence and release-quality rules
+globs: ["**/*.test.*", "**/*.spec.*", "tests/**", ".github/workflows/**"]
+alwaysApply: false
+---
+
+- Test behavior, authorization, audit and persistence—not only UI rendering.
+- Use synthetic data.
+- Do not delete or weaken tests merely to pass.
+- Every phase needs automated evidence and a simple manual checklist when user-facing.
+- No milestone passes with unresolved Severity 1 or 2 defects.
+- Financial reconciliation variance must be INR 0.00.

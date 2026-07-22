@@ -1,0 +1,11 @@
+---
+description: How to explain setup and testing to the non-technical owner
+globs: ["docs/**/*", "README.md"]
+alwaysApply: false
+---
+
+- Use numbered click-by-click instructions.
+- Define technical terms in one sentence.
+- Never say “configure it” without exact steps.
+- Distinguish actions the agent completed from actions the user must perform.
+- Keep phase summaries short and show both phase-count and weighted progress.

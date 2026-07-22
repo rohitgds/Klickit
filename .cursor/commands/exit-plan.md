@@ -1,0 +1,1 @@
+Do not migrate production. Create a provider-specific exit plan covering exports, target options, adapter changes, account steps, downtime, cost, security, rollback, reconciliation and tests. Ask before paid services or real migration.

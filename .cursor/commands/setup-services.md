@@ -1,0 +1,1 @@
+Review `docs/SETUP_AND_SECRETS_CHECKLIST.md`. Identify only the next service connection genuinely required. Explain account, plan, CLI/MCP, permissions, cost possibility, secret handling and exact user steps. Stop before login, secret entry, MCP installation, paid purchase, administrator command or production action until approved.

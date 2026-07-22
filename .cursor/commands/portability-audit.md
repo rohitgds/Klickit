@@ -1,0 +1,1 @@
+Do not change providers or production. Audit provider-specific code, dashboard-only configuration, account ownership, build reproducibility, exports, storage keys, auth, realtime, messaging, CI, desktop, gateway, secrets and licenses. Update the provider inventory, exit plan, risk register and test plan. Explain lock-in simply.

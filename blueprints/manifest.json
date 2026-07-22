@@ -1,0 +1,52 @@
+[
+  {
+    "file": "blueprints/original/01_database_schema.md",
+    "sha256": "6a5cc78c0caa6a16540ff6756da11116bb628cedd7c782ad62b2f95023787cce",
+    "bytes": 436008
+  },
+  {
+    "file": "blueprints/original/02_core_workflows_logic.md",
+    "sha256": "e381d9dea11f98930940c47b4c768f9a80c1538388dad629413337ca8291feea",
+    "bytes": 122792
+  },
+  {
+    "file": "blueprints/original/03_billing_and_ledger_math.md",
+    "sha256": "19ce89ff678163dfe6fb5abe43023f39d67cd43607aef3ff37b8da3402e6e98c",
+    "bytes": 56466
+  },
+  {
+    "file": "blueprints/original/04_reporting_analytics_queries.md",
+    "sha256": "6a4cafc2eb6af0fbe326f8dc68067590582678fbfb7cd377c18811c0db3c0cf9",
+    "bytes": 534097
+  },
+  {
+    "file": "blueprints/original/05_system_architecture_stack.md",
+    "sha256": "4a6d5c683179b8f8553c6cda85bd9e2f5c7e964f4c801f0aa6e532f788d5f0c3",
+    "bytes": 75834
+  },
+  {
+    "file": "blueprints/original/06_ui_and_menu_hierarchy.md",
+    "sha256": "7d383625bd04dd2a753ba663a9f62331d4865718fb67552aeb8e4898ada0b991",
+    "bytes": 222698
+  },
+  {
+    "file": "blueprints/original/07_acceptance_criteria.md",
+    "sha256": "29a2ec73f45e028f7491d910dd8591e0c58b9abf8b9fc174ddce6602b1c9990b",
+    "bytes": 1312049
+  },
+  {
+    "file": "blueprints/original/08_live_screen_parity_audit.md",
+    "sha256": "661261987bc4539a85604595302440eb07b42756a46ef44a96c81da4de8693e5",
+    "bytes": 25480
+  },
+  {
+    "file": "blueprints/original/09_zero_shortcut_expansion_log.md",
+    "sha256": "685b858c99a20c6e32ec7e0dc12854a45c4384421ed17d45196dcaf11b03fed9",
+    "bytes": 7558
+  },
+  {
+    "file": "blueprints/original/10_klickit_offline_first_roadmap.md",
+    "sha256": "35b2c9c4b01c63e0521977ef5f04e8b4fbc4905aff840b6d7aae9583daae4ad6",
+    "bytes": 44424
+  }
+]

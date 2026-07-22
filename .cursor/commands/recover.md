@@ -1,0 +1,1 @@
+Stop feature work. Inspect Git status, last successful phase, logs, database state and backups. Explain the problem simply. Propose the safest reversible recovery plan. Do not reset, delete, rewrite history, restore, migrate or change production without approval.

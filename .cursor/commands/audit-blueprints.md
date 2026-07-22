@@ -1,0 +1,1 @@
+Do not implement product features. Verify all ten original blueprint files and their hashes. Read the relevant authority and conflict files. Identify contradictions, missing traceability, outdated DentOS naming, and decisions that document 10 overrides. Record findings without editing originals.

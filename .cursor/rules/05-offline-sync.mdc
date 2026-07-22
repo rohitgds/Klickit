@@ -1,0 +1,13 @@
+---
+description: Clinic gateway, offline operation and synchronization invariants
+globs: ["services/sync-engine/**", "services/local-*/**", "apps/desktop/**", "packages/sync-contracts/**"]
+alwaysApply: false
+---
+
+- The clinic gateway is the operational authority during an internet outage.
+- Use transactional outbox/inbox, event IDs, idempotency keys, versions and cursors.
+- Never use blind table copying or generic last-write-wins for clinical/financial data.
+- Different-field edits may merge; same-field conflicts require review.
+- One failed sync item must not block unrelated items.
+- Enforce read-only mode after 72 hours without successful cloud sync.
+- Test interruption, replay, duplicate events and cross-clinic conflicts.

@@ -1,0 +1,43 @@
+# Secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.pfx
+*.p12
+*.key
+secrets/
+credentials/
+
+# Patient and production data
+patient-data/
+real-data/
+exports/
+backups/
+*.backup
+*.dump
+*.dmp
+
+# Local databases and containers
+supabase/.temp/
+supabase/.branches/
+postgres-data/
+docker-data/
+
+# Dependencies/build
+node_modules/
+dist/
+build/
+target/
+coverage/
+playwright-report/
+test-results/
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/settings.local.json
+
+# Logs
+*.log
+logs/
