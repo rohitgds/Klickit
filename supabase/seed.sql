@@ -115,6 +115,16 @@ WHERE p.code IN (
   'document.view',
   'document.upload',
   'document.delete_draft',
+  'care_plan.create',
+  'care_plan.edit',
+  'treatment_bundle.manage',
+  'clinical_case.create',
+  'medication_order.view',
+  'medication_order.create',
+  'medication_order.edit_draft',
+  'medication_order.sign',
+  'medication_order.void',
+  'fee_statement.print',
   'audit.view'
 )
 ON CONFLICT (role_id, permission_id) DO NOTHING;
@@ -343,6 +353,118 @@ VALUES (
   'CARIES',
   'Dental Caries',
   true,
+  clock_timestamp(),
+  clock_timestamp()
+)
+ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO dentos_data.medication_domains (
+  id, organization_id, code, name, display_order, active, created_at, updated_at
+)
+VALUES (
+  '888888a1-8888-48a1-88a1-8888888888a1',
+  '11111111-1111-4111-8111-111111111111',
+  'ANALGESIC',
+  'Analgesic',
+  1,
+  true,
+  clock_timestamp(),
+  clock_timestamp()
+)
+ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO dentos_data.active_ingredient_catalog (
+  id, organization_id, code, name, active, created_at, updated_at
+)
+VALUES (
+  '888888a2-8888-48a2-88a2-8888888888a2',
+  '11111111-1111-4111-8111-111111111111',
+  'PARACETAMOL',
+  'Paracetamol',
+  true,
+  clock_timestamp(),
+  clock_timestamp()
+)
+ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO dentos_data.administration_patterns (
+  id, organization_id, code, label, take_text, frequency, duration_value, duration_period, instructions, active, created_at, updated_at
+)
+VALUES (
+  '888888a3-8888-48a3-88a3-8888888888a3',
+  '11111111-1111-4111-8111-111111111111',
+  'TAB-BD-3D',
+  'Tablet twice daily for 3 days',
+  '1 tablet after food',
+  'twice daily',
+  3,
+  'days',
+  'After meals',
+  true,
+  clock_timestamp(),
+  clock_timestamp()
+)
+ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO dentos_data.medication_catalog (
+  id, organization_id, primary_domain_id, active_ingredient_id, brand_name, strength, dosage_form,
+  default_administration_pattern_id, active, created_at, updated_at
+)
+VALUES (
+  '888888a4-8888-48a4-88a4-8888888888a4',
+  '11111111-1111-4111-8111-111111111111',
+  '888888a1-8888-48a1-88a1-8888888888a1',
+  '888888a2-8888-48a2-88a2-8888888888a2',
+  'Dolo 650',
+  '650 mg',
+  'tablet',
+  '888888a3-8888-48a3-88a3-8888888888a3',
+  true,
+  clock_timestamp(),
+  clock_timestamp()
+)
+ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO dentos_data.medication_ingredient_links (
+  id, medication_id, active_ingredient_id, sequence_no, active, created_at, updated_at
+)
+VALUES (
+  '888888a5-8888-48a5-88a5-8888888888a5',
+  '888888a4-8888-48a4-88a4-8888888888a4',
+  '888888a2-8888-48a2-88a2-8888888888a2',
+  1,
+  true,
+  clock_timestamp(),
+  clock_timestamp()
+)
+ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO dentos_data.allergy_ingredient_rules (
+  id, allergy_id, active_ingredient_id, interaction_level, warning_text, active, created_at, updated_at
+)
+VALUES (
+  '888888a6-8888-48a6-88a6-8888888888a6',
+  '88888886-8888-4888-8888-888888888886',
+  '888888a2-8888-48a2-88a2-8888888888a2',
+  'warn',
+  'Penicillin-class caution for paracetamol combination products',
+  true,
+  clock_timestamp(),
+  clock_timestamp()
+)
+ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO dentos_data.clinic_settings (
+  id, organization_id, clinic_id, group_code, key, value_json, value_schema_version, created_at, updated_at
+)
+VALUES (
+  '888888a7-8888-48a7-88a7-8888888888a7',
+  '11111111-1111-4111-8111-111111111111',
+  '22222222-2222-4222-8222-222222222222',
+  'document_output',
+  'care_plan_a4',
+  '{"pageSize":"A4","orientation":"portrait","showLogo":true,"headerText":"Care Plan","footerText":"KlickIt Development Clinic"}'::jsonb,
+  1,
   clock_timestamp(),
   clock_timestamp()
 )

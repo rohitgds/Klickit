@@ -1,0 +1,51 @@
+-- Generated from Blueprint 01 — plan and prescription audit triggers
+
+SET search_path = dentos_data, dentos_runtime, public;
+
+CREATE TRIGGER trg_clinic_settings_touch BEFORE UPDATE ON dentos_data.clinic_settings FOR EACH ROW EXECUTE FUNCTION dentos_runtime.touch_mutable_row();
+CREATE TRIGGER trg_clinic_settings_audit AFTER INSERT OR UPDATE OR DELETE ON dentos_data.clinic_settings FOR EACH ROW EXECUTE FUNCTION dentos_runtime.write_audit_event();
+CREATE TRIGGER trg_medication_domains_touch BEFORE UPDATE ON dentos_data.medication_domains FOR EACH ROW EXECUTE FUNCTION dentos_runtime.touch_mutable_row();
+CREATE TRIGGER trg_medication_domains_audit AFTER INSERT OR UPDATE OR DELETE ON dentos_data.medication_domains FOR EACH ROW EXECUTE FUNCTION dentos_runtime.write_audit_event();
+CREATE TRIGGER trg_care_plans_touch BEFORE UPDATE ON dentos_data.care_plans FOR EACH ROW EXECUTE FUNCTION dentos_runtime.touch_mutable_row();
+CREATE TRIGGER trg_care_plans_audit AFTER INSERT OR UPDATE OR DELETE ON dentos_data.care_plans FOR EACH ROW EXECUTE FUNCTION dentos_runtime.write_audit_event();
+CREATE TRIGGER trg_care_plan_stages_touch BEFORE UPDATE ON dentos_data.care_plan_stages FOR EACH ROW EXECUTE FUNCTION dentos_runtime.touch_mutable_row();
+CREATE TRIGGER trg_care_plan_stages_audit AFTER INSERT OR UPDATE OR DELETE ON dentos_data.care_plan_stages FOR EACH ROW EXECUTE FUNCTION dentos_runtime.write_audit_event();
+CREATE TRIGGER trg_care_plan_services_touch BEFORE UPDATE ON dentos_data.care_plan_services FOR EACH ROW EXECUTE FUNCTION dentos_runtime.touch_mutable_row();
+CREATE TRIGGER trg_care_plan_services_audit AFTER INSERT OR UPDATE OR DELETE ON dentos_data.care_plan_services FOR EACH ROW EXECUTE FUNCTION dentos_runtime.write_audit_event();
+CREATE TRIGGER trg_clinical_cases_touch BEFORE UPDATE ON dentos_data.clinical_cases FOR EACH ROW EXECUTE FUNCTION dentos_runtime.touch_mutable_row();
+CREATE TRIGGER trg_clinical_cases_audit AFTER INSERT OR UPDATE OR DELETE ON dentos_data.clinical_cases FOR EACH ROW EXECUTE FUNCTION dentos_runtime.write_audit_event();
+CREATE TRIGGER trg_case_consultations_touch BEFORE UPDATE ON dentos_data.case_consultations FOR EACH ROW EXECUTE FUNCTION dentos_runtime.touch_mutable_row();
+CREATE TRIGGER trg_case_consultations_audit AFTER INSERT OR UPDATE OR DELETE ON dentos_data.case_consultations FOR EACH ROW EXECUTE FUNCTION dentos_runtime.write_audit_event();
+CREATE TRIGGER trg_treatment_bundles_touch BEFORE UPDATE ON dentos_data.treatment_bundles FOR EACH ROW EXECUTE FUNCTION dentos_runtime.touch_mutable_row();
+CREATE TRIGGER trg_treatment_bundles_audit AFTER INSERT OR UPDATE OR DELETE ON dentos_data.treatment_bundles FOR EACH ROW EXECUTE FUNCTION dentos_runtime.write_audit_event();
+CREATE TRIGGER trg_treatment_bundle_services_touch BEFORE UPDATE ON dentos_data.treatment_bundle_services FOR EACH ROW EXECUTE FUNCTION dentos_runtime.touch_mutable_row();
+CREATE TRIGGER trg_treatment_bundle_services_audit AFTER INSERT OR UPDATE OR DELETE ON dentos_data.treatment_bundle_services FOR EACH ROW EXECUTE FUNCTION dentos_runtime.write_audit_event();
+CREATE TRIGGER trg_active_ingredient_catalog_touch BEFORE UPDATE ON dentos_data.active_ingredient_catalog FOR EACH ROW EXECUTE FUNCTION dentos_runtime.touch_mutable_row();
+CREATE TRIGGER trg_active_ingredient_catalog_audit AFTER INSERT OR UPDATE OR DELETE ON dentos_data.active_ingredient_catalog FOR EACH ROW EXECUTE FUNCTION dentos_runtime.write_audit_event();
+CREATE TRIGGER trg_medication_catalog_touch BEFORE UPDATE ON dentos_data.medication_catalog FOR EACH ROW EXECUTE FUNCTION dentos_runtime.touch_mutable_row();
+CREATE TRIGGER trg_medication_catalog_audit AFTER INSERT OR UPDATE OR DELETE ON dentos_data.medication_catalog FOR EACH ROW EXECUTE FUNCTION dentos_runtime.write_audit_event();
+CREATE TRIGGER trg_administration_patterns_touch BEFORE UPDATE ON dentos_data.administration_patterns FOR EACH ROW EXECUTE FUNCTION dentos_runtime.touch_mutable_row();
+CREATE TRIGGER trg_administration_patterns_audit AFTER INSERT OR UPDATE OR DELETE ON dentos_data.administration_patterns FOR EACH ROW EXECUTE FUNCTION dentos_runtime.write_audit_event();
+CREATE TRIGGER trg_medication_domain_links_touch BEFORE UPDATE ON dentos_data.medication_domain_links FOR EACH ROW EXECUTE FUNCTION dentos_runtime.touch_mutable_row();
+CREATE TRIGGER trg_medication_domain_links_audit AFTER INSERT OR UPDATE OR DELETE ON dentos_data.medication_domain_links FOR EACH ROW EXECUTE FUNCTION dentos_runtime.write_audit_event();
+CREATE TRIGGER trg_medication_ingredient_links_touch BEFORE UPDATE ON dentos_data.medication_ingredient_links FOR EACH ROW EXECUTE FUNCTION dentos_runtime.touch_mutable_row();
+CREATE TRIGGER trg_medication_ingredient_links_audit AFTER INSERT OR UPDATE OR DELETE ON dentos_data.medication_ingredient_links FOR EACH ROW EXECUTE FUNCTION dentos_runtime.write_audit_event();
+CREATE TRIGGER trg_allergy_ingredient_rules_touch BEFORE UPDATE ON dentos_data.allergy_ingredient_rules FOR EACH ROW EXECUTE FUNCTION dentos_runtime.touch_mutable_row();
+CREATE TRIGGER trg_allergy_ingredient_rules_audit AFTER INSERT OR UPDATE OR DELETE ON dentos_data.allergy_ingredient_rules FOR EACH ROW EXECUTE FUNCTION dentos_runtime.write_audit_event();
+CREATE TRIGGER trg_medication_protocols_touch BEFORE UPDATE ON dentos_data.medication_protocols FOR EACH ROW EXECUTE FUNCTION dentos_runtime.touch_mutable_row();
+CREATE TRIGGER trg_medication_protocols_audit AFTER INSERT OR UPDATE OR DELETE ON dentos_data.medication_protocols FOR EACH ROW EXECUTE FUNCTION dentos_runtime.write_audit_event();
+CREATE TRIGGER trg_medication_protocol_lines_touch BEFORE UPDATE ON dentos_data.medication_protocol_lines FOR EACH ROW EXECUTE FUNCTION dentos_runtime.touch_mutable_row();
+CREATE TRIGGER trg_medication_protocol_lines_audit AFTER INSERT OR UPDATE OR DELETE ON dentos_data.medication_protocol_lines FOR EACH ROW EXECUTE FUNCTION dentos_runtime.write_audit_event();
+CREATE TRIGGER trg_medication_protocol_diagnosis_links_touch BEFORE UPDATE ON dentos_data.medication_protocol_diagnosis_links FOR EACH ROW EXECUTE FUNCTION dentos_runtime.touch_mutable_row();
+CREATE TRIGGER trg_medication_protocol_diagnosis_links_audit AFTER INSERT OR UPDATE OR DELETE ON dentos_data.medication_protocol_diagnosis_links FOR EACH ROW EXECUTE FUNCTION dentos_runtime.write_audit_event();
+CREATE TRIGGER trg_medication_protocol_service_links_touch BEFORE UPDATE ON dentos_data.medication_protocol_service_links FOR EACH ROW EXECUTE FUNCTION dentos_runtime.touch_mutable_row();
+CREATE TRIGGER trg_medication_protocol_service_links_audit AFTER INSERT OR UPDATE OR DELETE ON dentos_data.medication_protocol_service_links FOR EACH ROW EXECUTE FUNCTION dentos_runtime.write_audit_event();
+CREATE TRIGGER trg_medication_orders_touch BEFORE UPDATE ON dentos_data.medication_orders FOR EACH ROW EXECUTE FUNCTION dentos_runtime.touch_mutable_row();
+CREATE TRIGGER trg_medication_orders_audit AFTER INSERT OR UPDATE OR DELETE ON dentos_data.medication_orders FOR EACH ROW EXECUTE FUNCTION dentos_runtime.write_audit_event();
+CREATE TRIGGER trg_medication_order_diagnoses_touch BEFORE UPDATE ON dentos_data.medication_order_diagnoses FOR EACH ROW EXECUTE FUNCTION dentos_runtime.touch_mutable_row();
+CREATE TRIGGER trg_medication_order_diagnoses_audit AFTER INSERT OR UPDATE OR DELETE ON dentos_data.medication_order_diagnoses FOR EACH ROW EXECUTE FUNCTION dentos_runtime.write_audit_event();
+CREATE TRIGGER trg_medication_order_service_links_touch BEFORE UPDATE ON dentos_data.medication_order_service_links FOR EACH ROW EXECUTE FUNCTION dentos_runtime.touch_mutable_row();
+CREATE TRIGGER trg_medication_order_service_links_audit AFTER INSERT OR UPDATE OR DELETE ON dentos_data.medication_order_service_links FOR EACH ROW EXECUTE FUNCTION dentos_runtime.write_audit_event();
+CREATE TRIGGER trg_medication_order_lines_touch BEFORE UPDATE ON dentos_data.medication_order_lines FOR EACH ROW EXECUTE FUNCTION dentos_runtime.touch_mutable_row();
+CREATE TRIGGER trg_medication_order_lines_audit AFTER INSERT OR UPDATE OR DELETE ON dentos_data.medication_order_lines FOR EACH ROW EXECUTE FUNCTION dentos_runtime.write_audit_event();
+

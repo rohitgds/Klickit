@@ -7,7 +7,7 @@
 | Milestone 3 — Access & Patients | Phase 23 | Approved | 2026-07-22 | approve milestone | Identity, patients and synthetic migration staging |
 | Milestone 4 — Scheduler & Queue | Phase 29 | Approved | 2026-07-22 | approve milestone and continue till next milestone | Scheduler, clinical queue, live refresh and operational dashboard |
 | Milestone 5 — Clinical & Files | Phase 34 | Approved | 2026-07-22 | approve milestone 5 and push to github | Encounter workspace, FDI records, notes, files and clinical permissions |
-| Milestone 6 — Plans & Prescriptions | Phase 39 | Not started | — | — | |
+| Milestone 6 — Plans & Prescriptions | Phase 39 | Approved | 2026-07-22 | approve milestone and create a commit | Treatment plans, prescriptions, signing and printing |
 | Milestone 7 — Finance | Phase 46 | Not started | — | — | |
 | Milestone 8 — Communications & Printing | Phase 50 | Not started | — | — | |
 | Milestone 9 — Rohini Readiness | Phase 53 | Not started | — | — | |

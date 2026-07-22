@@ -180,6 +180,47 @@ const clinicalCoreTables = [
 ];
 const clinicalTables = [...clinicalMasterTables, ...clinicalCoreTables];
 const clinicalReferenceTables = [...schedulingReferenceTables, ...clinicalTables];
+
+const planCoreTables = [
+  "care_plans",
+  "care_plan_stages",
+  "care_plan_services",
+  "clinical_cases",
+  "case_consultations",
+  "treatment_bundles",
+  "treatment_bundle_services",
+];
+const medicationMasterTables = [
+  "medication_domains",
+  "active_ingredient_catalog",
+  "administration_patterns",
+  "medication_catalog",
+  "medication_domain_links",
+  "medication_ingredient_links",
+  "allergy_ingredient_rules",
+  "medication_protocols",
+  "medication_protocol_lines",
+  "medication_protocol_diagnosis_links",
+  "medication_protocol_service_links",
+];
+const medicationOrderTables = [
+  "medication_orders",
+  "medication_order_diagnoses",
+  "medication_order_service_links",
+  "medication_order_lines",
+];
+const settingsTables = ["clinic_settings"];
+const planPrescriptionTables = [
+  ...planCoreTables,
+  ...medicationMasterTables,
+  ...medicationOrderTables,
+  ...settingsTables,
+];
+const planPrescriptionReferenceTables = [
+  ...clinicalReferenceTables,
+  ...planPrescriptionTables,
+  "staff",
+];
 const indexBlock = blocks.find((block) => block.includes("ix_patients_scope_lookup")) ?? "";
 
 mkdirSync(outputDir, { recursive: true });
@@ -266,6 +307,22 @@ const migrations = [
     file: "20260722123000_clinical_indexes.sql",
     body: `-- Generated from Blueprint 01 — clinical indexes\n\nSET search_path = dentos_data, dentos_runtime, public;\n\n${extractIndexLines(indexBlock, clinicalTables)}\n`,
   },
+  {
+    file: "20260722130000_plan_prescription_tables.sql",
+    body: `-- Generated from Blueprint 01 — treatment plans and prescriptions foundation (Milestone 6)\n\nSET search_path = dentos_data, dentos_runtime, public;\n\n${extractTables(tableBlock, planPrescriptionTables)}\n`,
+  },
+  {
+    file: "20260722131000_plan_prescription_foreign_keys.sql",
+    body: `-- Generated from Blueprint 01 — plan and prescription foreign keys\n\nSET search_path = dentos_data, dentos_runtime, public;\n\n${extractAlterLines(fkBlock, planPrescriptionTables, planPrescriptionReferenceTables)}\n`,
+  },
+  {
+    file: "20260722132000_plan_prescription_triggers.sql",
+    body: `-- Generated from Blueprint 01 — plan and prescription audit triggers\n\nSET search_path = dentos_data, dentos_runtime, public;\n\n${extractTriggerLines(triggerBlock, planPrescriptionTables)}\n`,
+  },
+  {
+    file: "20260722133000_plan_prescription_indexes.sql",
+    body: `-- Generated from Blueprint 01 — plan and prescription indexes\n\nSET search_path = dentos_data, dentos_runtime, public;\n\n${extractIndexLines(indexBlock, planPrescriptionTables)}\n`,
+  },
 ];
 
 for (const migration of migrations) {
@@ -281,4 +338,5 @@ console.log(`Runtime tables extracted: ${extractedRuntimeCount}/${runtimeTables.
 console.log(`Patient tables extracted: ${patientTables.filter((name) => extractTableDDL(tableBlock, name)).length}/${patientTables.length}`);
 console.log(`Scheduling tables extracted: ${schedulingTables.filter((name) => extractTableDDL(tableBlock, name)).length}/${schedulingTables.length}`);
 console.log(`Clinical tables extracted: ${clinicalTables.filter((name) => extractTableDDL(tableBlock, name)).length}/${clinicalTables.length}`);
+console.log(`Plan/prescription tables extracted: ${planPrescriptionTables.filter((name) => extractTableDDL(tableBlock, name)).length}/${planPrescriptionTables.length}`);
 console.log(`Permission seed bytes: ${permissionSeedBlock.length}`);

@@ -2,6 +2,17 @@
 
 ## Unreleased
 
+### Milestone 6 approved — 2026-07-22
+- Owner approved Milestone 6 (Plans & Prescriptions, Phases 35–39)
+- Next work: Phase 40 — Financial masters and fee controls
+
+### Milestone 6 foundation — 2026-07-22
+- Phases 35–39: care plans with phases and treatment bundle alternatives, acceptance records, medication masters and safety checks, signed medication orders with PIN and revisions, document print snapshots
+- `@klickit/plans-prescriptions` package with plan totals, allergy evaluation, signing hash and print snapshot helpers
+- Plan and prescription PostgreSQL migrations plus acceptance, PIN, revision and print snapshot tables
+- Gateway plan, medication and document print APIs with permission gates
+- Milestone 6 evidence checklist
+
 ### Milestone 5 approved — 2026-07-22
 - Owner approved Milestone 5 (Clinical & Files, Phases 30–34)
 - `main` pushed to GitHub with approved work through Phase 34

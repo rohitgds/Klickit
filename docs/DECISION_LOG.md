@@ -27,3 +27,5 @@ Record only accepted decisions. Do not place secrets here.
 | DEC-020 | 2026-07-22 | Milestone 4 approved after owner review and local Supabase reset | Authorizes Phase 30 within Milestone 5 | Milestone 4 | User |
 | DEC-021 | 2026-07-22 | Milestone 5 foundation delivered through Phase 34 with encounter workspace, FDI clinical records, signed note amendments, file sync metadata and cross-clinic access checks | Clinical & Files milestone endpoint ready for manual review | Phases 30–34, Milestone 5 | Agent |
 | DEC-022 | 2026-07-22 | Milestone 5 approved after owner review | Authorizes Phase 35 within Milestone 6 | Milestone 5 | User |
+| DEC-023 | 2026-07-22 | Milestone 6 foundation delivered through Phase 39 with care plans, acceptance, medication safety, signed orders and print snapshots | Plans & Prescriptions milestone endpoint ready for manual review | Phases 35–39, Milestone 6 | Agent |
+| DEC-024 | 2026-07-22 | Milestone 6 approved after owner review | Authorizes Phase 40 within Milestone 7 | Milestone 6 | User |
