@@ -1,46 +1,48 @@
 # Current Status
 
 - Project: KlickIt
-- Total phases: 55
-- Current phase: 55 complete — Final acceptance, sale/transfer handover and Shalimar expansion plan
-- Completed phases: 55
-- Phase-count progress: 55/55 (100%)
-- Weighted project progress: 100%
-- Current milestone: Milestone 10 — Pilot Acceptance (approved 2026-07-22)
-- Milestone approval: All 10 milestones approved; 55-phase master plan complete
-- Last successful commit: Milestone 10 pilot acceptance (`6ea0da2`)
-- Last passing test run: Phase 55 — 120 automated tests passed 2026-07-22
-- Current blocker: UI Module 5 ready for owner review — see `docs/UI_MODULE_05_OWNER_TEST_GUIDE.md`
-- Next action: Owner tests Module 5; reply `APPROVE UI MODULE` to start Module 6 (Clinical Records)
+- **Release state: NOT READY**
+- **Current track: Critical remediation**
+- **Real patient data: PROHIBITED**
+- **Production deployment: PROHIBITED**
 
-## Recent results
+## Phase history (backend delivery complete; release not verified)
 
-### Milestone 10 approved — 2026-07-22
-- Owner approved Pilot Acceptance milestone; all 55 backend phases complete
-- UI Module 1 also approved; next frontend work is Module 2 — Dashboard
+- Total phases delivered: 55/55 (backend implementation track)
+- Milestone approvals: 10/10 recorded (historical — does not override NOT READY release state)
+- UI modules built: 14/14 (5 owner-approved Modules 1–5; 9 pending review)
+- Independent audit (2026-07-22): ~52% blueprint-verified pilot readiness — see `audit-export/` (local, gitignored)
 
-### Milestone 10 foundation delivered (Phases 54–55)
-- Pilot PostgreSQL migrations for release candidates, daily reconciliations, acceptance records and unresolved issues
-- `@klickit/pilot` package with go-live checklist, production gate, daily reconciliation and Shalimar expansion helpers
-- Gateway pilot routes for release candidate, reconciliation, acceptance, rollback and handover summary
-- Rohini go-live and rollback runbooks, Shalimar expansion plan and daily reconciliation script
+## Active remediation branch
 
-### Milestone 9 approved
-- Owner approved Rohini Readiness milestone and authorized Phase 54 work
-- Milestone 9 committed through Phase 53
+- Branch: `remediation/pilot-safety`
+- Baseline commit: `27978fb` — UI Modules 1–14 + audit tooling fix + remediation plans
+- Annotated tag `pre-remediation-audit-baseline`: **pending owner approval**
 
-### UI Module 3 approved — 2026-07-22
-- Owner approved Patient Registry; UI Modules 2–3 may be uncommitted locally
+## Critical remediation tracks (plans in `docs/remediation/`)
 
-### UI Module 4 approved — 2026-07-22
-- Owner approved Scheduler; UI Modules 3–4 may be uncommitted locally
+| Track | Plan | Priority |
+|-------|------|----------|
+| Security | `SECURITY_REMEDIATION_PLAN.md` | P0 — fixed-salt passwords, session/authz validation |
+| Finance | `FINANCE_REMEDIATION_PLAN.md` | P0 — FIN-DEC closure, UI, reconciliation |
+| Sync | `SYNC_REMEDIATION_PLAN.md` | P1 — live OFF/SYNC drills |
+| Backup / Desktop | `BACKUP_DESKTOP_REMEDIATION_PLAN.md` | P1 — real backup, signed Tauri |
+| Test / CI | `TEST_REMEDIATION_PLAN.md` | P1 — migration verify exit codes, E2E |
 
-## Owner actions still open
+## Part D — Security Remediation 1
 
-1. Push to GitHub when ready — UI Modules 3–5 may still be uncommitted locally.
-2. Start UI Module 6 — Clinical Records after Module 5 approval.
-3. Optional: complete remaining manual checks in `docs/MILESTONE10_EVIDENCE.md` if not already done.
+**Status: NOT STARTED** — awaits explicit owner approval after plan review.
 
-## Session handoff
+## Next safe step
 
-Before continuing, read `AGENTS.md`, this file, the phase plan, decisions, known issues and relevant blueprints.
+1. Owner reviews remediation plans in `docs/remediation/`
+2. Reply **`APPROVE SECURITY REMEDIATION 1`** to begin Part D (Argon2id, session invalidation, PostgreSQL auth tests)
+3. Reply **`APPROVE TAG`** to create annotated tag `pre-remediation-audit-baseline`
+4. Reply **`APPROVE PUSH`** to push `remediation/pilot-safety` to GitHub
+
+## Do not proceed without approval
+
+- Push to remote
+- Production deployment or credentials changes
+- Live WhatsApp / real patient data
+- Deleting credential data

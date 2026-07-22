@@ -23,23 +23,7 @@ export function filterNavItemsByPermission(
   return items.filter((item) => permissionCodes.includes(item.permission));
 }
 
-export const MODULE_PLACEHOLDERS: Record<string, { title: string; description: string; nextModule: string }> = {
-  "/financial-operations": {
-    title: "Financial Operations",
-    description: "Fee statements, collections and allocations will be built in UI Module 9.",
-    nextModule: "Financial Operations",
-  },
-  "/comms-center": {
-    title: "Comms Center",
-    description: "Recalls, templates and message status will be built in UI Module 10.",
-    nextModule: "Recall and Communications",
-  },
-  "/system-configuration": {
-    title: "System Configuration",
-    description: "Staff, access and clinic setup screens will be built in UI Module 12.",
-    nextModule: "Settings and Permissions",
-  },
-};
+export const MODULE_PLACEHOLDERS: Record<string, { title: string; description: string; nextModule: string }> = {};
 
 export function mapClinicConfigToSyncStatus(config: {
   databaseConnected: boolean;

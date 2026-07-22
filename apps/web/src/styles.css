@@ -200,9 +200,44 @@ code {
   font-size: 18px;
 }
 
-.ki-patient-tabs {
+.ki-patient-tabs,
+.ki-tab-bar {
   display: flex;
+  flex-wrap: wrap;
   gap: var(--ki-space-2);
+  margin-bottom: var(--ki-space-3);
+}
+
+.ki-tab {
+  border: 1px solid var(--ki-color-border);
+  background: var(--ki-color-surface);
+  color: var(--ki-color-text);
+  padding: var(--ki-space-1) var(--ki-space-3);
+  border-radius: var(--ki-radius-sm);
+  cursor: pointer;
+  font-size: var(--ki-font-size-sm);
+}
+
+.ki-form-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ki-space-2);
+  margin-bottom: var(--ki-space-3);
+}
+
+.ki-code-block {
+  border: 1px solid var(--ki-color-border);
+  background: var(--ki-color-surface-muted);
+  padding: var(--ki-space-3);
+  border-radius: var(--ki-radius-sm);
+  overflow: auto;
+  font-size: var(--ki-font-size-sm);
+  max-height: 320px;
+}
+
+.ki-btn-sm {
+  padding: 2px var(--ki-space-2);
+  font-size: var(--ki-font-size-sm);
 }
 
 .ki-tab-active {

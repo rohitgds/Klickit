@@ -41,3 +41,6 @@ Thumbs.db
 # Logs
 *.log
 logs/
+
+# Audit export bundles (regenerate locally; not source of truth)
+audit-export/

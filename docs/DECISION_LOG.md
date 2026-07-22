@@ -41,3 +41,5 @@ Record only accepted decisions. Do not place secrets here.
 | DEC-034 | 2026-07-22 | UI Module 2 (Dashboard) approved after owner review | Authorizes UI Module 3 — Patient Registry | UI Module 2 | User |
 | DEC-035 | 2026-07-22 | UI Module 3 (Patient Registry) approved after owner review | Authorizes UI Module 4 — Scheduler | UI Module 3 | User |
 | DEC-036 | 2026-07-22 | UI Module 4 (Scheduler) approved after owner review | Authorizes UI Module 5 — Clinical Queue | UI Module 4 | User |
+| DEC-037 | 2026-07-22 | UI Module 5 (Clinical Queue) approved; owner authorized continuous build of remaining UI modules without per-module approval gates | Authorizes UI Modules 6–14 in one continuous frontend track | UI Module 5 | User |
+| DEC-038 | 2026-07-22 | Release state set to NOT READY; critical remediation track on branch `remediation/pilot-safety`; independent audit ~52% blueprint-verified | Milestone approvals do not override release gate; Part D security awaits approval | Remediation | Agent + User directive |

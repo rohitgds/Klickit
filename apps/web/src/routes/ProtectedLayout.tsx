@@ -61,6 +61,21 @@ export function ProtectedLayout() {
     if (location.pathname === "/clinical-queue") {
       return "Clinical Queue";
     }
+    if (location.pathname.startsWith("/clinical/encounters/")) {
+      return "Clinical Encounter";
+    }
+    if (location.pathname === "/financial-operations") {
+      return "Financial Operations";
+    }
+    if (location.pathname === "/comms-center") {
+      return "Comms Center";
+    }
+    if (location.pathname === "/system-configuration") {
+      return "System Configuration";
+    }
+    if (location.pathname === "/pilot-demo") {
+      return "Pilot Demo";
+    }
     return placeholder?.title ?? "KlickIt";
   })();
 

@@ -69,17 +69,3 @@ CREATE TABLE dentos_data.patient_flag_assignments (
   )
 );
 
-ALTER TABLE dentos_data.patient_flag_assignments
-  ADD CONSTRAINT fk_patient_flag_assignments_patient_id
-  FOREIGN KEY (patient_id) REFERENCES dentos_data.patients(id)
-  ON UPDATE RESTRICT ON DELETE RESTRICT DEFERRABLE INITIALLY IMMEDIATE;
-
-ALTER TABLE dentos_data.patient_flag_assignments
-  ADD CONSTRAINT fk_patient_flag_assignments_flag_id
-  FOREIGN KEY (flag_id) REFERENCES dentos_data.patient_flags(id)
-  ON UPDATE RESTRICT ON DELETE RESTRICT DEFERRABLE INITIALLY IMMEDIATE;
-
-ALTER TABLE dentos_data.patient_flag_assignments
-  ADD CONSTRAINT fk_patient_flag_assignments_clinic_id
-  FOREIGN KEY (clinic_id) REFERENCES dentos_data.clinics(id)
-  ON UPDATE RESTRICT ON DELETE RESTRICT DEFERRABLE INITIALLY IMMEDIATE;

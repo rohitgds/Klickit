@@ -19,6 +19,7 @@ import {
   filterEncountersByPatientQuery,
   formatEncounterStatus,
 } from "../config/clinicalQueue.js";
+import { canOpenEncounterWorkspace } from "../config/clinical.js";
 import { formatBookingTime, lookupMasterName, lookupStaffName } from "../config/scheduling.js";
 import type { QueueEncounter } from "../api/types.js";
 
@@ -118,6 +119,11 @@ export function ClinicalQueuePage() {
     const actions = encounterActionAvailability(encounter.status);
     return (
       <div className="ki-queue-actions">
+        {canOpenEncounterWorkspace(encounter.status) ? (
+          <Link to={`/clinical/encounters/${encounter.id}`} className="ki-btn ki-btn-sm">
+            Workspace
+          </Link>
+        ) : null}
         {actions.canEngage && canEngage ? (
           <button
             type="button"
