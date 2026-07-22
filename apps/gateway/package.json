@@ -16,6 +16,8 @@
     "@klickit/shared": "0.0.0",
     "@klickit/identity": "0.0.0",
     "@klickit/patients": "0.0.0",
+    "@klickit/scheduling": "0.0.0",
+    "@klickit/clinical": "0.0.0",
     "@klickit/sync-contracts": "0.0.0",
     "fastify": "^5.5.0",
     "pg": "^8.16.3"

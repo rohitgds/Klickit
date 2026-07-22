@@ -23,3 +23,6 @@ Record only accepted decisions. Do not place secrets here.
 | DEC-016 | 2026-07-22 | Milestone 2 approved after owner review | Authorizes Phase 17 within Milestone 3 | Milestone 2 | User |
 | DEC-017 | 2026-07-22 | Milestone 3 foundation delivered through Phase 23 with identity, patient registry and synthetic DrKlick staging | Access & Patients milestone endpoint ready for manual review | Phases 17–23, Milestone 3 | Agent |
 | DEC-018 | 2026-07-22 | Milestone 3 approved after owner review | Authorizes Phase 24 within Milestone 4 | Milestone 3 | User |
+| DEC-019 | 2026-07-22 | Milestone 4 foundation delivered through Phase 29 with scheduling masters, booking state machine, clinical queue, live refresh and operational dashboard | Scheduler & Queue milestone endpoint ready for manual review | Phases 24–29, Milestone 4 | Agent |
+| DEC-020 | 2026-07-22 | Milestone 4 approved after owner review and local Supabase reset | Authorizes Phase 30 within Milestone 5 | Milestone 4 | User |
+| DEC-021 | 2026-07-22 | Milestone 5 foundation delivered through Phase 34 with encounter workspace, FDI clinical records, signed note amendments, file sync metadata and cross-clinic access checks | Clinical & Files milestone endpoint ready for manual review | Phases 30–34, Milestone 5 | Agent |

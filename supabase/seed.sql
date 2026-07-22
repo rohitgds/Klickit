@@ -99,6 +99,22 @@ WHERE p.code IN (
   'configuration.practice.view',
   'configuration.workforce.view',
   'configuration.workforce.edit',
+  'scheduler.view',
+  'scheduler.create',
+  'scheduler.edit',
+  'scheduler.cancel',
+  'scheduler.override',
+  'queue.view',
+  'queue.admit',
+  'queue.engage',
+  'queue.release',
+  'queue.reopen',
+  'clinical.view',
+  'clinical.edit',
+  'clinical.delete_draft',
+  'document.view',
+  'document.upload',
+  'document.delete_draft',
   'audit.view'
 )
 ON CONFLICT (role_id, permission_id) DO NOTHING;
@@ -194,6 +210,138 @@ VALUES (
   '11111111-1111-4111-8111-111111111111',
   'Any heart condition?',
   'yes_no',
+  true,
+  clock_timestamp(),
+  clock_timestamp()
+)
+ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO dentos_data.staff (
+  id, organization_id, display_name, staff_type, active, created_at, updated_at
+)
+VALUES (
+  '88888891-8888-4891-8891-888888888891',
+  '11111111-1111-4111-8111-111111111111',
+  'Development Clinician',
+  'clinician',
+  true,
+  clock_timestamp(),
+  clock_timestamp()
+)
+ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO dentos_data.staff_clinics (
+  staff_id, clinic_id, active, created_at, updated_at
+)
+VALUES (
+  '88888891-8888-4891-8891-888888888891',
+  '22222222-2222-4222-8222-222222222222',
+  true,
+  clock_timestamp(),
+  clock_timestamp()
+)
+ON CONFLICT (staff_id, clinic_id) DO NOTHING;
+
+INSERT INTO dentos_data.chairs (
+  id, clinic_id, code, name, display_order, active, created_at, updated_at
+)
+VALUES (
+  '88888892-8888-4892-8892-888888888892',
+  '22222222-2222-4222-8222-222222222222',
+  'CH01',
+  'Chair 1',
+  1,
+  true,
+  clock_timestamp(),
+  clock_timestamp()
+)
+ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO dentos_data.care_booking_reasons (
+  id, organization_id, name, default_minutes, color_hex, active, created_at, updated_at
+)
+VALUES (
+  '88888893-8888-4893-8893-888888888893',
+  '11111111-1111-4111-8111-111111111111',
+  'Consultation',
+  30,
+  '#2563EB',
+  true,
+  clock_timestamp(),
+  clock_timestamp()
+)
+ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO dentos_data.staff_working_hours (
+  id, clinic_id, staff_id, weekday, starts_local, ends_local, active, created_at, updated_at
+)
+VALUES (
+  '88888894-8888-4894-8894-888888888894',
+  '22222222-2222-4222-8222-222222222222',
+  '88888891-8888-4891-8891-888888888891',
+  1,
+  '09:00',
+  '18:00',
+  true,
+  clock_timestamp(),
+  clock_timestamp()
+)
+ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO dentos_data.chair_working_hours (
+  id, chair_id, weekday, starts_local, ends_local, active, created_at, updated_at
+)
+VALUES (
+  '88888895-8888-4895-8895-888888888895',
+  '88888892-8888-4892-8892-888888888892',
+  1,
+  '09:00',
+  '18:00',
+  true,
+  clock_timestamp(),
+  clock_timestamp()
+)
+ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO dentos_data.service_domains (
+  id, organization_id, code, name, display_order, active, created_at, updated_at
+)
+VALUES (
+  '88888896-8888-4896-8896-888888888896',
+  '11111111-1111-4111-8111-111111111111',
+  'RESTORATIVE',
+  'Restorative',
+  1,
+  true,
+  clock_timestamp(),
+  clock_timestamp()
+)
+ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO dentos_data.service_catalog (
+  id, organization_id, code, description, service_domain_id, default_minutes, active, created_at, updated_at
+)
+VALUES (
+  '88888897-8888-4897-8897-888888888897',
+  '11111111-1111-4111-8111-111111111111',
+  'FILL-001',
+  'Composite Filling',
+  '88888896-8888-4896-8896-888888888896',
+  45,
+  true,
+  clock_timestamp(),
+  clock_timestamp()
+)
+ON CONFLICT (id) DO NOTHING;
+
+INSERT INTO dentos_data.diagnosis_catalog (
+  id, organization_id, code, name, active, created_at, updated_at
+)
+VALUES (
+  '88888898-8888-4898-8898-888888888898',
+  '11111111-1111-4111-8111-111111111111',
+  'CARIES',
+  'Dental Caries',
   true,
   clock_timestamp(),
   clock_timestamp()

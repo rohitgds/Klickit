@@ -2,6 +2,22 @@
 
 ## Unreleased
 
+### Milestone 5 foundation — 2026-07-22
+- Phases 30–34: encounter workspace, FDI clinical records, signed note amendments, file sync metadata and clinical permissions
+- `@klickit/clinical` package with tooth validation, note rules and cross-clinic access evaluation
+- Clinical PostgreSQL migrations plus note amendment and file sync job tables
+- Gateway clinical and document APIs with permission gates
+
+### Milestone 4 approved — 2026-07-22
+- Owner approved Milestone 4 after local Supabase reset
+
+### Milestone 4 foundation — 2026-07-22
+- Phases 24–29: scheduling masters, views, booking state machine, clinical queue, live refresh and operational dashboard
+- `@klickit/scheduling` package with transition and availability domain logic
+- Scheduling PostgreSQL migrations compiled from Blueprint 01 (9 tables)
+- Gateway scheduling and clinical queue APIs with permission gates
+- Milestone 4 evidence checklist
+
 ### Milestone 3 approved — 2026-07-22
 - Owner approved Milestone 3 (Access & Patients, Phases 17–23)
 - `main` updated to include approved Milestone 3 work

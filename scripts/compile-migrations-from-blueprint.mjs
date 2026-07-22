@@ -33,13 +33,21 @@ function extractTables(block, tableNames) {
     .join("\n\n");
 }
 
-function extractAlterLines(block, tableNames) {
+function extractAlterLines(block, tableNames, referenceTableNames) {
   const allowed = new Set(tableNames);
+  const references = new Set(referenceTableNames ?? tableNames);
   return block
     .split("\n")
     .filter((line) => {
       const match = line.match(/^ALTER TABLE ([a-z_]+)/i);
-      return match && allowed.has(match[1].toLowerCase());
+      if (!match || !allowed.has(match[1].toLowerCase())) {
+        return false;
+      }
+      const refMatch = line.match(/REFERENCES ([a-z_]+)\(/i);
+      if (refMatch && !references.has(refMatch[1].toLowerCase())) {
+        return false;
+      }
+      return true;
     })
     .map((line) => line.replace(/^ALTER TABLE /i, "ALTER TABLE dentos_data."))
     .join("\n");
@@ -57,12 +65,16 @@ function extractTriggerLines(block, tableNames) {
     .join("\n");
 }
 
-function extractIndexLines(block, tableNames) {
+function extractIndexLines(block, tableNames, options = {}) {
   const allowed = new Set(tableNames);
+  const skipTrgm = options.skipTrgm !== false;
   return block
     .split("\n")
     .filter((line) => {
       if (!line.startsWith("CREATE INDEX")) {
+        return false;
+      }
+      if (skipTrgm && line.includes("gin_trgm_ops")) {
         return false;
       }
       const match = line.match(/ ON ([a-z_]+) /i);
@@ -135,6 +147,39 @@ const patientCoreTables = [
 ];
 
 const patientTables = [...patientMasterTables, ...patientCoreTables];
+
+const schedulingMasterTables = [
+  "chairs",
+  "care_booking_reasons",
+  "staff_working_hours",
+  "chair_working_hours",
+  "resource_blackouts",
+];
+
+const schedulingCoreTables = [
+  "care_bookings",
+  "care_booking_state_events",
+  "care_encounters",
+  "encounter_state_events",
+];
+
+const schedulingTables = [...schedulingMasterTables, ...schedulingCoreTables];
+const identityReferenceTables = [...identityTables, ...runtimeTables];
+const patientReferenceTables = [...identityReferenceTables, ...patientTables];
+const schedulingReferenceTables = [...patientReferenceTables, ...schedulingTables];
+
+const clinicalMasterTables = ["service_domains", "service_catalog", "diagnosis_catalog"];
+const clinicalCoreTables = [
+  "odontogram_findings",
+  "encounter_diagnoses",
+  "encounter_service_recommendations",
+  "care_deliveries",
+  "clinical_notes",
+  "files",
+  "patient_files",
+];
+const clinicalTables = [...clinicalMasterTables, ...clinicalCoreTables];
+const clinicalReferenceTables = [...schedulingReferenceTables, ...clinicalTables];
 const indexBlock = blocks.find((block) => block.includes("ix_patients_scope_lookup")) ?? "";
 
 mkdirSync(outputDir, { recursive: true });
@@ -158,7 +203,7 @@ const migrations = [
   },
   {
     file: "20260721104000_identity_runtime_foreign_keys.sql",
-    body: `-- Generated from Blueprint 01 — foreign keys for baseline tables\n\nSET search_path = dentos_data, dentos_runtime, public;\n\n${extractAlterLines(fkBlock, [...identityTables, ...runtimeTables])}\n`,
+    body: `-- Generated from Blueprint 01 — foreign keys for baseline tables\n\nSET search_path = dentos_data, dentos_runtime, public;\n\n${extractAlterLines(fkBlock, [...identityTables, ...runtimeTables], identityReferenceTables)}\n`,
   },
   {
     file: "20260721105000_identity_audit_triggers.sql",
@@ -179,7 +224,7 @@ const migrations = [
   },
   {
     file: "20260722101000_patient_registry_foreign_keys.sql",
-    body: `-- Generated from Blueprint 01 — patient registry foreign keys\n\nSET search_path = dentos_data, dentos_runtime, public;\n\n${extractAlterLines(fkBlock, patientTables)}\n`,
+    body: `-- Generated from Blueprint 01 — patient registry foreign keys\n\nSET search_path = dentos_data, dentos_runtime, public;\n\n${extractAlterLines(fkBlock, patientTables, patientReferenceTables)}\n`,
   },
   {
     file: "20260722102000_patient_registry_triggers.sql",
@@ -188,6 +233,38 @@ const migrations = [
   {
     file: "20260722103000_patient_registry_indexes.sql",
     body: `-- Generated from Blueprint 01 — patient registry indexes\n\nSET search_path = dentos_data, dentos_runtime, public;\n\n${extractIndexLines(indexBlock, patientTables)}\n`,
+  },
+  {
+    file: "20260722110000_scheduling_tables.sql",
+    body: `-- Generated from Blueprint 01 — scheduler and clinical queue foundation (Milestone 4)\n\nSET search_path = dentos_data, dentos_runtime, public;\n\n${extractTables(tableBlock, schedulingTables)}\n`,
+  },
+  {
+    file: "20260722111000_scheduling_foreign_keys.sql",
+    body: `-- Generated from Blueprint 01 — scheduling foreign keys\n\nSET search_path = dentos_data, dentos_runtime, public;\n\n${extractAlterLines(fkBlock, schedulingTables, schedulingReferenceTables)}\n`,
+  },
+  {
+    file: "20260722112000_scheduling_triggers.sql",
+    body: `-- Generated from Blueprint 01 — scheduling audit triggers\n\nSET search_path = dentos_data, dentos_runtime, public;\n\n${extractTriggerLines(triggerBlock, schedulingTables)}\n`,
+  },
+  {
+    file: "20260722113000_scheduling_indexes.sql",
+    body: `-- Generated from Blueprint 01 — scheduling indexes\n\nSET search_path = dentos_data, dentos_runtime, public;\n\n${extractIndexLines(indexBlock, schedulingTables)}\n`,
+  },
+  {
+    file: "20260722120000_clinical_tables.sql",
+    body: `-- Generated from Blueprint 01 — clinical workspace and files foundation (Milestone 5)\n\nSET search_path = dentos_data, dentos_runtime, public;\n\n${extractTables(tableBlock, clinicalTables)}\n`,
+  },
+  {
+    file: "20260722121000_clinical_foreign_keys.sql",
+    body: `-- Generated from Blueprint 01 — clinical foreign keys\n\nSET search_path = dentos_data, dentos_runtime, public;\n\n${extractAlterLines(fkBlock, clinicalTables, clinicalReferenceTables)}\n`,
+  },
+  {
+    file: "20260722122000_clinical_triggers.sql",
+    body: `-- Generated from Blueprint 01 — clinical audit triggers\n\nSET search_path = dentos_data, dentos_runtime, public;\n\n${extractTriggerLines(triggerBlock, clinicalTables)}\n`,
+  },
+  {
+    file: "20260722123000_clinical_indexes.sql",
+    body: `-- Generated from Blueprint 01 — clinical indexes\n\nSET search_path = dentos_data, dentos_runtime, public;\n\n${extractIndexLines(indexBlock, clinicalTables)}\n`,
   },
 ];
 
@@ -202,4 +279,6 @@ console.log(`Wrote ${migrations.length} migration files to ${outputDir}`);
 console.log(`Identity tables extracted: ${extractedIdentityCount}/${identityTables.length}`);
 console.log(`Runtime tables extracted: ${extractedRuntimeCount}/${runtimeTables.length}`);
 console.log(`Patient tables extracted: ${patientTables.filter((name) => extractTableDDL(tableBlock, name)).length}/${patientTables.length}`);
+console.log(`Scheduling tables extracted: ${schedulingTables.filter((name) => extractTableDDL(tableBlock, name)).length}/${schedulingTables.length}`);
+console.log(`Clinical tables extracted: ${clinicalTables.filter((name) => extractTableDDL(tableBlock, name)).length}/${clinicalTables.length}`);
 console.log(`Permission seed bytes: ${permissionSeedBlock.length}`);

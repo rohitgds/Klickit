@@ -1,0 +1,52 @@
+-- Generated from Blueprint 01 — clinical foreign keys
+
+SET search_path = dentos_data, dentos_runtime, public;
+
+ALTER TABLE dentos_data.service_domains ADD CONSTRAINT fk_service_domains_organization_id FOREIGN KEY (organization_id) REFERENCES organizations(id) ON UPDATE RESTRICT ON DELETE RESTRICT DEFERRABLE INITIALLY IMMEDIATE;
+ALTER TABLE dentos_data.service_domains ADD CONSTRAINT fk_service_domains_created_by FOREIGN KEY (created_by) REFERENCES users(id) ON UPDATE RESTRICT ON DELETE SET NULL DEFERRABLE INITIALLY IMMEDIATE;
+ALTER TABLE dentos_data.service_domains ADD CONSTRAINT fk_service_domains_updated_by FOREIGN KEY (updated_by) REFERENCES users(id) ON UPDATE RESTRICT ON DELETE SET NULL DEFERRABLE INITIALLY IMMEDIATE;
+ALTER TABLE dentos_data.diagnosis_catalog ADD CONSTRAINT fk_diagnosis_catalog_organization_id FOREIGN KEY (organization_id) REFERENCES organizations(id) ON UPDATE RESTRICT ON DELETE RESTRICT DEFERRABLE INITIALLY IMMEDIATE;
+ALTER TABLE dentos_data.diagnosis_catalog ADD CONSTRAINT fk_diagnosis_catalog_created_by FOREIGN KEY (created_by) REFERENCES users(id) ON UPDATE RESTRICT ON DELETE SET NULL DEFERRABLE INITIALLY IMMEDIATE;
+ALTER TABLE dentos_data.diagnosis_catalog ADD CONSTRAINT fk_diagnosis_catalog_updated_by FOREIGN KEY (updated_by) REFERENCES users(id) ON UPDATE RESTRICT ON DELETE SET NULL DEFERRABLE INITIALLY IMMEDIATE;
+ALTER TABLE dentos_data.service_catalog ADD CONSTRAINT fk_service_catalog_organization_id FOREIGN KEY (organization_id) REFERENCES organizations(id) ON UPDATE RESTRICT ON DELETE RESTRICT DEFERRABLE INITIALLY IMMEDIATE;
+ALTER TABLE dentos_data.service_catalog ADD CONSTRAINT fk_service_catalog_service_domain_id FOREIGN KEY (service_domain_id) REFERENCES service_domains(id) ON UPDATE RESTRICT ON DELETE RESTRICT DEFERRABLE INITIALLY IMMEDIATE;
+ALTER TABLE dentos_data.service_catalog ADD CONSTRAINT fk_service_catalog_created_by FOREIGN KEY (created_by) REFERENCES users(id) ON UPDATE RESTRICT ON DELETE SET NULL DEFERRABLE INITIALLY IMMEDIATE;
+ALTER TABLE dentos_data.service_catalog ADD CONSTRAINT fk_service_catalog_updated_by FOREIGN KEY (updated_by) REFERENCES users(id) ON UPDATE RESTRICT ON DELETE SET NULL DEFERRABLE INITIALLY IMMEDIATE;
+ALTER TABLE dentos_data.odontogram_findings ADD CONSTRAINT fk_odontogram_findings_patient_id FOREIGN KEY (patient_id) REFERENCES patients(id) ON UPDATE RESTRICT ON DELETE RESTRICT DEFERRABLE INITIALLY IMMEDIATE;
+ALTER TABLE dentos_data.odontogram_findings ADD CONSTRAINT fk_odontogram_findings_care_encounter_id FOREIGN KEY (care_encounter_id) REFERENCES care_encounters(id) ON UPDATE RESTRICT ON DELETE SET NULL DEFERRABLE INITIALLY IMMEDIATE;
+ALTER TABLE dentos_data.odontogram_findings ADD CONSTRAINT fk_odontogram_findings_recorded_by FOREIGN KEY (recorded_by) REFERENCES staff(id) ON UPDATE RESTRICT ON DELETE RESTRICT DEFERRABLE INITIALLY IMMEDIATE;
+ALTER TABLE dentos_data.odontogram_findings ADD CONSTRAINT fk_odontogram_findings_supersedes_id FOREIGN KEY (supersedes_id) REFERENCES odontogram_findings(id) ON UPDATE RESTRICT ON DELETE SET NULL DEFERRABLE INITIALLY IMMEDIATE;
+ALTER TABLE dentos_data.odontogram_findings ADD CONSTRAINT fk_odontogram_findings_created_by FOREIGN KEY (created_by) REFERENCES users(id) ON UPDATE RESTRICT ON DELETE SET NULL DEFERRABLE INITIALLY IMMEDIATE;
+ALTER TABLE dentos_data.odontogram_findings ADD CONSTRAINT fk_odontogram_findings_updated_by FOREIGN KEY (updated_by) REFERENCES users(id) ON UPDATE RESTRICT ON DELETE SET NULL DEFERRABLE INITIALLY IMMEDIATE;
+ALTER TABLE dentos_data.care_deliveries ADD CONSTRAINT fk_care_deliveries_patient_id FOREIGN KEY (patient_id) REFERENCES patients(id) ON UPDATE RESTRICT ON DELETE RESTRICT DEFERRABLE INITIALLY IMMEDIATE;
+ALTER TABLE dentos_data.care_deliveries ADD CONSTRAINT fk_care_deliveries_care_encounter_id FOREIGN KEY (care_encounter_id) REFERENCES care_encounters(id) ON UPDATE RESTRICT ON DELETE RESTRICT DEFERRABLE INITIALLY IMMEDIATE;
+ALTER TABLE dentos_data.care_deliveries ADD CONSTRAINT fk_care_deliveries_service_id FOREIGN KEY (service_id) REFERENCES service_catalog(id) ON UPDATE RESTRICT ON DELETE RESTRICT DEFERRABLE INITIALLY IMMEDIATE;
+ALTER TABLE dentos_data.care_deliveries ADD CONSTRAINT fk_care_deliveries_lead_clinician_id FOREIGN KEY (lead_clinician_id) REFERENCES staff(id) ON UPDATE RESTRICT ON DELETE RESTRICT DEFERRABLE INITIALLY IMMEDIATE;
+ALTER TABLE dentos_data.care_deliveries ADD CONSTRAINT fk_care_deliveries_completed_by FOREIGN KEY (completed_by) REFERENCES users(id) ON UPDATE RESTRICT ON DELETE RESTRICT DEFERRABLE INITIALLY IMMEDIATE;
+ALTER TABLE dentos_data.care_deliveries ADD CONSTRAINT fk_care_deliveries_created_by FOREIGN KEY (created_by) REFERENCES users(id) ON UPDATE RESTRICT ON DELETE SET NULL DEFERRABLE INITIALLY IMMEDIATE;
+ALTER TABLE dentos_data.care_deliveries ADD CONSTRAINT fk_care_deliveries_updated_by FOREIGN KEY (updated_by) REFERENCES users(id) ON UPDATE RESTRICT ON DELETE SET NULL DEFERRABLE INITIALLY IMMEDIATE;
+ALTER TABLE dentos_data.clinical_notes ADD CONSTRAINT fk_clinical_notes_patient_id FOREIGN KEY (patient_id) REFERENCES patients(id) ON UPDATE RESTRICT ON DELETE RESTRICT DEFERRABLE INITIALLY IMMEDIATE;
+ALTER TABLE dentos_data.clinical_notes ADD CONSTRAINT fk_clinical_notes_care_encounter_id FOREIGN KEY (care_encounter_id) REFERENCES care_encounters(id) ON UPDATE RESTRICT ON DELETE RESTRICT DEFERRABLE INITIALLY IMMEDIATE;
+ALTER TABLE dentos_data.clinical_notes ADD CONSTRAINT fk_clinical_notes_clinician_id FOREIGN KEY (clinician_id) REFERENCES staff(id) ON UPDATE RESTRICT ON DELETE RESTRICT DEFERRABLE INITIALLY IMMEDIATE;
+ALTER TABLE dentos_data.clinical_notes ADD CONSTRAINT fk_clinical_notes_created_by FOREIGN KEY (created_by) REFERENCES users(id) ON UPDATE RESTRICT ON DELETE SET NULL DEFERRABLE INITIALLY IMMEDIATE;
+ALTER TABLE dentos_data.clinical_notes ADD CONSTRAINT fk_clinical_notes_updated_by FOREIGN KEY (updated_by) REFERENCES users(id) ON UPDATE RESTRICT ON DELETE SET NULL DEFERRABLE INITIALLY IMMEDIATE;
+ALTER TABLE dentos_data.files ADD CONSTRAINT fk_files_organization_id FOREIGN KEY (organization_id) REFERENCES organizations(id) ON UPDATE RESTRICT ON DELETE RESTRICT DEFERRABLE INITIALLY IMMEDIATE;
+ALTER TABLE dentos_data.files ADD CONSTRAINT fk_files_created_by FOREIGN KEY (created_by) REFERENCES users(id) ON UPDATE RESTRICT ON DELETE SET NULL DEFERRABLE INITIALLY IMMEDIATE;
+ALTER TABLE dentos_data.files ADD CONSTRAINT fk_files_updated_by FOREIGN KEY (updated_by) REFERENCES users(id) ON UPDATE RESTRICT ON DELETE SET NULL DEFERRABLE INITIALLY IMMEDIATE;
+ALTER TABLE dentos_data.patient_files ADD CONSTRAINT fk_patient_files_patient_id FOREIGN KEY (patient_id) REFERENCES patients(id) ON UPDATE RESTRICT ON DELETE RESTRICT DEFERRABLE INITIALLY IMMEDIATE;
+ALTER TABLE dentos_data.patient_files ADD CONSTRAINT fk_patient_files_care_encounter_id FOREIGN KEY (care_encounter_id) REFERENCES care_encounters(id) ON UPDATE RESTRICT ON DELETE SET NULL DEFERRABLE INITIALLY IMMEDIATE;
+ALTER TABLE dentos_data.patient_files ADD CONSTRAINT fk_patient_files_file_id FOREIGN KEY (file_id) REFERENCES files(id) ON UPDATE RESTRICT ON DELETE RESTRICT DEFERRABLE INITIALLY IMMEDIATE;
+ALTER TABLE dentos_data.patient_files ADD CONSTRAINT fk_patient_files_created_by FOREIGN KEY (created_by) REFERENCES users(id) ON UPDATE RESTRICT ON DELETE SET NULL DEFERRABLE INITIALLY IMMEDIATE;
+ALTER TABLE dentos_data.patient_files ADD CONSTRAINT fk_patient_files_updated_by FOREIGN KEY (updated_by) REFERENCES users(id) ON UPDATE RESTRICT ON DELETE SET NULL DEFERRABLE INITIALLY IMMEDIATE;
+ALTER TABLE dentos_data.encounter_diagnoses ADD CONSTRAINT fk_encounter_diagnoses_care_encounter_id FOREIGN KEY (care_encounter_id) REFERENCES care_encounters(id) ON UPDATE RESTRICT ON DELETE RESTRICT DEFERRABLE INITIALLY IMMEDIATE;
+ALTER TABLE dentos_data.encounter_diagnoses ADD CONSTRAINT fk_encounter_diagnoses_diagnosis_id FOREIGN KEY (diagnosis_id) REFERENCES diagnosis_catalog(id) ON UPDATE RESTRICT ON DELETE RESTRICT DEFERRABLE INITIALLY IMMEDIATE;
+ALTER TABLE dentos_data.encounter_diagnoses ADD CONSTRAINT fk_encounter_diagnoses_diagnosed_by FOREIGN KEY (diagnosed_by) REFERENCES staff(id) ON UPDATE RESTRICT ON DELETE RESTRICT DEFERRABLE INITIALLY IMMEDIATE;
+ALTER TABLE dentos_data.encounter_diagnoses ADD CONSTRAINT fk_encounter_diagnoses_created_by FOREIGN KEY (created_by) REFERENCES users(id) ON UPDATE RESTRICT ON DELETE SET NULL DEFERRABLE INITIALLY IMMEDIATE;
+ALTER TABLE dentos_data.encounter_diagnoses ADD CONSTRAINT fk_encounter_diagnoses_updated_by FOREIGN KEY (updated_by) REFERENCES users(id) ON UPDATE RESTRICT ON DELETE SET NULL DEFERRABLE INITIALLY IMMEDIATE;
+ALTER TABLE dentos_data.encounter_service_recommendations ADD CONSTRAINT fk_encounter_service_recommendations_care_encounter_id FOREIGN KEY (care_encounter_id) REFERENCES care_encounters(id) ON UPDATE RESTRICT ON DELETE RESTRICT DEFERRABLE INITIALLY IMMEDIATE;
+ALTER TABLE dentos_data.encounter_service_recommendations ADD CONSTRAINT fk_encounter_service_recommendations_encounter_diagnosis_id FOREIGN KEY (encounter_diagnosis_id) REFERENCES encounter_diagnoses(id) ON UPDATE RESTRICT ON DELETE SET NULL DEFERRABLE INITIALLY IMMEDIATE;
+ALTER TABLE dentos_data.encounter_service_recommendations ADD CONSTRAINT fk_encounter_service_recommendations_service_id FOREIGN KEY (service_id) REFERENCES service_catalog(id) ON UPDATE RESTRICT ON DELETE RESTRICT DEFERRABLE INITIALLY IMMEDIATE;
+ALTER TABLE dentos_data.encounter_service_recommendations ADD CONSTRAINT fk_encounter_service_recommendations_suggested_by FOREIGN KEY (suggested_by) REFERENCES staff(id) ON UPDATE RESTRICT ON DELETE RESTRICT DEFERRABLE INITIALLY IMMEDIATE;
+ALTER TABLE dentos_data.encounter_service_recommendations ADD CONSTRAINT fk_encounter_service_recommendations_created_by FOREIGN KEY (created_by) REFERENCES users(id) ON UPDATE RESTRICT ON DELETE SET NULL DEFERRABLE INITIALLY IMMEDIATE;
+ALTER TABLE dentos_data.encounter_service_recommendations ADD CONSTRAINT fk_encounter_service_recommendations_updated_by FOREIGN KEY (updated_by) REFERENCES users(id) ON UPDATE RESTRICT ON DELETE SET NULL DEFERRABLE INITIALLY IMMEDIATE;
+

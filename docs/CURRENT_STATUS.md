@@ -2,38 +2,32 @@
 
 - Project: KlickIt
 - Total phases: 55
-- Current phase: 23 complete — DrKlick demographic migration staging (synthetic dry run)
-- Completed phases: 23
-- Phase-count progress: 23/55 (42%)
-- Weighted project progress: 39%
-- Current milestone: Milestone 3 — Access & Patients (approved)
-- Milestone approval: Milestone 3 approved 2026-07-22
-- Last successful commit: Milestone 3 integration on `develop`; `main` updated after approval
-- Last passing test run: Phase 23 — 43 automated tests passed 2026-07-22
+- Current phase: 34 complete — Clinical permissions and UAT foundation
+- Completed phases: 34
+- Phase-count progress: 34/55 (62%)
+- Weighted project progress: 57%
+- Current milestone: Milestone 5 — Clinical & Files
+- Milestone approval: Milestone 4 approved 2026-07-22; Milestone 5 ready for manual review
+- Last passing test run: Phase 34 — 62 automated tests passed 2026-07-22
 - Current blocker: None
-- Next action: Phase 24 — Scheduling masters, chairs and availability
+- Next action: Manual Milestone 5 review, then Phase 35 after `APPROVE MILESTONE`
 
 ## Recent results
 
-### Phases 17–23
-- Identity/workforce APIs for organizations, clinics, staff and users
-- Permission evaluation middleware with denial audit events
-- Online login/logout and offline auth snapshot foundation
-- Local-only `/auth/dev/session` bootstrap for synthetic testing (no password in Git)
-- Patient registry PostgreSQL migrations compiled from Blueprint 01
-- Patient search, registration, profile and safety-summary APIs
-- Duplicate review queue and DrKlick import staging dry-run APIs
-- Expanded synthetic seed for memberships, role permissions and patient masters
+### Milestone 4 approved
+- Owner approved scheduler and clinical queue milestone after local Supabase reset
 
-### GitHub
-- Private remote connected: `https://github.com/rohitgds/Klickit.git`
-- `main`: approved milestones through Milestone 3
-- `develop`: integration branch for ongoing phase work
+### Phases 30–34
+- Encounter workspace with allergy safety context
+- FDI odontogram findings, encounter diagnoses, service recommendations and care deliveries
+- Signed clinical notes with immutable amendment history
+- Patient file registration, hash verification and sync job metadata
+- Cross-clinic clinical access denial checks and permission-gated routes
 
 ## Owner actions still open
 
-1. Optional: run the Milestone 3 manual checklist in `docs/MILESTONE3_EVIDENCE.md` for extra confidence.
-2. Reply when ready to continue with Phase 24.
+1. Run the Milestone 5 manual checklist in `docs/MILESTONE5_EVIDENCE.md`.
+2. Reply with `APPROVE MILESTONE` after manual testing if satisfied.
 
 ## Session handoff
 

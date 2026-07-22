@@ -69,8 +69,33 @@ export function App() {
     <main className="shell">
       <header>
         <h1>{PRODUCT_NAME} Web</h1>
-        <p>Milestone 3 shell — workforce, patient registry and migration staging placeholders.</p>
+        <p>Milestone 5 shell — clinical workspace, odontogram, notes and patient files placeholders.</p>
       </header>
+
+      <section>
+        <h2>Clinical workspace (Phase 30–32)</h2>
+        <p>Use `/clinical/encounters/:id/workspace`, findings, diagnoses, deliveries and note sign/amend routes.</p>
+      </section>
+
+      <section>
+        <h2>Patient files (Phase 33–34)</h2>
+        <p>Use `/clinical/files/register`, sync-status, verify-hash and `/clinical/access/effective`.</p>
+      </section>
+
+      <section>
+        <h2>Scheduler (Phase 24–26)</h2>
+        <p>Use `/scheduling/masters`, `/scheduling/views/day`, and `/scheduling/bookings` with a session token.</p>
+      </section>
+
+      <section>
+        <h2>Clinical Queue (Phase 27)</h2>
+        <p>Use `/clinical-queue`, check-in, engage, release and checkout routes after booking or walk-in creation.</p>
+      </section>
+
+      <section>
+        <h2>Live refresh and dashboard (Phase 28–29)</h2>
+        <p>Poll `/scheduling/live/events` and open `/dashboard/operational/daily?date=YYYY-MM-DD`.</p>
+      </section>
 
       <section>
         <h2>Workforce (Phase 17–18)</h2>
