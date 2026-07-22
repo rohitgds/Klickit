@@ -19,6 +19,6 @@ services:
       - key: KLICKIT_GATEWAY_CODE
         value: DEV-GW-01
       - key: GATEWAY_CORS_ORIGINS
-        sync: false
+        value: https://klickit-web-2c63.vercel.app
       - key: DATABASE_URL
         sync: false

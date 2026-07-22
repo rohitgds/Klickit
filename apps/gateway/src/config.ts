@@ -24,6 +24,17 @@ function parseCorsOrigins(raw: string | undefined): string[] {
     .filter(Boolean);
 }
 
+function resolveCorsOrigins(appEnv: string, env: NodeJS.ProcessEnv): string[] {
+  const configured = parseCorsOrigins(env.GATEWAY_CORS_ORIGINS);
+  if (configured.length > 0) {
+    return configured;
+  }
+  if (appEnv === "staging") {
+    return ["https://klickit-web-2c63.vercel.app"];
+  }
+  return [];
+}
+
 function resolveGatewayPort(env: NodeJS.ProcessEnv): number {
   const raw = env.PORT ?? env.GATEWAY_PORT ?? "8787";
   const port = Number(raw);
@@ -61,7 +72,7 @@ export function loadGatewayConfig(env: NodeJS.ProcessEnv = process.env): Gateway
       "postgresql://postgres:postgres@127.0.0.1:54322/postgres",
     lanDiscoveryEnabled: defaultLanDiscovery(appEnv, env),
     cloudSyncUrl: env.KLICKIT_CLOUD_SYNC_URL ?? null,
-    corsOrigins: parseCorsOrigins(env.GATEWAY_CORS_ORIGINS),
+    corsOrigins: resolveCorsOrigins(appEnv, env),
     logLevel: (env.GATEWAY_LOG_LEVEL as GatewayConfig["logLevel"]) ?? "info",
     serviceName: "KlickIt Clinic Gateway",
     softwareVersion: env.KLICKIT_SOFTWARE_VERSION ?? "0.0.0",

@@ -81,7 +81,8 @@ export function LoginPage() {
         >
           <h2 style={{ marginTop: 0, fontSize: "15px" }}>Owner Demo Login</h2>
           <p style={{ marginTop: 0, color: "var(--ki-color-text-muted)", fontSize: "12px" }}>
-            Signs in as <strong>dev.admin</strong> with full clinic permissions in local development.
+            Signs in as <strong>dev.admin</strong> with full clinic permissions. Works on local dev only — on
+            staging use <strong>Password Login</strong> below.
           </p>
           <button type="button" className="ki-btn ki-btn-primary" disabled={demoLoading} onClick={() => void handleDemoLogin()}>
             {demoLoading ? "Signing in…" : "Sign In with Demo Account"}
@@ -117,7 +118,7 @@ export function LoginPage() {
             </div>
           </form>
           <p style={{ marginBottom: 0, color: "var(--ki-color-text-muted)", fontSize: "12px" }}>
-            Password login requires seeded credentials. Until then, use Owner Demo Login.
+            On staging, sign in here with the seeded dev credentials (synthetic data only).
           </p>
         </section>
       </div>
