@@ -11,7 +11,7 @@ import {
   validatePlanAcceptance,
   validatePrescriptionRevision,
   verifyDoctorSigningPin,
-} from "../src/index.ts";
+} from "../src/index.js";
 
 describe("@klickit/plans-prescriptions", () => {
   it("calculates care plan totals with discounts and accepted lines", () => {
