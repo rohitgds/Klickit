@@ -8,7 +8,7 @@
 - Weighted project progress: 100%
 - Current milestone: Milestone 10 — Pilot Acceptance (ready for manual review)
 - Milestone approval: Milestone 9 approved 2026-07-22; Milestone 10 pending owner review
-- Last successful commit: Milestone 9 Rohini readiness and approval (`6174ac6`)
+- Last successful commit: Milestone 10 pilot acceptance (`6ea0da2`)
 - Last passing test run: Phase 55 — 120 automated tests passed 2026-07-22
 - Current blocker: None
 - Next action: Manual Milestone 10 review using `docs/MILESTONE10_EVIDENCE.md`
