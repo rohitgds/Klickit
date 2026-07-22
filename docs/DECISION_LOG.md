@@ -36,3 +36,5 @@ Record only accepted decisions. Do not place secrets here.
 | DEC-029 | 2026-07-22 | Milestone 9 foundation delivered through Phase 53 with backup/restore drills, migration dry run, readiness drills, synthetic fixtures and portability guards | Rohini Readiness milestone endpoint ready for manual review | Phases 51–53, Milestone 9 | Agent |
 | DEC-030 | 2026-07-22 | Milestone 9 approved after owner review | Authorizes Phase 54 within Milestone 10 | Milestone 9 | User |
 | DEC-031 | 2026-07-22 | Milestone 10 foundation delivered through Phase 55 with pilot release candidate, daily reconciliation, acceptance records, handover summary and Shalimar expansion plan | Pilot Acceptance milestone endpoint ready for manual review | Phases 54–55, Milestone 10 | Agent |
+| DEC-032 | 2026-07-22 | UI Module 1 (Login and Application Shell) approved after owner review | Authorizes UI Module 2 — Dashboard | UI Module 1 | User |
+| DEC-033 | 2026-07-22 | Milestone 10 (Pilot Acceptance, Phases 54–55) approved after owner review | Closes the 55-phase master plan; backend milestone track complete | Milestone 10 | User |

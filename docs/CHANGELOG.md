@@ -2,6 +2,19 @@
 
 ## Unreleased
 
+### Milestone 10 approved — 2026-07-22
+- Owner approved Pilot Acceptance milestone (Phases 54–55)
+- 55-phase master plan complete; remaining work is frontend UI modules and pilot go-live preparation
+
+### UI Module 1 approved — 2026-07-22
+- Owner approved Login and Application Shell after manual review
+- Next UI work: Module 2 — Dashboard
+
+### UI Module 1 foundation — 2026-07-22
+- `@klickit/ui` package with Blueprint 06 tokens, AppShell, navigation, sync indicator and form states
+- Web app restructured with React Router, TanStack Query, auth context and protected routes
+- Pilot navigation placeholders and owner test guide `docs/UI_MODULE_01_OWNER_TEST_GUIDE.md`
+
 ### Milestone 10 foundation — 2026-07-22
 - Phases 54–55: pilot release candidate, go-live checklist, production approval gate, daily reconciliation, acceptance records, unresolved issues, rollback and Shalimar expansion plan
 - `@klickit/pilot` package with checklist evaluation, production gate, reconciliation and handover helpers

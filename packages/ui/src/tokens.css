@@ -1,0 +1,134 @@
+:root {
+  --ki-font-family: "Segoe UI", system-ui, sans-serif;
+  --ki-font-size-xs: 11px;
+  --ki-font-size-sm: 12px;
+  --ki-font-size-md: 13px;
+  --ki-font-size-lg: 14px;
+  --ki-line-height: 1.35;
+
+  --ki-space-1: 4px;
+  --ki-space-2: 8px;
+  --ki-space-3: 12px;
+  --ki-space-4: 16px;
+
+  --ki-nav-height: 38px;
+  --ki-toolbar-height: 34px;
+  --ki-control-height: 30px;
+  --ki-grid-row-height: 28px;
+  --ki-icon-button: 28px;
+
+  --ki-color-bg: #f4f6f8;
+  --ki-color-surface: #ffffff;
+  --ki-color-border: #c8d0d8;
+  --ki-color-text: #1a2430;
+  --ki-color-text-muted: #5a6775;
+  --ki-color-primary: #1f5f8b;
+  --ki-color-primary-hover: #174a6d;
+  --ki-color-focus: #2563eb;
+  --ki-color-demo-bg: #7c2d12;
+  --ki-color-demo-text: #fff7ed;
+  --ki-color-success: #166534;
+  --ki-color-success-bg: #dcfce7;
+  --ki-color-warning: #92400e;
+  --ki-color-warning-bg: #fef3c7;
+  --ki-color-error: #991b1b;
+  --ki-color-error-bg: #fee2e2;
+  --ki-color-disabled-bg: #e5e7eb;
+  --ki-color-disabled-text: #6b7280;
+
+  --ki-radius-sm: 2px;
+  --ki-shadow-focus: 0 0 0 2px #fff, 0 0 0 4px var(--ki-color-focus);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--ki-font-family);
+  font-size: var(--ki-font-size-md);
+  line-height: var(--ki-line-height);
+  color: var(--ki-color-text);
+  background: var(--ki-color-bg);
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+.ki-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--ki-control-height);
+  padding: 0 var(--ki-space-3);
+  border: 1px solid var(--ki-color-border);
+  border-radius: var(--ki-radius-sm);
+  background: var(--ki-color-surface);
+  color: var(--ki-color-text);
+  cursor: pointer;
+}
+
+.ki-btn:hover:not(:disabled) {
+  border-color: var(--ki-color-primary);
+}
+
+.ki-btn:focus-visible {
+  outline: none;
+  box-shadow: var(--ki-shadow-focus);
+}
+
+.ki-btn:disabled {
+  background: var(--ki-color-disabled-bg);
+  color: var(--ki-color-disabled-text);
+  cursor: not-allowed;
+}
+
+.ki-btn-primary {
+  background: var(--ki-color-primary);
+  border-color: var(--ki-color-primary);
+  color: #fff;
+}
+
+.ki-btn-primary:hover:not(:disabled) {
+  background: var(--ki-color-primary-hover);
+  border-color: var(--ki-color-primary-hover);
+}
+
+.ki-input {
+  min-height: var(--ki-control-height);
+  width: 100%;
+  padding: 0 var(--ki-space-2);
+  border: 1px solid var(--ki-color-border);
+  border-radius: var(--ki-radius-sm);
+  background: var(--ki-color-surface);
+}
+
+.ki-input:focus-visible {
+  outline: none;
+  box-shadow: var(--ki-shadow-focus);
+  border-color: var(--ki-color-focus);
+}
+
+.ki-label {
+  display: block;
+  font-size: var(--ki-font-size-sm);
+  font-weight: 600;
+  margin-bottom: var(--ki-space-1);
+}
+
+.ki-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ki-space-1);
+}
+
+.ki-error-text {
+  color: var(--ki-color-error);
+  font-size: var(--ki-font-size-sm);
+}
