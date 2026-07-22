@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+### Milestone 3 approved — 2026-07-22
+- Owner approved Milestone 3 (Access & Patients, Phases 17–23)
+- `main` updated to include approved Milestone 3 work
+- Next work: Phase 24 — Scheduling masters
+
 ### Added
 - Universal provider/account/local-stack portability framework
 - Clean rebuild, account transfer, provider exit and sale/handover documentation

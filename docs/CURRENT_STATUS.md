@@ -6,12 +6,12 @@
 - Completed phases: 23
 - Phase-count progress: 23/55 (42%)
 - Weighted project progress: 39%
-- Current milestone: Milestone 3 — Access & Patients
-- Milestone approval: Milestone 2 approved 2026-07-22; Milestone 3 ready for manual review
-- Last successful commit: Initial commit through Milestone 2 (2026-07-22)
+- Current milestone: Milestone 3 — Access & Patients (approved)
+- Milestone approval: Milestone 3 approved 2026-07-22
+- Last successful commit: Milestone 3 integration on `develop`; `main` updated after approval
 - Last passing test run: Phase 23 — 43 automated tests passed 2026-07-22
-- Current blocker: Private GitHub remote URL not connected yet
-- Next action: Manual Milestone 3 review, then Phase 24 after `APPROVE MILESTONE`
+- Current blocker: None
+- Next action: Phase 24 — Scheduling masters, chairs and availability
 
 ## Recent results
 
@@ -25,11 +25,15 @@
 - Duplicate review queue and DrKlick import staging dry-run APIs
 - Expanded synthetic seed for memberships, role permissions and patient masters
 
+### GitHub
+- Private remote connected: `https://github.com/rohitgds/Klickit.git`
+- `main`: approved milestones through Milestone 3
+- `develop`: integration branch for ongoing phase work
+
 ## Owner actions still open
 
-1. Create private GitHub repository using `docs/GIT_SETUP.md` and share the URL when ready for first push.
-2. Run the Milestone 3 manual checklist in `docs/MILESTONE3_EVIDENCE.md`.
-3. Reply with `APPROVE MILESTONE` after manual testing if satisfied.
+1. Optional: run the Milestone 3 manual checklist in `docs/MILESTONE3_EVIDENCE.md` for extra confidence.
+2. Reply when ready to continue with Phase 24.
 
 ## Session handoff
 

@@ -60,4 +60,5 @@ git clone klickit-backup.bundle klickit-restored
 ## Status
 
 - Local Git: initialized
-- Remote GitHub: waiting for owner repository URL and login approval
+- Remote GitHub: connected to `https://github.com/rohitgds/Klickit.git`
+- Branches pushed: `main`, `develop`
