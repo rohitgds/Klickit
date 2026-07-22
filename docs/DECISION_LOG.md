@@ -26,3 +26,4 @@ Record only accepted decisions. Do not place secrets here.
 | DEC-019 | 2026-07-22 | Milestone 4 foundation delivered through Phase 29 with scheduling masters, booking state machine, clinical queue, live refresh and operational dashboard | Scheduler & Queue milestone endpoint ready for manual review | Phases 24–29, Milestone 4 | Agent |
 | DEC-020 | 2026-07-22 | Milestone 4 approved after owner review and local Supabase reset | Authorizes Phase 30 within Milestone 5 | Milestone 4 | User |
 | DEC-021 | 2026-07-22 | Milestone 5 foundation delivered through Phase 34 with encounter workspace, FDI clinical records, signed note amendments, file sync metadata and cross-clinic access checks | Clinical & Files milestone endpoint ready for manual review | Phases 30–34, Milestone 5 | Agent |
+| DEC-022 | 2026-07-22 | Milestone 5 approved after owner review | Authorizes Phase 35 within Milestone 6 | Milestone 5 | User |

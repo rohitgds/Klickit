@@ -21,3 +21,11 @@
 | Summary | Owner approved Milestone 4 and requested continuation to next milestone. |
 | Result | Milestone 4 recorded approved; Milestone 5 Phases 30–34 implemented. |
 | Follow-up | Manual Milestone 5 review in `docs/MILESTONE5_EVIDENCE.md`. |
+
+| Date | 2026-07-22 |
+|---|---|
+| Milestone | Milestone 5 — Clinical & Files |
+| Feedback type | Milestone approval |
+| Summary | Owner approved Milestone 5 and requested GitHub push. |
+| Result | Milestone 5 recorded approved; `main` and `develop` pushed to GitHub. |
+| Follow-up | Continue Phase 35 when ready. |

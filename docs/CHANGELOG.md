@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+### Milestone 5 approved — 2026-07-22
+- Owner approved Milestone 5 (Clinical & Files, Phases 30–34)
+- `main` pushed to GitHub with approved work through Phase 34
+- Next work: Phase 35 — Treatment plan phases
+
 ### Milestone 5 foundation — 2026-07-22
 - Phases 30–34: encounter workspace, FDI clinical records, signed note amendments, file sync metadata and clinical permissions
 - `@klickit/clinical` package with tooth validation, note rules and cross-clinic access evaluation

@@ -6,16 +6,18 @@
 - Completed phases: 34
 - Phase-count progress: 34/55 (62%)
 - Weighted project progress: 57%
-- Current milestone: Milestone 5 — Clinical & Files
-- Milestone approval: Milestone 4 approved 2026-07-22; Milestone 5 ready for manual review
+- Current milestone: Milestone 5 — Clinical & Files (approved)
+- Milestone approval: Milestone 5 approved 2026-07-22
+- Last successful commit: Milestones 4-5 integration on `main`, pushed to GitHub
 - Last passing test run: Phase 34 — 62 automated tests passed 2026-07-22
 - Current blocker: None
-- Next action: Manual Milestone 5 review, then Phase 35 after `APPROVE MILESTONE`
+- Next action: Phase 35 — Treatment plan phases and alternatives
 
 ## Recent results
 
-### Milestone 4 approved
-- Owner approved scheduler and clinical queue milestone after local Supabase reset
+### Milestone 5 approved
+- Owner approved clinical workspace, FDI records, notes, files and permissions milestone
+- GitHub updated with approved work through Phase 34
 
 ### Phases 30–34
 - Encounter workspace with allergy safety context
@@ -26,8 +28,7 @@
 
 ## Owner actions still open
 
-1. Run the Milestone 5 manual checklist in `docs/MILESTONE5_EVIDENCE.md`.
-2. Reply with `APPROVE MILESTONE` after manual testing if satisfied.
+1. Reply when ready to continue with Phase 35.
 
 ## Session handoff
 
